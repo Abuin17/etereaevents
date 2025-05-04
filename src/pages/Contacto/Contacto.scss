@@ -1,0 +1,134 @@
+@import '../../styles/variables';
+
+.contacto {
+  min-height: 100vh;
+  position: relative;
+  background: #F7F6F4;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  padding: 0 0 320px 0;
+
+  &__main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 0;
+    gap: 50px;
+    padding: 0;
+  }
+
+  &__intro {
+    margin: 0 0 32px 0;
+    text-align: center;
+  }
+
+  &__content {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding: 0;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    align-items: center;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__group--social {
+    margin-top: 24px;
+  }
+
+  &__line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Revans', sans-serif;
+    font-weight: 400;
+    font-size: 19.2px;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #393431;
+    vertical-align: middle;
+  }
+
+  &__label, &__separator {
+    font-family: 'Revans', sans-serif;
+    font-weight: 400;
+    font-size: $font-size-lg;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #393431;
+    vertical-align: middle;
+  }
+
+  &__value {
+    font-family: 'Revans', sans-serif;
+    font-weight: 400;
+    font-size: $font-size-base;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #393431;
+    vertical-align: middle;
+  }
+
+
+  &__separator {
+    margin: 0;
+  }
+
+  // El footer debe ser visible siempre y no encogerse
+  .footer {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    &__main {
+      padding-top: 12rem;
+      padding-bottom: 4px;
+    }
+    &__intro {
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+    &__content {
+      max-width: 95vw;
+      gap: 24px;
+    }
+    &__line {
+      font-size: 16px;
+    }
+    &__label, &__separator, &__value {
+      font-size: 16px;
+    }
+  }
+}
+
+.footer--contact {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 100px;
+  padding: 0;
+} 

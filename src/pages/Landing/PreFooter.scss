@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+
+.pre-footer {
+  font-family: 'Hedvig Letters Sans', sans-serif;
+  font-weight: 400;
+  font-size: $body-font-size;
+  line-height: $body-line-height;
+  letter-spacing: 0%;
+  text-align: center;
+  color: #393431;
+  margin: 15.5rem 0 0 0;
+  padding-bottom: 4.5rem;
+  white-space: pre-line;
+} 

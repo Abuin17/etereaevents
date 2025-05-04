@@ -1,0 +1,264 @@
+@import '../../styles/variables';
+
+.events-invisible {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: var(--page-background);
+  padding: $spacing-6xl $spacing-xl;
+  box-sizing: border-box;
+
+  &__container {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: $spacing-6xl;
+  }
+
+  &__body {
+    font-family: $font-secondary;
+    font-size: $body-font-size;
+    line-height: $body-line-height;
+    text-align: center;
+    color: $primary-color;
+    max-width: 700px;
+    margin-top: 24px;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__showcase {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-xl;
+  }
+
+  &__slider {
+    width: 100%;
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    pointer-events: none;
+
+    &.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    &.next {
+      z-index: 2;
+      
+      &.fade-in {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__project {
+    text-align: center;
+    margin-top: $spacing-xl;
+  }
+
+  &__project-title {
+    font-family: $font-primary;
+    font-size: $font-size-lg;
+    color: $primary-color;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__project-year {
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    color: $primary-color;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__project-description {
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    line-height: 1.5;
+    color: $primary-color;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  &__separator {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-2xl;
+  }
+
+  &__separator-line {
+    width: 1px;
+    height: 415px;
+    background: $primary-color;
+    position: relative;
+    overflow: visible;
+  }
+
+  &__separator-dots {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: translateX(-50%);
+  }
+
+  &__separator-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: $primary-color;
+    transition: all 0.5s ease-out;
+    position: relative;
+    z-index: 2;
+
+    &:first-child {
+      margin-top: -4px;
+    }
+
+    &:last-child {
+      margin-bottom: -4px;
+    }
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-2xl;
+    margin-top: $spacing-4xl;
+    width: 100%;
+    max-width: 500px;
+
+    .eterea-button {
+      font-family: $font-primary;
+      font-weight: 400;
+      font-size: $body-font-size;
+      line-height: 1;
+      letter-spacing: 0;
+      text-align: center;
+      text-transform: uppercase;
+      color: #393431;
+      background: #fff;
+      border: none;
+      border-radius: 0;
+      padding: 0.5rem 2rem;
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: all 0.25s cubic-bezier(.4,0,.2,1);
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      width: auto;
+      min-width: 175px;
+      box-sizing: border-box;
+
+      &:hover, &:focus {
+        background: #E8E2D5;
+        color: #393431;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-2xl $spacing-lg;
+
+    &__container {
+      gap: 48px;
+    }
+
+    &__title {
+      font-size: 36px;
+    }
+
+    &__body {
+      font-size: 20px;
+    }
+
+    &__showcase {
+      max-width: 400px;
+    }
+
+    &__separator-line {
+      height: 150px;
+    }
+
+    &__contact {
+      margin-top: $spacing-2xl;
+      max-width: 400px;
+
+      .events__title {
+        font-size: 36px;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-xl $spacing-md;
+
+    &__container {
+      gap: 32px;
+    }
+
+    &__title {
+      font-size: 28px;
+    }
+
+    &__body {
+      font-size: 18px;
+    }
+
+    &__showcase {
+      max-width: 300px;
+    }
+
+    &__separator-line {
+      height: 150px;
+    }
+
+    &__contact {
+      margin-top: $spacing-xl;
+      max-width: 300px;
+
+      .events__title {
+        font-size: 28px;
+      }
+
+      .eterea-button {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.875rem;
+      }
+    }
+  }
+} 

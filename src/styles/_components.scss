@@ -1,0 +1,65 @@
+@import './variables';
+
+// Botón base de Etérea
+.eterea-button {
+  font-family: $font-primary;
+  font-weight: 400;
+  font-size: $body-font-size;
+  line-height: 1;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  color: #393431;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  padding: 0.5rem 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: all 0.25s cubic-bezier(.4,0,.2,1);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 175px;
+  box-sizing: border-box;
+
+  &:hover, &:focus {
+    background: #E8E2D5;
+    color: #393431;
+  }
+
+  // Variante VIP
+  &--vip {
+    background: $button-vip-bg;
+    color: $text-light;
+
+    &:hover, &:focus {
+      background: lighten($button-vip-bg, 10%);
+      color: $text-light;
+    }
+  }
+
+  // Variante de ancho automático
+  &--auto {
+    width: auto;
+    min-width: 175px;
+  }
+
+  // Variante de ancho completo
+  &--full {
+    width: 100%;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+  }
+} 

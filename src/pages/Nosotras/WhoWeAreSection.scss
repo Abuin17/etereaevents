@@ -1,0 +1,133 @@
+@import '../../styles/variables';
+
+.who-we-are-section {
+  width: 100%;
+  padding: $spacing-6xl $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-4xl;
+
+  &__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: $spacing-2xl;
+
+    &--bottom {
+      margin-top: $spacing-2xl;
+      margin-bottom: 0;
+    }
+  }
+
+  &__icon {
+    width: 3.1875rem;
+    object-fit: contain;
+    align-self: center;
+
+    &--inverted {
+      transform: scaleY(-1);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-4xl;
+    max-width: 800px;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: $title-size;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__blocks {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4xl;
+    width: 100%;
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-lg;
+  }
+
+  &__subtitle {
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: 19.2px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__body {
+    font-family: $font-secondary;
+    font-size: $body-font-size;
+    line-height: $body-line-height;
+    text-align: center;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__separator {
+    width: 5px;
+    height: auto;
+    margin-top: $spacing-lg;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-2xl $spacing-lg;
+    gap: $spacing-2xl;
+
+    &__title {
+      font-size: $font-size-2xl;
+    }
+
+    &__blocks {
+      gap: $spacing-2xl;
+    }
+
+    &__subtitle {
+      font-size: $font-size-base;
+    }
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-xl $spacing-md;
+    gap: $spacing-xl;
+
+    &__title {
+      font-size: $font-size-xl;
+    }
+
+    &__blocks {
+      gap: $spacing-xl;
+    }
+
+    &__subtitle {
+      font-size: $font-size-sm;
+    }
+
+    &__body {
+      font-size: $font-size-base;
+    }
+  }
+} 

@@ -1,0 +1,122 @@
+@import '../../styles/variables';
+
+.hero-section {
+  width: 100vw;
+  height: 100vh;
+  min-height: 600px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Versión portrait (móvil)
+  &--portrait {
+    .hero-section__static {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+      height: 100vh;
+      width: 100%;
+    }
+
+    .hero-section__logo {
+      width: 80%;
+      max-width: 300px;
+      height: auto;
+    }
+
+    .hero-section__text {
+      font-size: 18px;
+      margin-top: 0;
+    }
+  }
+
+  &__marquee {
+    width: 100vw;
+    overflow: hidden;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  &__track {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+    animation: hero-marquee-infinite 240s linear infinite;
+    will-change: transform;
+    min-width: max-content;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    white-space: nowrap;
+    height: 100%;
+  }
+
+  &__logo {
+    width: 360px;
+    max-width: 30vw;
+    height: auto;
+    display: block;
+    align-self: center;
+  }
+
+  &__text {
+    font-family: 'Revans', serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    background: rgba(0,0,0,0.0);
+    padding: 0 12px;
+    white-space: pre-line;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin-top: 16px;
+  }
+}
+
+@keyframes hero-marquee-infinite {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+// Media queries adicionales para ajustes finos en diferentes tamaños de móvil
+@media (max-width: $breakpoint-sm) {
+  .hero-section {
+    &--portrait {
+      .hero-section__logo {
+        width: 90%;
+        max-width: 800px;
+      }
+
+      .hero-section__text {
+        font-size: $font-size-2xl;
+        height: 0;
+      }
+    }
+  }
+} 

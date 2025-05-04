@@ -1,0 +1,54 @@
+@import '../../styles/variables';
+
+.us-section {
+  width: 100%;
+  padding: $spacing-6xl $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+
+  &__title {
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: $title-size;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__body {
+    font-family: $font-secondary;
+    font-size: $body-font-size;
+    line-height: $body-line-height;
+    text-align: center;
+    color: $primary-color;
+    max-width: 600px;
+    margin: 0;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-2xl $spacing-lg;
+    gap: $spacing-4xl;
+
+    &__title {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 6rem $spacing-md $spacing-xl $spacing-md;
+    gap: $spacing-2xl;
+
+    &__title {
+      font-size: $font-size-xl;
+    }
+
+    &__body {
+      font-size: $font-size-base;
+    }
+  }
+} 

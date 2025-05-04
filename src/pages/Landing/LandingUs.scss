@@ -1,0 +1,31 @@
+@import '../../styles/variables';
+
+.landing-us {
+  font-family: $font-secondary;
+  margin-top: 350px;
+  padding: 0 20px;
+  text-align: center;
+  color: #393431;
+
+  &__title {
+    font-family: $font-primary;
+    font-size: $font-size-4xl;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  &__body {
+    font-size: $body-font-size;
+    line-height: $body-line-height;
+    margin-bottom: $spacing-2xl;
+    max-width: 500px;
+    margin: 0 auto $spacing-2xl;
+    white-space: pre-line;
+  }
+} 
+
+@media (max-width: $breakpoint-sm) {
+  .landing-us {
+    margin-top: 100px;
+  }
+}
