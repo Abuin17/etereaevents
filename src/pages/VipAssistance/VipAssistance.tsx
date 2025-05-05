@@ -85,7 +85,7 @@ const VipAssistance: React.FC = () => {
           </div>
         </div>
       </div>
-      <section className="vip-assistance__contact">
+      <section className="vip-assistance__contact eterea-content-block">
         <h2 className="vip-assistance__title">IT'S NOT JUST WHERE YOU GO.<br />
         IT'S WHO BRINGS YOU THERE.</h2>
         <p className="vip-assistance__contact-text">

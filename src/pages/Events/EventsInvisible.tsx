@@ -76,8 +76,8 @@ const EventsInvisible: React.FC = () => {
           </div>
         </div>
 
-        <div className="events-invisible__contact">
-          <div className="events__title">Extraordinary begins where perfection stops being enough</div>
+        <div className="events-invisible__contact eterea-content-block">
+          <div className="events__title eterea-title">Extraordinary begins where perfection stops being enough</div>
           <Link to="/contacto" className="eterea-button eterea-button--auto">Contacto</Link>
         </div>
       </div>

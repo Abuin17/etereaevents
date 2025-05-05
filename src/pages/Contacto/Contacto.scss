@@ -1,3 +1,4 @@
+@import '../../styles/_base';
 @import '../../styles/variables';
 
 .contacto {
@@ -23,8 +24,8 @@
   }
 
   &__intro {
+    @extend .eterea-title;
     margin: 0 0 32px 0;
-    text-align: center;
   }
 
   &__content {

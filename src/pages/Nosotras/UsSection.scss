@@ -1,3 +1,4 @@
+@import '../../styles/_base';
 @import '../../styles/variables';
 
 .us-section {
@@ -9,6 +10,7 @@
   gap: 100px;
 
   &__title {
+    @extend .eterea-title;
     font-family: $font-primary;
     font-weight: 400;
     font-size: $title-size;
@@ -21,13 +23,7 @@
   }
 
   &__body {
-    font-family: $font-secondary;
-    font-size: $body-font-size;
-    line-height: $body-line-height;
-    text-align: center;
-    color: $primary-color;
-    max-width: 600px;
-    margin: 0;
+    @extend .eterea-body;
   }
 
   @media (max-width: $breakpoint-md) {

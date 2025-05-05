@@ -11,7 +11,7 @@ const WhoWeAreSection: React.FC = () => {
         <img src={etereaIcon} alt="Etérea Icon" className="who-we-are-section__icon" />
       </div>
       <div className="who-we-are-section__content">
-        <h2 className="who-we-are-section__title">QUIÉNES SOMOS</h2>
+        <h2 className="who-we-are-section__title eterea-title">QUIÉNES SOMOS</h2>
         <div className="who-we-are-section__blocks">
           <div className="who-we-are-section__block">
             <h3 className="who-we-are-section__subtitle">¿HASTA DÓNDE LLEGAMOS?</h3>

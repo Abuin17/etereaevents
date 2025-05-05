@@ -1,3 +1,4 @@
+@import '../../styles/_base';
 @import '../../styles/variables';
 
 .who-we-are-section {
@@ -40,6 +41,7 @@
   }
 
   &__title {
+    @extend .eterea-title;
     font-family: $font-primary;
     font-weight: 400;
     font-size: $title-size;

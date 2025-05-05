@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 const LandingUs: React.FC = () => {
   return (
-    <section className="landing-us">
-      <h1 className="landing-us__title">
+    <section className="landing-us eterea-content-block">
+      <h1 className="landing-us__title eterea-title">
         POR LAS IDEAS<br />
         QUE MERECEN SER CONTADAS
       </h1>

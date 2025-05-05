@@ -85,4 +85,70 @@ img {
 .flex-col { flex-direction: column; }
 .items-center { align-items: center; }
 .justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; } 
+.justify-between { justify-content: space-between; }
+
+.eterea-title {
+  font-family: $font-primary;
+  font-weight: 400;
+  font-size: $title-size;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  color: $primary-color;
+  margin-bottom: $spacing-lg;
+  word-wrap: break-word;
+  hyphens: auto;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.eterea-body {
+  font-family: $font-secondary;
+  font-size: $body-font-size;
+  line-height: $body-line-height;
+  text-align: center;
+  color: $primary-color;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.eterea-subtitle {
+  font-family: $font-accent;
+  font-weight: 400;
+  font-size: $events-subtitle-size;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-align: center;
+  color: $primary-color;
+}
+
+.eterea-content-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; // 24px
+
+  .eterea-title {
+    margin-bottom: 0; // Reset del margin-bottom por defecto
+  }
+
+  .eterea-body {
+    margin: 0; // Reset del margin por defecto
+  }
+
+  .eterea-button {
+    margin-top: 2.5rem; // 40px
+  }
+}
+
+// Convención: Para cualquier combinación de título + subtítulo, usar siempre .eterea-title seguido de .eterea-subtitle, ambos centrados y con un gap de 0.5rem entre ellos. Ejemplo:
+// <div class="eterea-title-group"><h1 class="eterea-title">Título</h1><span class="eterea-subtitle">Subtítulo</span></div>
+
+.eterea-title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+} 

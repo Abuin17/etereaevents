@@ -1,3 +1,4 @@
+@import '../../styles/_base';
 @import '../../styles/variables';
 
 .events-invisible {
@@ -26,7 +27,6 @@
     line-height: $body-line-height;
     text-align: center;
     color: $primary-color;
-    max-width: 700px;
     margin-top: 24px;
 
     p {
@@ -149,6 +149,7 @@
   }
 
   &__contact {
+    @extend .eterea-content-block;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -1,3 +1,4 @@
+@import '../../styles/_base';
 @import '../../styles/variables';
 
 .landing-us {
@@ -8,19 +9,11 @@
   color: #393431;
 
   &__title {
-    font-family: $font-primary;
-    font-size: $font-size-4xl;
-    font-weight: 400;
-    line-height: 1.2;
+    @extend .eterea-title;
   }
 
   &__body {
-    font-size: $body-font-size;
-    line-height: $body-line-height;
-    margin-bottom: $spacing-2xl;
-    max-width: 500px;
-    margin: 0 auto $spacing-2xl;
-    white-space: pre-line;
+    @extend .eterea-body;
   }
 } 
 

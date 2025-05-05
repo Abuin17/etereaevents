@@ -1,3 +1,4 @@
+@import '../../styles/_base';
 @import '../../styles/variables';
 
 .team-section {
@@ -9,6 +10,7 @@
   gap: $spacing-5xl;
 
   &__title {
+    @extend .eterea-title;
     font-family: $font-primary;
     font-weight: 400;
     font-size: $title-size;
@@ -70,13 +72,7 @@
   }
 
   &__description {
-    font-family: $font-secondary;
-    font-size: $body-font-size;
-    line-height: $body-line-height;
-    text-align: center;
-    color: $primary-color;
-    max-width: 800px;
-    margin: 0;
+    @extend .eterea-body;
   }
 
   @media (max-width: $breakpoint-md) {
