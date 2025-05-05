@@ -87,6 +87,12 @@ img {
 .justify-center { justify-content: center; }
 .justify-between { justify-content: space-between; }
 
+.eterea-title, .eterea-body, .eterea-subtitle, h1, h2, h3, h4, h5, h6, p, span, label, .eterea-title-group {
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: manual;
+}
+
 .eterea-title {
   font-family: $font-primary;
   font-weight: 400;
@@ -94,11 +100,8 @@ img {
   line-height: 100%;
   letter-spacing: 0;
   text-align: center;
-  text-transform: uppercase;
   color: $primary-color;
   margin-bottom: $spacing-lg;
-  word-wrap: break-word;
-  hyphens: auto;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
@@ -141,6 +144,12 @@ img {
   .eterea-button {
     margin-top: 2.5rem; // 40px
   }
+}
+
+.eterea-content-block, .eterea-title-group, .eterea-button, .eterea-label, .eterea-link, .eterea-step, .eterea-step-title, .eterea-step-desc, .eterea-step-number, .eterea-card, .eterea-card-title, .eterea-card-body, .eterea-card-footer, .eterea-input, .eterea-textarea, .eterea-caption, .eterea-legend, .eterea-list, .eterea-list-item, .eterea-quote, .eterea-quote-author, .eterea-hero-title, .eterea-hero-subtitle, .eterea-hero-body, .eterea-section-title, .eterea-section-subtitle, .eterea-section-body, .eterea-section-footer, .eterea-section-header, .eterea-section-label, .eterea-section-link, .eterea-section-caption, .eterea-section-legend, .eterea-section-list, .eterea-section-list-item, .eterea-section-quote, .eterea-section-quote-author, .eterea-section-hero-title, .eterea-section-hero-subtitle, .eterea-section-hero-body, .eterea-section-hero-footer, .eterea-section-hero-header, .eterea-section-hero-label, .eterea-section-hero-link, .eterea-section-hero-caption, .eterea-section-hero-legend, .eterea-section-hero-list, .eterea-section-hero-list-item, .eterea-section-hero-quote, .eterea-section-hero-quote-author {
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: manual;
 }
 
 // Convención: Para cualquier combinación de título + subtítulo, usar siempre .eterea-title seguido de .eterea-subtitle, ambos centrados y con un gap de 0.5rem entre ellos. Ejemplo:
