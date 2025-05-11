@@ -6,6 +6,23 @@ import slider3 from '../../assets/images/slider3.png';
 import { Link } from 'react-router-dom';
 
 const images = [rhudoImage, slider2, slider3];
+const projects = [
+  {
+    title: 'FARLABO - MICHELÍN',
+    year: '2023',
+    description: 'Veinticinco aniversario de Michelín en colaboración con Farlabo para el unvealing de su última creación.'
+  },
+  {
+    title: 'VARIANTE 2',
+    year: '2022',
+    description: 'Descripción para la segunda variante del proyecto.'
+  },
+  {
+    title: 'VARIANTE 3',
+    year: '2021',
+    description: 'Descripción para la tercera variante del proyecto.'
+  }
+];
 const FADE_DURATION = 1000; // 1 segundos entre cambios
 
 const EventsInvisible: React.FC = () => {
@@ -56,14 +73,25 @@ const EventsInvisible: React.FC = () => {
         </div>
         
         <div className="events-invisible__project">
+          <div className="events-invisible__project-stack">
+            {projects.map((project, idx) => (
+              <div
+                key={idx}
+                className={`events-invisible__project-info${
+                  idx === activeIndex && !isFading ? ' active' : ''
+                }${idx === nextIndex && isFading ? ' next fade-in' : ''}`}
+              >
           <div className="events-invisible__project-title">
-            FARLABO - MICHELÍN
+                  {project.title}
           </div>
           <div className="events-invisible__project-year">
-            2023
+                  {project.year}
           </div>
           <div className="events-invisible__project-description">
-            Veinticinco aniversario de Michelín en colaboración con Farlabo para el unvealing de su última creación.
+                  {project.description}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -77,7 +105,7 @@ const EventsInvisible: React.FC = () => {
         </div>
 
         <div className="events-invisible__contact eterea-content-block">
-          <div className="events__title eterea-title">Extraordinary begins where perfection stops being enough</div>
+          <div className="events__title eterea-title">EXTRAORDINARY BEGINS WHERE PERFECTION STOPS BEING ENOUGH</div>
           <Link to="/contacto" className="eterea-button eterea-button--auto">Contacto</Link>
         </div>
       </div>

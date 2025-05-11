@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
       <div className={`menu-overlay${isMenuOpen ? ' menu-overlay--open' : ''}`}>
         <div className="menu-overlay__content">
           <div className="menu-overlay__main-items">
-            <Link to="/eventos" className="menu-overlay__item" onClick={closeMenu}>
+            <Link to="/eventos" className="menu-overlay__item eterea-title" onClick={closeMenu}>
               <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
                 <img src={rhombusIcon} alt="" />
               </span>
@@ -79,7 +79,7 @@ const Navbar: React.FC = () => {
                 <img src={rhombusIcon} alt="" />
               </span>
             </Link>
-            <Link to="/vip-assistance" className="menu-overlay__item" onClick={closeMenu}>
+            <Link to="/vip-assistance" className="menu-overlay__item eterea-title" onClick={closeMenu}>
               <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
                 <img src={rhombusIcon} alt="" />
               </span>
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className="menu-overlay__secondary-items">
-            <Link to="/nosotras" className="menu-overlay__item" onClick={closeMenu}>
+            <Link to="/nosotras" className="menu-overlay__item eterea-title" onClick={closeMenu}>
               <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
                 <img src={rhombusIcon} alt="" />
               </span>
@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
                 <img src={rhombusIcon} alt="" />
               </span>
             </Link>
-            <Link to="/contacto" className="menu-overlay__item" onClick={closeMenu}>
+            <Link to="/contacto" className="menu-overlay__item eterea-title" onClick={closeMenu}>
               <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
                 <img src={rhombusIcon} alt="" />
               </span>

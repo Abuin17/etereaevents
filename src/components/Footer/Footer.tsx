@@ -6,7 +6,7 @@ import etereaBgLogoBeigeMedio from '../../assets/logos/ETÉREA_Logo_beige-medio.
 import etereaBgLogoBeigeOro from '../../assets/logos/ETÉREA_Logo_beige-oro.svg';
 
 interface FooterProps {
-  variant?: 'light' | 'dark' | 'contact' | 'gold';
+  variant?: 'light' | 'dark' | 'gold';
 }
 
 const Footer: React.FC<FooterProps> = ({ variant }) => {
@@ -16,8 +16,6 @@ const Footer: React.FC<FooterProps> = ({ variant }) => {
   if (!resolvedVariant) {
     if (location.pathname === '/vip-assistance') {
       resolvedVariant = 'dark';
-    } else if (location.pathname === '/contacto') {
-      resolvedVariant = 'contact';
     } else if (location.pathname === '/eventos') {
       resolvedVariant = 'gold';
     } else {
@@ -32,29 +30,9 @@ const Footer: React.FC<FooterProps> = ({ variant }) => {
     logoSrc = etereaBgLogoGrisMedio;
     logoOpacity = 0.04;
   }
-  if (resolvedVariant === 'contact') {
-    logoSrc = etereaBgLogoBeigeMedio;
-    logoOpacity = 1;
-  }
   if (resolvedVariant === 'gold') {
     logoSrc = etereaBgLogoBeigeOro;
     logoOpacity = 1;
-  }
-
-  // Solo logo para contacto
-  if (resolvedVariant === 'contact') {
-    return (
-      <footer className="footer footer--contact">
-        <div className="footer__background">
-          <img
-            src={logoSrc}
-            alt="Etérea"
-            className="footer__background-logo"
-            style={{ opacity: logoOpacity }}
-          />
-        </div>
-      </footer>
-    );
   }
 
   return (
@@ -76,7 +54,6 @@ const Footer: React.FC<FooterProps> = ({ variant }) => {
             <Link to="/nosotras" className="footer__nav-link">Nosotras</Link>
             <span className="footer__separator">|</span>
             <Link to="/contacto" className="footer__nav-link">Contacto</Link>
-            <span className="footer__separator">|</span>
           </div>
           <div className="footer__nav-line">
             <a href="" className="footer__nav-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -89,9 +66,9 @@ const Footer: React.FC<FooterProps> = ({ variant }) => {
           <div className="footer__info-static">
             <span>2025</span>
             <span className="footer__separator">|</span>
-            <span>Eterea Eventos SL</span>
+            <span>Eterea Events</span>
             <span className="footer__separator">|</span>
-            <span>Calle Dorado, Madrid España</span>
+            <span>Madrid, España</span>
             <span className="footer__separator">|</span>
           </div>
           <div className="footer__info-links">

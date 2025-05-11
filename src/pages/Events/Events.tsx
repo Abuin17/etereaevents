@@ -39,18 +39,14 @@ const Events: React.FC = () => {
         }
       });
 
-      tl.to(imageWrapperRef.current, {
-        width: "100vw",
-        maxWidth: "100vw",
-        ease: "none",
-        duration: 1
-      })
-      .to([leftTextRef.current, rightTextRef.current], {
-        x: 0,
-        scale: (i) => i === 0 ? 0.95 : 0.95,
-        ease: "none",
-        duration: 0.3
-      }, 0);
+      tl.fromTo(imageWrapperRef.current,
+        { width: "90vw", maxWidth: "90vw" },
+        { width: "100vw", maxWidth: "100vw", ease: "none", duration: 1 }
+      )
+      .fromTo([leftTextRef.current, rightTextRef.current],
+        { x: (i) => i === 0 ? -60 : 60 },
+        { x: 0, ease: "none", duration: 0.3 }, 0
+      );
     }, imageContainerRef);
 
     // Limpiar cuando el componente se desmonta
@@ -64,7 +60,7 @@ const Events: React.FC = () => {
   return (
     <div className="events">
       <div className="events__header">
-        <h1 className="events__title">Eventos</h1>
+        <h1 className="events__title">EVENTOS</h1>
         <span className="events__subtitle">profundamente tuyos</span>
       </div>
       <p className="events__description">

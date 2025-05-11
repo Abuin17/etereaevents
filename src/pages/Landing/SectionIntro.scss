@@ -11,3 +11,10 @@
   margin: 3.5rem 0 4.5rem 0;
   white-space: pre-line;
 } 
+
+
+@media (max-width: $breakpoint-sm) {
+  .section-intro {
+    margin: $spacing-xl 0 $spacing-6xl 0;
+  }
+}

@@ -184,4 +184,39 @@
       max-width: calc(100vw - 48px);
     }
   }
+
+  @media (min-width: 1400px) {
+    .landing-slider__slide {
+      width: 708px;
+      min-width: 708px;
+      max-width: 50vw;
+    }
+  }
+}
+
+.landing-slider__intro {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Hedvig Letters Sans', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  color: #393431;
+  width: 100%;
+  max-width: 700px;
+  padding: 0 20px;
+  margin-top: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@media (max-width: $breakpoint-sm) {
+  .landing-slider__intro {
+    font-size: 1.1rem;
+    top: 30px;
+    padding: 0 10px;
+  }
 } 

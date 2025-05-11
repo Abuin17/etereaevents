@@ -4,9 +4,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 60px;
-  background-color: transparent;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   z-index: $z-index-modal;
@@ -28,7 +28,6 @@
     .navbar__menu-icon {
       filter: brightness(0) invert(1);
     }
-
     &.navbar--menu-open {
       .navbar__logo {
         filter: none;
@@ -50,10 +49,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 24px;
     position: relative;
     width: 100%;
-    max-width: 1440px;
+    max-width: none;
     margin: 0 auto;
     box-sizing: border-box;
   }
@@ -65,8 +63,7 @@
   }
 
   &__logo {
-    height: 100%;
-    width: auto;
+    width: 56px;
     object-fit: contain;
   }
 
@@ -87,30 +84,33 @@
 
   &__menu-icon {
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 32px;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    transform: translate(-50%, -50%);
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.12s cubic-bezier(.4,0,.2,1), transform 0.4s cubic-bezier(.4,0,.2,1);
+    transition: opacity 0.18s cubic-bezier(.4,0,.2,1);
     
     &--active {
       opacity: 1;
       pointer-events: auto;
       z-index: 2;
-      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+      transform: translate(-50%, -50%);
     }
     
     &--fadeout {
       opacity: 0;
       pointer-events: none;
       z-index: 1;
-      transform: translate(-50%, -50%) rotate(90deg) scale(0.8);
+      transform: translate(-50%, -50%);
     }
   }
+}
+
+.navbar--vip {
+  background-color: rgba(57, 52, 49, 0.6) !important;
 }
 
 .menu-overlay {
@@ -164,18 +164,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-family: $font-primary;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: 0%;
-    text-align: center;
     color: #393431;
     text-transform: uppercase;
     text-decoration: none;
     position: relative;
-    padding: 12px 24px;
-    margin: 8px 0;
+    padding: 0 24px;
     transition: color 0.3s cubic-bezier(.4,0,.2,1);
     max-width: 300px;
     
@@ -194,9 +187,9 @@
 
   &__rhombus {
     position: absolute;
-    top: 50%;
+    top: 43%;
     transform: translateY(-50%);
-    width: 5px;
+    width: 6px;
     pointer-events: none;
     
     &--left {
@@ -286,6 +279,10 @@
       font-size: 16px;
       line-height: 20px;
       padding: 8px 16px;
+    }
+
+    .menu-overlay__item.eterea-title {
+      margin-bottom: 0.2rem;
     }
   }
 } 

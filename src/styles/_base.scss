@@ -10,7 +10,13 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+  
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none;
+  }
 
 body {
   font-family: $font-primary;
@@ -91,6 +97,8 @@ img {
   word-break: normal;
   overflow-wrap: normal;
   hyphens: manual;
+  text-wrap: balance;
+	text-wrap: pretty;
 }
 
 .eterea-title {
@@ -102,7 +110,7 @@ img {
   text-align: center;
   color: $primary-color;
   margin-bottom: $spacing-lg;
-  max-width: 500px;
+  max-width: 580px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -123,7 +131,7 @@ img {
   font-size: $events-subtitle-size;
   line-height: 100%;
   letter-spacing: 0;
-  text-align: center;
+  text-align: center; 
   color: $primary-color;
 }
 
@@ -143,6 +151,15 @@ img {
 
   .eterea-button {
     margin-top: 2.5rem; // 40px
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    .eterea-button {
+      margin-top: 0;
+    }
+    .eterea-button-top {
+      margin-top: 100px;
+    }
   }
 }
 

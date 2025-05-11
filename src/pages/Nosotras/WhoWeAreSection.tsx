@@ -26,7 +26,7 @@ const WhoWeAreSection: React.FC = () => {
             <h3 className="who-we-are-section__subtitle">¿POR QUÉ CONFIAR?</h3>
             <p className="who-we-are-section__body">
               Nuestro recorrido se mide en confianza. En quienes repiten, en quienes nos recomiendan, 
-              en quienes sienten que no hay otra forma de hacerlo. Llevamos más de quince años trabajando para firmas como Redbull, Michelín, Salvaje, Rhudo.
+              en quienes sienten que no hay otra forma de hacerlo. Llevamos más de quince años trabajando para firmas como Lamborghini, Armany Beauty, Farlabo, Benefit, Snapchat y Redbull.
             </p>
             <img src={rhombusIcon} alt="" className="who-we-are-section__separator" />
           </div>

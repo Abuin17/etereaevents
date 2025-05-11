@@ -9,11 +9,11 @@
   flex-direction: column;
   align-items: center;
   margin-top: auto;
-  padding: 64px 0 48px 0;
+  padding: 64px 0 8px 0;
 
   &__background {
     position: absolute;
-    top: 0;
+    top: 14px;
     left: 0;
     width: 100vw;
     height: 100%;
@@ -25,10 +25,9 @@
   }
 
   &__background-logo {
-    width: 100vw;
-    height: auto;
-    min-height: 180px;
-    max-width: none;
+    width: 100%;
+    max-width: 1920px;
+    height: 2000px;
     opacity: 0.08;
     object-fit: contain;
     display: block;
@@ -77,7 +76,8 @@
     transition: color 0.3s ease;
 
     &:hover {
-      color: lighten($primary-color, 20%);
+      color: $primary-color;
+      text-decoration: underline;
     }
   }
 
@@ -93,7 +93,7 @@
 
       &:hover {
         color: #F7F6F4 !important;
-        opacity: 0.7;
+        text-decoration: underline;
       }
     }
 
@@ -111,7 +111,8 @@
       color: $text-light;
 
       &:hover {
-        opacity: 0.7;
+        color: $primary-color;
+        text-decoration: underline;
       }
     }
   }
@@ -119,7 +120,7 @@
   &__nav {
     width: 100%;
     padding: 0 $spacing-xl;
-    margin: 0 auto;
+    margin-bottom: 140px;
 
     &-links, &-line {
       display: flex;
@@ -142,7 +143,8 @@
       align-items: center;
 
       &:hover {
-        opacity: 0.7;
+        text-decoration: underline;
+        color: $primary-color;
       }
     }
   }
@@ -178,7 +180,8 @@
       align-items: center;
 
       &:hover {
-        opacity: 0.7;
+        color: $primary-color;
+        text-decoration: underline;
       }
     }
   }
@@ -240,7 +243,7 @@
     }
     &__content {
       padding: 0;
-      gap: 5rem;
+      gap: $spacing-xl;
     }
     &__text {
       font-size: $font-size-sm;
@@ -254,7 +257,7 @@
     }
     &__nav-links {
       flex-wrap: wrap;
-      gap: $spacing-md;
+      gap:0;
     }
     &__info {
       flex-wrap: wrap;
@@ -265,22 +268,5 @@
         gap: $spacing-xs;
       }
     }
-  }
-}
-
-.footer--contact {
-  padding: 64px 0 48px 0;
-  min-height: 320px;
-  .footer__background-logo {
-    width: 100vw;
-    height: auto;
-    min-height: 180px;
-    max-width: none;
-    opacity: 1;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-    pointer-events: none;
-    user-select: none;
   }
 }

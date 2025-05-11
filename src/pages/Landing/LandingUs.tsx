@@ -14,7 +14,7 @@ const LandingUs: React.FC = () => {
         no necesita demostrar, sino hacer sentir; de quien sabe que el verdadero lujo
         no se impone, sino que se percibe.
       </p>
-      <Link to="/nosotras" className="eterea-button eterea-button--auto">
+      <Link to="/nosotras" className="eterea-button eterea-button--auto eterea-button-top">
         Nosotras
       </Link>
     </section>

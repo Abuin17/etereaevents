@@ -1,11 +1,12 @@
 import React from 'react';
 import './Contacto.scss';
+import Footer from '../../components/Footer/Footer';
 
 const Contacto: React.FC = () => {
   return (
     <div className="contacto">
       <div className="contacto__main">
-        <section className="section-intro contacto__intro">
+        <section className="section-intro">
           LAS MEJORES EXPERIENCIAS <br />COMIENZAN CON UNA CONVERSACIÓN
         </section>
         <div className="contacto__content">
@@ -20,21 +21,17 @@ const Contacto: React.FC = () => {
               <span className="contacto__separator">|</span>
               <span className="contacto__value">info@etereaevents.com</span>
             </div>
-          </div>
-          <div className="contacto__group contacto__group--social">
-            <div className="contacto__line">
-              <span className="contacto__label">LINKEDIN</span>
-              <span className="contacto__separator">|</span>
-              <span className="contacto__value">Etérea Eventos</span>
-            </div>
             <div className="contacto__line">
               <span className="contacto__label">INSTAGRAM</span>
               <span className="contacto__separator">|</span>
-              <span className="contacto__value">@etereaevents</span>
+              <span className="contacto__value">@eterea.events</span>
             </div>
+          </div>
+          <div className="contacto__group contacto__group--social">
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

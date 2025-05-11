@@ -9,23 +9,15 @@
   flex-direction: column;
   align-items: stretch;
   width: 100%;
-  padding: 0 0 320px 0;
 
   &__main {
-    flex: 1 1 auto;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    min-height: 0;
-    gap: 50px;
     padding: 0;
-  }
-
-  &__intro {
-    @extend .eterea-title;
-    margin: 0 0 32px 0;
   }
 
   &__content {
@@ -34,14 +26,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
+    gap: 16px;
     padding: 0;
+    margin-top: 7rem;
   }
 
   &__group {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 4px;
     width: 100%;
     align-items: center;
     &:last-child {
@@ -82,7 +75,7 @@
   }
 
   &__value {
-    font-family: 'Revans', sans-serif;
+    font-family: $font-secondary;
     font-weight: 400;
     font-size: $font-size-base;
     line-height: 100%;
@@ -91,22 +84,21 @@
     text-transform: uppercase;
     color: #393431;
     vertical-align: middle;
+    padding-bottom: 4px;
+    text-transform: none;
   }
-
 
   &__separator {
     margin: 0;
   }
 
-  // El footer debe ser visible siempre y no encogerse
   .footer {
-    flex-shrink: 0;
+    margin-top: auto;
   }
 
   @media (max-width: 600px) {
     &__main {
-      padding-top: 12rem;
-      padding-bottom: 4px;
+      padding: 8rem 0 4rem 0;
     }
     &__intro {
       margin-bottom: 16px;

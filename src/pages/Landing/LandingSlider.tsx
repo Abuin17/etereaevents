@@ -6,7 +6,7 @@ import './LandingSlider.scss';
 
 import slider1 from '../../assets/images/slider1.jpg';
 import slider2 from '../../assets/images/slider2.jpg';
-import slider3 from '../../assets/images/slider3.png';
+import slider3 from '../../assets/images/EVENTS- VIVIR 1.jpg';
 
 const slides = [slider1, slider2, slider3];
 const SLIDE_HEIGHT = 700; // px
@@ -14,18 +14,21 @@ const SLIDER_SCROLL_LENGTH = slides.length * SLIDE_HEIGHT;
 
 const slideContent = [
   {
+    title: "CONOCER",
+    body: "Cada historia comienza con una conversación. Tomamos tiempo para entender quién eres, qué te inspira y cómo imaginas ese momento especial."
+  },
+  {
     title: "CREAR",
     body: "Desde la idea inicial hasta el último detalle, combinamos estética, emoción y precisión para dar forma a eventos que no se parecen a ningún otro."
   },
   {
-    title: "EXCLUSIVO",
-    body: "Lo que importa no se repite, permanece. Desarrollamos dos celebraciones al año porque lo extraordinario no admite prisas."
-  },
-  {
-    title: "CONOCER",
-    body: "Cada historia comienza con una conversación. Tomamos tiempo para entender quién eres, qué te inspira y cómo imaginas ese momento especial."
+    title: "VIVIR",
+    body: "Aquello que está presente sin necesidad de ser evidente, aquello intangible que evoca la profundidad. Cada instante, a tu medida."
   }
 ];
+
+const POLAROID_MAX_WIDTH = 422;
+const POLAROID_PERCENT = 0.6; // Polaroid ocupa el 60% de la slide
 
 const LandingSlider: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -35,6 +38,22 @@ const LandingSlider: React.FC = () => {
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
+  const [parallaxOffsets, setParallaxOffsets] = useState<number[]>(slides.map(() => 0));
+
+  // Calcula el ancho ideal de la slide para que la polaroid esté centrada
+  function getSlideWidth() {
+    const vw = window.innerWidth;
+    let polaroidWidth = Math.min(POLAROID_MAX_WIDTH, Math.round(vw * 0.6));
+    // El ancho de la slide debe ser igual al ancho del viewport menos el padding lateral
+    let slideWidth = vw - 200; // 100px padding a cada lado
+    // Nunca menor que la polaroid + 2*32px margen
+    if (slideWidth < polaroidWidth + 64) slideWidth = polaroidWidth + 64;
+    return { slideWidth, polaroidWidth };
+  }
+
+  const { slideWidth, polaroidWidth } = getSlideWidth();
+  // padding lateral fijo
+  const sliderSidePadding = 100;
 
   // Inicializar los arrays de refs
   useEffect(() => {
@@ -68,8 +87,9 @@ const LandingSlider: React.FC = () => {
       const rect = scrollEl.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const stickyHeight = stickyEl.offsetHeight;
-      const start = rect.top - windowHeight / 2 + stickyHeight / 2;
-      const end = rect.bottom - windowHeight / 2 - stickyHeight / 2;
+      // Ajuste: el scroll horizontal empieza justo al hacer sticky
+      const start = rect.top - windowHeight / 2; // Quita stickyHeight/2
+      const end = rect.bottom - windowHeight / 2 - stickyHeight; // Quita stickyHeight/2
       const total = end - start;
       const scrolled = Math.min(Math.max(-start, 0), total);
       const progress = total > 0 ? scrolled / total : 0;
@@ -77,6 +97,14 @@ const LandingSlider: React.FC = () => {
       // Calcular el scroll horizontal objetivo
       const maxScrollLeft = sliderEl.scrollWidth - sliderEl.clientWidth;
       const targetScrollLeft = progress * maxScrollLeft;
+
+      // Parallax: calcula el offset para cada slide
+      const newParallaxOffsets = slides.map((_, idx) => {
+        // El parallax depende de la posición de la slide y el progreso
+        // Puedes ajustar el factor (ej: 40px) para más/menos efecto
+        return (progress - idx) * 40;
+      });
+      setParallaxOffsets(newParallaxOffsets);
 
       // GSAP para suavidad
       gsap.to(sliderEl, {
@@ -90,17 +118,14 @@ const LandingSlider: React.FC = () => {
             if (slideRef && textRefs.current[index]) {
               const slideRect = slideRef.getBoundingClientRect();
               const sliderRect = sliderEl.getBoundingClientRect();
-              
               // Calcular qué tan centrada está la slide
               const slideCenter = slideRect.left + (slideRect.width / 2);
               const sliderCenter = sliderRect.left + (sliderRect.width / 2);
               const distanceFromCenter = Math.abs(slideCenter - sliderCenter);
               const maxDistance = slideRect.width * 0.5;
-              
               // Calcular opacidad basada en la distancia al centro
               let opacity = 1 - (distanceFromCenter / maxDistance);
               opacity = Math.max(0, Math.min(1, opacity));
-
               // Aplicar opacidad al texto correspondiente
               gsap.set(textRefs.current[index], {
                 opacity: opacity
@@ -150,7 +175,8 @@ const LandingSlider: React.FC = () => {
         ref={stickyRef}
         style={{
           position: 'sticky',
-          top: 0,
+          top: '50%',
+          transform: 'translateY(-50%)',
           height: `${SLIDE_HEIGHT}px`,
           display: 'flex',
           flexDirection: 'column',
@@ -160,6 +186,8 @@ const LandingSlider: React.FC = () => {
           zIndex: 2,
         }}
       >
+        {/* Slider Intro Text */}
+        <div className="landing-slider__intro">IT'S ALL ABOUT DETAILS</div>
         <div
           ref={sliderRef}
           className="landing-slider__custom-track"
@@ -172,7 +200,7 @@ const LandingSlider: React.FC = () => {
             height: '100%',
             gap: '16px',
             boxSizing: 'border-box',
-            padding: isPortrait ? '0 24px' : '0 100px',
+            padding: isPortrait ? '0 24px' : `0 100px`,
             alignItems: 'center',
             justifyContent: 'flex-start',
           }}
@@ -185,12 +213,13 @@ const LandingSlider: React.FC = () => {
               }}
               className="landing-slider__slide"
               style={{
-                minWidth: isPortrait ? 'calc(100vw - 48px)' : '1062px',
+                minWidth: isPortrait ? 'calc(100vw - 48px)' : `${slideWidth}px`,
+                width: isPortrait ? 'calc(100vw - 48px)' : `${slideWidth}px`,
                 height: '506px',
                 scrollSnapAlign: 'center',
                 backgroundImage: `url(${img})`,
                 backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                backgroundPosition: `calc(50% + ${parallaxOffsets[idx] || 0}px) center`,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -207,7 +236,7 @@ const LandingSlider: React.FC = () => {
           display: 'flex', 
           flexDirection: 'column', 
           alignItems: 'center',
-          width: isPortrait ? '80%' : '422px',
+          width: isPortrait ? '80%' : `${polaroidWidth}px`,
           maxWidth: '422px'
         }}>
           <div className="landing-slider__polaroid-window" style={{ 

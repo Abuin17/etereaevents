@@ -12,3 +12,9 @@
   padding-bottom: 4.5rem;
   white-space: pre-line;
 } 
+
+@media (max-width: $breakpoint-sm) {
+  .pre-footer {
+    margin: 7rem 0 0 0;
+  }
+}

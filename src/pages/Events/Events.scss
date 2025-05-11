@@ -46,7 +46,7 @@
 
   &__image-container {
     width: 100%;
-    height: 80vh;
+    height: 100vh;
     position: relative;
     overflow: visible;
     margin: $spacing-2xl 0;
@@ -56,18 +56,21 @@
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%;
-    max-width: 900px;
+    width: 90vw;
+    max-width: 90vw;
+    height: 70vh;
+    overflow: visible;
     display: flex;
     justify-content: center;
     will-change: width, max-width;
+    z-index: 1;
   }
 
   &__image {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 80vh;
+    width: 100vw;
+    height: 70vh;
+    object-fit: cover;
+    z-index: 1;
   }
 
   @media (min-width: 1100px) {
@@ -85,7 +88,7 @@
     line-height: $body-line-height;
     color: $secondary-color;
     text-transform: uppercase;
-    z-index: 1;
+    z-index: 10;
     white-space: nowrap;
     will-change: transform;
     bottom: -0.5rem;

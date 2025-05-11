@@ -3,7 +3,8 @@
 
 .landing-us {
   font-family: $font-secondary;
-  margin-top: 350px;
+  margin-top: 100px;
+  margin-bottom: 400px;
   padding: 0 20px;
   text-align: center;
   color: #393431;
@@ -19,6 +20,12 @@
 
 @media (max-width: $breakpoint-sm) {
   .landing-us {
-    margin-top: 100px;
+    margin-top: 0;
+  }
+  .landing-us__eterea-content-block {
+    margin-top: 0 !important;
+  }
+  .landing-us__eterea-button {
+    margin-top: 0 !important;
   }
 }

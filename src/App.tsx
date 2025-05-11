@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import './styles/main.scss';
 import Navbar from './components/Navbar/Navbar';
@@ -14,11 +14,11 @@ import Contacto from './pages/Contacto/Contacto';
 // Importar otras páginas aquí...
 
 const routesConfig = [
-  { path: '/', element: <Landing /> },
-  { path: '/eventos', element: <Events /> },
-  { path: '/nosotras', element: <Nosotras /> },
-  { path: '/vip-assistance', element: <VipAssistance /> },
-  { path: '/contacto', element: <Contacto /> },
+  { path: '/', element: <Landing />, bg: '#F7F6F4' },
+  { path: '/eventos', element: <Events />, bg: '#EFECE7' },
+  { path: '/nosotras', element: <Nosotras />, bg: '#F7F6F4' },
+  { path: '/vip-assistance', element: <VipAssistance />, bg: '#393431' },
+  { path: '/contacto', element: <Contacto />, bg: '#F7F6F4' },
   // Agregar otras rutas aquí
 ];
 
@@ -27,43 +27,107 @@ const PageTransitionManager: React.FC = () => {
   const [displayedLocation, setDisplayedLocation] = useState(location);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [pendingLocation, setPendingLocation] = useState(null as null | typeof location);
+  const [prevBg, setPrevBg] = useState('#F7F6F4');
+  const [nextBg, setNextBg] = useState('#F7F6F4');
+  const [showBgFade, setShowBgFade] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const bgFadeTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const currentRoute = routesConfig.find(r => r.path === displayedLocation.pathname);
+    setPrevBg(currentRoute?.bg || '#F7F6F4');
+  }, [displayedLocation]);
 
   useEffect(() => {
     if (location !== displayedLocation) {
       setIsFadingOut(true);
       setPendingLocation(location);
+      const nextRoute = routesConfig.find(r => r.path === location.pathname);
+      setNextBg(nextRoute?.bg || '#F7F6F4');
+      setShowBgFade(true);
       document.body.classList.add('body--no-scroll');
     }
-    // eslint-disable-next-line
-  }, [location]);
+  }, [location, displayedLocation]);
 
   const handleFadeOutComplete = () => {
+    setIsTransitioning(true); // Hide content
+    setShowOverlay(true); // Show overlay
+    setTimeout(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
     setDisplayedLocation(pendingLocation!);
     setIsFadingOut(false);
     setPendingLocation(null);
+      setTimeout(() => {
+        setIsTransitioning(false); // Show new content
+        setShowOverlay(false); // Hide overlay
+      }, 100); // Small delay to ensure overlay covers during scroll
     document.body.classList.remove('body--no-scroll');
+      // Hide bg fade after a short delay to allow crossfade
+      if (bgFadeTimeout.current) clearTimeout(bgFadeTimeout.current);
+      bgFadeTimeout.current = setTimeout(() => setShowBgFade(false), 500);
+    }, 10); // Small delay to ensure content is hidden before scroll
   };
 
-  // Encuentra el elemento de la ruta actual
   const currentRoute = routesConfig.find(r => r.path === displayedLocation.pathname);
 
   return (
+    <>
+      {/* Crossfade background layer */}
+      <AnimatePresence>
+        {showBgFade && (
+          <motion.div
+            key={nextBg}
+            initial={{ opacity: 0, background: prevBg }}
+            animate={{ opacity: 1, background: nextBg }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              zIndex: 0,
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+      </AnimatePresence>
+      {/* Overlay that covers everything during scroll to top */}
+      {showOverlay && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: nextBg,
+            zIndex: 9999,
+            pointerEvents: 'auto',
+            transition: 'background 0.3s',
+          }}
+        />
+      )}
     <AnimatePresence mode="wait">
+        {!isTransitioning && (
       <motion.div
         key={displayedLocation.pathname}
-        initial={{ opacity: 1 }}
-        animate={{ opacity: isFadingOut ? 0 : 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: isFadingOut ? 0 : 1, y: isFadingOut ? -40 : 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         onAnimationComplete={() => {
           if (isFadingOut) handleFadeOutComplete();
         }}
-        style={{ minHeight: '100vh' }}
+            style={{ minHeight: '100vh', position: 'relative', zIndex: 1 }}
       >
         {currentRoute ? currentRoute.element : null}
       </motion.div>
+        )}
     </AnimatePresence>
+    </>
   );
 };
 
@@ -74,13 +138,16 @@ document.head.insertAdjacentHTML(
 );
 
 const AppContent: React.FC = () => {
+  const location = useLocation();
+  const isContactPage = location.pathname === '/contacto';
+
   return (
     <div className="app">
       <Navbar />
       <main className="app__main">
         <PageTransitionManager />
       </main>
-      <Footer />
+      {!isContactPage && <Footer />}
     </div>
   );
 };

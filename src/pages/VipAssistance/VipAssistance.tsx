@@ -35,18 +35,10 @@ const VipAssistance: React.FC = () => {
       }
     });
 
-    tl.to(imageWrapperRef.current, {
-      width: "100vw",
-      maxWidth: "100vw",
-      ease: "none",
-      duration: 1
-    })
-    .to([bottomTextRef.current, quoteTextRef.current], {
-      x: 0,
-      scale: 0.95,
-      ease: "none",
-      duration: 0.3
-    }, 0);
+    tl.fromTo(imageWrapperRef.current,
+      { width: "90vw", maxWidth: "90vw" },
+      { width: "100vw", maxWidth: "100vw", ease: "none", duration: 1 }
+    );
 
     return () => {
       document.documentElement.style.setProperty('--page-background', '#F7F6F4');
@@ -75,6 +67,7 @@ const VipAssistance: React.FC = () => {
             alt="VIP Assistance" 
             className="vip-assistance__image"
           />
+        </div>
           <div 
             className="vip-assistance__image-text vip-assistance__image-text--bottom"
             ref={bottomTextRef}
@@ -84,7 +77,6 @@ const VipAssistance: React.FC = () => {
             IT'S ABOUT ACCESS
           </div>
         </div>
-      </div>
       <section className="vip-assistance__contact eterea-content-block">
         <h2 className="vip-assistance__title">IT'S NOT JUST WHERE YOU GO.<br />
         IT'S WHO BRINGS YOU THERE.</h2>

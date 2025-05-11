@@ -23,7 +23,7 @@
   }
 
   &__icon {
-    width: 3.1875rem;
+    width: 66px;
     object-fit: contain;
     align-self: center;
 
@@ -90,9 +90,9 @@
   }
 
   &__separator {
-    width: 5px;
+    width: 8px;
     height: auto;
-    margin-top: $spacing-lg;
+    margin-top: $spacing-2xl;
   }
 
   @media (max-width: $breakpoint-md) {

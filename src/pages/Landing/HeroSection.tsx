@@ -1,13 +1,20 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './HeroSection.scss';
-import heroImage from '../../assets/images/carrusel-landing.jpg';
+import heroImage1 from '../../assets/images/wedding.jpg';
+import heroImage2 from '../../assets/images/home3.jpg';
+import heroImage3 from '../../assets/images/carrusel-landing.jpg';
 import etereaLogo from '../../assets/logos/ETÉREA_Logo_beige-claro.svg';
 
-const MARQUEE_ITEMS = 6; // Número de repeticiones
+const MARQUEE_ITEMS = 6;
+const SLIDE_INTERVAL = 8000; // 5 segundos
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const images = [heroImage1, heroImage2, heroImage3];
 
   useEffect(() => {
     const handleResize = () => {
@@ -17,10 +24,18 @@ const HeroSection: React.FC = () => {
     const handleScroll = () => {
       if (sectionRef.current && !isPortrait) {
         const scrollY = window.scrollY;
-        // Parallax: mueve el fondo más lento que el scroll
         sectionRef.current.style.backgroundPositionY = `${scrollY * 0.4}px`;
       }
     };
+
+    // Carrusel automático
+    const carouselInterval = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setIsTransitioning(false);
+      }, 1000); // Duración del fade
+    }, SLIDE_INTERVAL);
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
@@ -28,8 +43,9 @@ const HeroSection: React.FC = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
+      clearInterval(carouselInterval);
     };
-  }, [isPortrait]);
+  }, [isPortrait, images.length]);
 
   const items = Array.from({ length: MARQUEE_ITEMS }).map((_, i) => (
     <div className="hero-section__item" key={i}>
@@ -44,8 +60,19 @@ const HeroSection: React.FC = () => {
     <section
       className={`hero-section ${isPortrait ? 'hero-section--portrait' : ''}`}
       ref={sectionRef}
-      style={{ backgroundImage: `url(${heroImage})` }}
     >
+      <div className="hero-section__background">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`hero-section__background-image ${
+              index === currentImageIndex ? 'hero-section__background-image--active' : ''
+            } ${isTransitioning ? 'hero-section__background-image--transitioning' : ''}`}
+            style={{ backgroundImage: `url(${image})` }}
+          />
+        ))}
+      </div>
+
       {isPortrait ? (
         <div className="hero-section__static">
           <img src={etereaLogo} alt="Eterea Logo" className="hero-section__logo" />

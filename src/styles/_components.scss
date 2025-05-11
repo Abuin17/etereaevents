@@ -4,7 +4,7 @@
 .eterea-button {
   font-family: $font-primary;
   font-weight: 400;
-  font-size: $body-font-size;
+  font-size: $font-size-lg;
   line-height: 1;
   letter-spacing: 0;
   text-align: center;
@@ -13,12 +13,11 @@
   background: #fff;
   border: none;
   border-radius: 0;
-  padding: 0.5rem 2rem;
+  padding: 0.7rem 2rem 0.5rem 2rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   transition: all 0.25s cubic-bezier(.4,0,.2,1);
   position: relative;
   overflow: hidden;
