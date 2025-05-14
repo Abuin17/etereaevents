@@ -28,7 +28,6 @@ const slideContent = [
 ];
 
 const POLAROID_MAX_WIDTH = 422;
-const POLAROID_PERCENT = 0.6; // Polaroid ocupa el 60% de la slide
 
 const LandingSlider: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -52,8 +51,6 @@ const LandingSlider: React.FC = () => {
   }
 
   const { slideWidth, polaroidWidth } = getSlideWidth();
-  // padding lateral fijo
-  const sliderSidePadding = 100;
 
   // Inicializar los arrays de refs
   useEffect(() => {

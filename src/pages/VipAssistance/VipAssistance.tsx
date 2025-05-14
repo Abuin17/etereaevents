@@ -11,7 +11,6 @@ const VipAssistance: React.FC = () => {
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const bottomTextRef = useRef<HTMLDivElement>(null);
-  const quoteTextRef = useRef<HTMLDivElement>(null);
   const [isPortrait, setIsPortrait] = useState(false);
 
   useEffect(() => {
