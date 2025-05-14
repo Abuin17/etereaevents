@@ -6,13 +6,11 @@ import heroImage3 from '../../assets/images/Landing sabana.jpg';
 import etereaLogo from '../../assets/logos/ETÉREA_Logo_beige-claro.svg';
 
 const MARQUEE_ITEMS = 6;
-const SLIDE_INTERVAL = 8000; // 8 segundos
+// const SLIDE_INTERVAL = 8000; // 8 segundos
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // const images = [heroImage1, heroImage2, heroImage3];
   const images = [heroImage3]; // Solo la imagen de la sabana
@@ -66,9 +64,7 @@ const HeroSection: React.FC = () => {
         {images.map((image, index) => (
           <div
             key={index}
-            className={`hero-section__background-image ${
-              index === currentImageIndex ? 'hero-section__background-image--active' : ''
-            } ${isTransitioning ? 'hero-section__background-image--transitioning' : ''}`}
+            className={`hero-section__background-image hero-section__background-image--active`}
             style={{ backgroundImage: `url(${image})` }}
           />
         ))}
