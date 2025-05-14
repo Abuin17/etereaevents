@@ -13,7 +13,7 @@ const Events: React.FC = () => {
   const imageWrapperRef = useRef<HTMLDivElement>(null);
   const leftTextRef = useRef<HTMLDivElement>(null);
   const rightTextRef = useRef<HTMLDivElement>(null);
-  const [isPortrait, setIsPortrait] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
 
   useEffect(() => {
     const checkOrientation = () => {
@@ -26,9 +26,9 @@ const Events: React.FC = () => {
     // Establecer el color de fondo cuando el componente se monta
     document.documentElement.style.setProperty('--page-background', '#EFECE7');
 
-    // Configurar la animación de scroll
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
+    let tl: gsap.core.Timeline | null = null;
+    if (!isPortrait) {
+      tl = gsap.timeline({
         scrollTrigger: {
           trigger: "body",
           start: "top top",
@@ -38,7 +38,6 @@ const Events: React.FC = () => {
           pinSpacing: false
         }
       });
-
       tl.fromTo(imageWrapperRef.current,
         { width: "90vw", maxWidth: "90vw" },
         { width: "100vw", maxWidth: "100vw", ease: "none", duration: 1 }
@@ -47,15 +46,15 @@ const Events: React.FC = () => {
         { x: (i) => i === 0 ? -60 : 60 },
         { x: 0, ease: "none", duration: 0.3 }, 0
       );
-    }, imageContainerRef);
+    }
 
     // Limpiar cuando el componente se desmonta
     return () => {
       document.documentElement.style.setProperty('--page-background', '#F7F6F4');
-      ctx.revert();
       window.removeEventListener('resize', checkOrientation);
+      if (tl) tl.kill();
     };
-  }, []);
+  }, [isPortrait]);
 
   return (
     <div className="events">
@@ -71,7 +70,7 @@ const Events: React.FC = () => {
         <div 
           className="events__image-wrapper" 
           ref={imageWrapperRef}
-          style={isPortrait ? { width: '80%', maxWidth: '80%' } : undefined}
+          style={isPortrait ? { width: '96vw', maxWidth: '96vw' } : undefined}
         >
           <img 
             src={eventsImage} 
@@ -81,6 +80,7 @@ const Events: React.FC = () => {
           <div 
             className="events__image-text events__image-text--left"
             ref={leftTextRef}
+            style={isPortrait ? { left: 0, right: 'auto', paddingLeft: 16, paddingRight: 0, width: 'auto', boxSizing: 'border-box' } : undefined}
           >
             SOIRÉE PRIVÉE<br />
             Chamartín
@@ -88,6 +88,7 @@ const Events: React.FC = () => {
           <div 
             className="events__image-text events__image-text--right"
             ref={rightTextRef}
+            style={isPortrait ? { right: 0, left: 'auto', paddingRight: 16, paddingLeft: 0, width: 'auto', boxSizing: 'border-box' } : undefined}
           >
             NATURA BISÉE
           </div>

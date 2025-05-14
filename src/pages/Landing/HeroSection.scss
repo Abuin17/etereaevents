@@ -109,7 +109,7 @@
 
   // Versión portrait (móvil)
   &--portrait {
-    height: 80vh;
+    height: 80dvh;
 
     .hero-section__static {
       width: 100%;
@@ -141,11 +141,11 @@
 @media (max-width: $breakpoint-sm) {
   .hero-section {
     &--portrait {
+      height: 80dvh;
       .hero-section__logo {
         width: 70%;
         max-width: 800px;
       }
-
       .hero-section__text {
         font-size: $font-size-sm;
         height: 0;

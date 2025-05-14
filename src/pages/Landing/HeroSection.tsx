@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './HeroSection.scss';
-import heroImage1 from '../../assets/images/wedding.jpg';
-import heroImage2 from '../../assets/images/home3.jpg';
+// import heroImage1 from '../../assets/images/wedding.jpg';
+// import heroImage2 from '../../assets/images/home3.jpg';
 import heroImage3 from '../../assets/images/Landing sabana.jpg';
 import etereaLogo from '../../assets/logos/ETÉREA_Logo_beige-claro.svg';
 
 const MARQUEE_ITEMS = 6;
-const SLIDE_INTERVAL = 8000; // 5 segundos
+const SLIDE_INTERVAL = 8000; // 8 segundos
 
 const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -14,7 +14,8 @@ const HeroSection: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const images = [heroImage1, heroImage2, heroImage3];
+  // const images = [heroImage1, heroImage2, heroImage3];
+  const images = [heroImage3]; // Solo la imagen de la sabana
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,13 +30,13 @@ const HeroSection: React.FC = () => {
     };
 
     // Carrusel automático
-    const carouselInterval = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-        setIsTransitioning(false);
-      }, 1000); // Duración del fade
-    }, SLIDE_INTERVAL);
+    // const carouselInterval = setInterval(() => {
+    //   setIsTransitioning(true);
+    //   setTimeout(() => {
+    //     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    //     setIsTransitioning(false);
+    //   }, 1000); // Duración del fade
+    // }, SLIDE_INTERVAL);
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
@@ -43,9 +44,9 @@ const HeroSection: React.FC = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
-      clearInterval(carouselInterval);
+      // clearInterval(carouselInterval);
     };
-  }, [isPortrait, images.length]);
+  }, [isPortrait]);
 
   const items = Array.from({ length: MARQUEE_ITEMS }).map((_, i) => (
     <div className="hero-section__item" key={i}>

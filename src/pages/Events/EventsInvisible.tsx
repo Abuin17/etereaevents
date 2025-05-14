@@ -23,12 +23,13 @@ const projects = [
     description: 'Descripción para la tercera variante del proyecto.'
   }
 ];
-const FADE_DURATION = 1000; // 1 segundos entre cambios
+const FADE_DURATION = 10000; // 10 segundos entre cambios
 
 const EventsInvisible: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
   const [isFading, setIsFading] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
 
   const transition = useCallback(() => {
     setIsFading(true);
@@ -46,6 +47,12 @@ const EventsInvisible: React.FC = () => {
     return () => clearInterval(interval);
   }, [transition]);
 
+  useEffect(() => {
+    const handleResize = () => setIsPortrait(window.innerWidth < window.innerHeight);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <section className="events-invisible">
       <div className="events-invisible__container">
@@ -59,7 +66,9 @@ const EventsInvisible: React.FC = () => {
       </div>
 
       <div className="events-invisible__showcase">
-        <div className="events-invisible__slider">
+        <div className="events-invisible__slider"
+          style={isPortrait ? { width: '96vw', maxWidth: '96vw' } : undefined}
+        >
           {images.map((image, index) => (
             <div
               key={index}
