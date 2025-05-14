@@ -140,8 +140,16 @@
     }
 
     &__image-container {
-      height: 40vh;
+      height: 560px;
       min-height: 300px;
+    }
+
+    &__image-wrapper {
+      height: 560px;
+    }
+
+    &__image {
+      height: 560px;
     }
   }
 } 

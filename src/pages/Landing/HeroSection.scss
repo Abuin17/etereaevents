@@ -140,8 +140,9 @@
 // Media queries adicionales para ajustes finos en diferentes tamaños de móvil
 @media (max-width: $breakpoint-sm) {
   .hero-section {
+    height: 570px;
     &--portrait {
-      height: 80dvh;
+      height: 570px;
       .hero-section__logo {
         width: 70%;
         max-width: 800px;
