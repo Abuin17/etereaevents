@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import './HeroSection.scss';
 import heroImage1 from '../../assets/images/wedding.jpg';
 import heroImage2 from '../../assets/images/home3.jpg';
-import heroImage3 from '../../assets/images/carrusel-landing.jpg';
+import heroImage3 from '../../assets/images/Landing sabana.jpg';
 import etereaLogo from '../../assets/logos/ETÉREA_Logo_beige-claro.svg';
 
 const MARQUEE_ITEMS = 6;
