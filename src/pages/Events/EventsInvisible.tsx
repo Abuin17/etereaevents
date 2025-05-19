@@ -10,17 +10,17 @@ const projects = [
   {
     title: 'SHOWRUN REDBULL x CHECO PÉREZ - MADRID',
     year: '2023',
-    // description: 'Veinticinco aniversario de Michelín en colaboración con Farlabo para el unvealing de su última creación.'//
+    description: ''
   },
   {
     title: 'FARLABO CHRISTMAS PARTY - LISBOA',
     year: '2024',
-    // description: 'Descripción para la segunda variante del proyecto.'//
+    description: ''
   },
   {
     title: 'ENCUENTRO "WELOVEBRANDS" DE VEEPEE CON SUS PRINCIPALES PARTNERS - MILÁN',
     year: '2024',
-    // description: 'Descripción para la tercera variante del proyecto.'//
+    description: ''
   }
 ];
 const FADE_DURATION = 8000; // 8 segundos entre cambios
