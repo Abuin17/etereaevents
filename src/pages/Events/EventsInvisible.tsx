@@ -1,29 +1,29 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './EventsInvisible.scss';
-import rhudoImage from '../../assets/images/RHUDO_001 1.jpg';
-import slider2 from '../../assets/images/slider2.jpg';
+import redbullImage from '../../assets/images/redbull.jpeg';
+import torreCavaImage from '../../assets/images/torre cava.jpeg';
 import slider3 from '../../assets/images/slider3.png';
 import { Link } from 'react-router-dom';
 
-const images = [rhudoImage, slider2, slider3];
+const images = [redbullImage, torreCavaImage, slider3];
 const projects = [
   {
-    title: 'FARLABO - MICHELÍN',
+    title: 'SHOWRUN REDBULL x CHECO PÉREZ - MADRID',
     year: '2023',
-    description: 'Veinticinco aniversario de Michelín en colaboración con Farlabo para el unvealing de su última creación.'
+    // description: 'Veinticinco aniversario de Michelín en colaboración con Farlabo para el unvealing de su última creación.'//
   },
   {
-    title: 'VARIANTE 2',
-    year: '2022',
-    description: 'Descripción para la segunda variante del proyecto.'
+    title: 'FARLABO CHRISTMAS PARTY - LISBOA',
+    year: '2024',
+    // description: 'Descripción para la segunda variante del proyecto.'//
   },
   {
-    title: 'VARIANTE 3',
-    year: '2021',
-    description: 'Descripción para la tercera variante del proyecto.'
+    title: 'ENCUENTRO "WELOVEBRANDS" DE VEEPEE CON SUS PRINCIPALES PARTNERS - MILÁN',
+    year: '2024',
+    // description: 'Descripción para la tercera variante del proyecto.'//
   }
 ];
-const FADE_DURATION = 10000; // 10 segundos entre cambios
+const FADE_DURATION = 8000; // 8 segundos entre cambios
 
 const EventsInvisible: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
