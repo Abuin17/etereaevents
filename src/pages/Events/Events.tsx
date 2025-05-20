@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Events.scss';
-import eventsImage from '../../assets/images/events.jpg';
+import eventsImage from '../../assets/images/opt-events-hero.jpg';
 import EventsInvisible from './EventsInvisible';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './VipAssistance.scss';
-import vipImage from '../../assets/images/vip.jpg';
+import vipImage from '../../assets/images/opt-hero-vip.jpg';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
@@ -26,15 +26,15 @@ const VipAssistance: React.FC = () => {
     let tl: gsap.core.Timeline | null = null;
     if (!isPortrait) {
       tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: "body",
-          start: "top top",
-          end: "+=50%",
-          scrub: 1,
-          pin: false,
-          pinSpacing: false
-        }
-      });
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "+=50%",
+        scrub: 1,
+        pin: false,
+        pinSpacing: false
+      }
+    });
       tl.fromTo(imageWrapperRef.current,
         { width: "90vw", maxWidth: "90vw" },
         { width: "100vw", maxWidth: "100vw", ease: "none", duration: 1 }

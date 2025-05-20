@@ -4,9 +4,9 @@ import ScrollToPlugin from 'gsap/ScrollToPlugin';
 gsap.registerPlugin(ScrollToPlugin);
 import './LandingSlider.scss';
 
-import slider1 from '../../assets/images/slider1.jpg';
-import slider2 from '../../assets/images/slider2.jpg';
-import slider3 from '../../assets/images/EVENTS- VIVIR 1.jpg';
+import slider1 from '../../assets/images/opt-slider-conocer.jpg';
+import slider2 from '../../assets/images/opt-slider-crear.jpg';
+import slider3 from '../../assets/images/opt-slider-vivir.jpg';
 
 const slides = [slider1, slider2, slider3];
 const SLIDE_HEIGHT = 700; // px

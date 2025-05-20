@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import './EventsInvisible.scss';
-import redbullImage from '../../assets/images/redbull.jpeg';
-import torreCavaImage from '../../assets/images/torre cava.jpeg';
-import slider3 from '../../assets/images/slider3.png';
+import redbullImage from '../../assets/images/opt-redbull.jpg';
+import pianoChristmasImage from '../../assets/images/opt-piano christmas.jpg';
+import torreCavaImage from '../../assets/images/opt-torre-cava.jpg';
 import { Link } from 'react-router-dom';
 
-const images = [redbullImage, torreCavaImage, slider3];
+const images = [redbullImage, pianoChristmasImage, torreCavaImage];
 const projects = [
   {
     title: 'SHOWRUN REDBULL x CHECO PÉREZ - MADRID',
@@ -23,7 +23,7 @@ const projects = [
     description: ''
   }
 ];
-const FADE_DURATION = 8000; // 8 segundos entre cambios
+const FADE_DURATION = 3000; // 3 segundos entre cambios
 
 const EventsInvisible: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);

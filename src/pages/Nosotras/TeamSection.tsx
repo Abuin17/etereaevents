@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './TeamSection.scss';
-import nataliaImage from '../../assets/images/natalia.jpg';
-import virginiaImage from '../../assets/images/virginia.jpg';
+import nataliaImage from '../../assets/images/opt-natalia.jpg';
+import virginiaImage from '../../assets/images/opt-virginia.jpg';
 
 const TeamSection: React.FC = () => {
   const nataliaMemberRef = useRef<HTMLDivElement>(null);

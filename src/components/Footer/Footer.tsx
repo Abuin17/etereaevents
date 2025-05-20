@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Footer.scss';
-import etereaBgLogoGrisMedio from '../../assets/logos/ETÉREA_Logo_gris-medio.svg';
-import etereaBgLogoBeigeMedio from '../../assets/logos/ETÉREA_Logo_beige-medio.svg';
-import etereaBgLogoBeigeOro from '../../assets/logos/ETÉREA_Logo_beige-oro.svg';
+import etereaBgLogoGrisMedio from '../../assets/logos/SIN_grisETÉREA_LOGO.svg';
+import etereaBgLogoBeigeMedio from '../../assets/logos/SIN_beige-medioETÉREA_LOGO.svg';
+import etereaBgLogoBeigeOro from '../../assets/logos/SIN_beige-oroETÉREA_LOGO.svg';
 
 interface FooterProps {
   variant?: 'light' | 'dark' | 'gold';
