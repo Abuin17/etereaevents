@@ -53,12 +53,60 @@ const BusinessCard: React.FC = () => {
       return;
     }
 
-    // Solo actualizar el título de la página para navegadores normales
-    // Los meta tags Open Graph se manejan por la Edge Function para bots
-    document.title = `${member.fullName} - ${member.role} | ETÉREA EVENTS`;
+    // Actualizar meta tags dinámicamente
+    const updateMetaTags = () => {
+      const title = `${member.fullName} - ${member.role} | ETÉREA EVENTS`;
+      const description = `Conecta con ${member.fullName} de ETÉREA EVENTS. ${member.role} especializada en eventos de lujo y experiencias únicas.`;
+      const imageUrl = member.image; // Usar la URL importada directamente
+      const pageUrl = `${window.location.origin}/card/${member.id}`;
+
+      // Actualizar título
+      document.title = title;
+
+      // Open Graph
+      updateMetaTag('og:title', title);
+      updateMetaTag('og:description', description);
+      updateMetaTag('og:type', 'website');
+      updateMetaTag('og:url', pageUrl);
+      updateMetaTag('og:image', imageUrl);
+      updateMetaTag('og:image:width', '1200');
+      updateMetaTag('og:image:height', '630');
+      updateMetaTag('og:image:type', 'image/jpeg');
+      updateMetaTag('og:site_name', 'ETÉREA EVENTS');
+
+      // Twitter Cards
+      updateMetaTag('twitter:card', 'summary_large_image');
+      updateMetaTag('twitter:title', title);
+      updateMetaTag('twitter:description', description);
+      updateMetaTag('twitter:image', imageUrl);
+
+      // Robots
+      updateMetaTag('robots', 'noindex, nofollow');
+      
+      // Otros meta tags útiles
+      updateMetaTag('author', member.fullName);
+      updateMetaTag('theme-color', '#393431');
+    };
+
+    updateMetaTags();
   }, [member, navigate]);
 
-
+  const updateMetaTag = (property: string, content: string) => {
+    let meta = document.querySelector(`meta[property="${property}"]`) || 
+               document.querySelector(`meta[name="${property}"]`);
+    
+    if (!meta) {
+      meta = document.createElement('meta');
+      if (property.startsWith('og:')) {
+        meta.setAttribute('property', property);
+      } else {
+        meta.setAttribute('name', property);
+      }
+      document.head.appendChild(meta);
+    }
+    
+    meta.setAttribute('content', content);
+  };
 
   const handleCall = () => {
     window.location.href = `tel:${member?.phone}`;
