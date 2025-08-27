@@ -3,7 +3,7 @@
 
 .business-card {
   min-height: 100dvh;
-  background: linear-gradient(135deg, #F7F6F4 0%, #EFECE7 100%);
+  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,11 +15,8 @@
 
   &__container {
     background: #FFFFFF;
-    border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(57, 52, 49, 0.1);
-    overflow: hidden;
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
@@ -31,9 +28,8 @@
   }
 
   &__header {
-    padding: 2rem 2rem 1rem;
+    padding: 1.5rem 0 1rem;
     text-align: center;
-    border-bottom: 1px solid rgba(57, 52, 49, 0.1);
   }
 
   &__logo-button {
@@ -41,13 +37,11 @@
     border: none;
     cursor: pointer;
     padding: 0.5rem;
-    border-radius: 8px;
     transition: all 0.2s ease;
     
     &:hover,
     &:focus {
-      background: rgba(57, 52, 49, 0.05);
-      transform: scale(1.05);
+      opacity: 0.8;
     }
     
     &:focus {
@@ -57,17 +51,20 @@
   }
 
   &__logo {
-    width: 60px;
-    height: auto;
-    display: block;
+    font-family: $font-primary;
+    font-size: 24px;
+    font-weight: 400;
+    color: $primary-color;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   &__content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
-    gap: 2rem;
+    padding: 0 1.5rem;
+    gap: 1.5rem;
   }
 
   &__image-container {
@@ -76,16 +73,15 @@
   }
 
   &__image {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
     object-fit: cover;
-    border: 4px solid rgba(57, 52, 49, 0.1);
-    box-shadow: 0 8px 24px rgba(57, 52, 49, 0.15);
+    display: block;
+    margin: 0 auto;
     
     @media (max-width: $breakpoint-sm) {
-      width: 160px;
-      height: 160px;
+      max-width: 280px;
     }
   }
 
@@ -95,105 +91,65 @@
   }
 
   &__name {
-    font-family: $font-primary;
-    font-size: 28px;
-    font-weight: 400;
+    font-family: $font-secondary;
+    font-size: 20px;
+    font-weight: 500;
     color: $primary-color;
     margin: 0 0 0.5rem 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-align: center;
     
     @media (max-width: $breakpoint-sm) {
-      font-size: 24px;
+      font-size: 18px;
     }
   }
 
   &__role {
     font-family: $font-secondary;
-    font-size: 16px;
+    font-size: 14px;
     color: rgba(57, 52, 49, 0.8);
-    margin: 0 0 0.5rem 0;
-    line-height: 1.4;
-    
-    @media (max-width: $breakpoint-sm) {
-      font-size: 14px;
-    }
-  }
-
-  &__company {
-    font-family: $font-primary;
-    font-size: 18px;
-    font-weight: 400;
-    color: $primary-color;
     margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    line-height: 1.4;
+    text-align: center;
     
     @media (max-width: $breakpoint-sm) {
-      font-size: 16px;
+      font-size: 13px;
     }
   }
 
   &__actions {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
     margin-bottom: 2rem;
   }
 
   &__button {
     font-family: $font-secondary;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
-    padding: 1rem 2rem;
+    padding: 0.875rem 1.5rem;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    background: #F7F6F4;
+    color: $primary-color;
     
     @media (max-width: $breakpoint-sm) {
-      font-size: 14px;
-      padding: 0.875rem 1.5rem;
+      font-size: 13px;
+      padding: 0.75rem 1.25rem;
     }
 
-    &--primary {
-      background: $primary-color;
-      color: #F7F6F4;
-      
-      &:hover,
-      &:focus {
-        background: rgba(57, 52, 49, 0.9);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(57, 52, 49, 0.2);
-      }
-      
-      &:active {
-        transform: translateY(0);
-      }
+    &:hover,
+    &:focus {
+      background: #EFECE7;
+      transform: translateY(-1px);
     }
-
-    &--secondary {
-      background: transparent;
-      color: $primary-color;
-      border: 2px solid rgba(57, 52, 49, 0.2);
-      
-      &:hover,
-      &:focus {
-        background: rgba(57, 52, 49, 0.05);
-        border-color: rgba(57, 52, 49, 0.4);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(57, 52, 49, 0.1);
-      }
-      
-      &:active {
-        transform: translateY(0);
-      }
+    
+    &:active {
+      transform: translateY(0);
     }
 
     &:focus {
@@ -207,29 +163,22 @@
     justify-content: center;
     gap: 2rem;
     margin-top: auto;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(57, 52, 49, 0.1);
+    padding-top: 1.5rem;
   }
 
   &__link {
     font-family: $font-secondary;
     font-size: 14px;
     color: $primary-color;
-    text-decoration: none;
+    text-decoration: underline;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
     transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
     
     &:hover,
     &:focus {
-      background: rgba(57, 52, 49, 0.05);
-      text-decoration: underline;
+      opacity: 0.8;
     }
     
     &:focus {

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './BusinessCard.scss';
-import etereaLogo from '../../assets/logos/ETÉREA_Icono_antracita.svg';
 
 interface TeamMember {
   id: string;
@@ -19,7 +18,7 @@ const teamMembers: TeamMember[] = [
   {
     id: 'natalia',
     name: 'Natalia',
-    fullName: 'Natalia Del Río',
+    fullName: 'NATALIA ROMÁN PÉREZ',
     role: 'Fundadora y Directora Creativa',
     phone: '+34697309380',
     image: nataliaImage
@@ -27,7 +26,7 @@ const teamMembers: TeamMember[] = [
   {
     id: 'virginia',
     name: 'Virginia',
-    fullName: 'Virginia De la Hoz',
+    fullName: 'VIRGINIA DE LA HOZ GONZÁLEZ',
     role: 'Responsable de Producción y Experiencia',
     phone: '+34663575095',
     image: virginiaImage
@@ -50,7 +49,7 @@ const BusinessCard: React.FC = () => {
     const updateMetaTags = () => {
       const title = `${member.fullName} - ${member.role} | ETÉREA EVENTS`;
       const description = `Conecta con ${member.name} de ETÉREA EVENTS. ${member.role} especializada en eventos de lujo y experiencias únicas.`;
-      const imageUrl = member.image; // Usar la URL importada directamente
+      const imageUrl = `${window.location.origin}${member.image}`; // URL absoluta para OG
       const pageUrl = `${window.location.origin}/card/${member.id}`;
 
       // Actualizar título
@@ -151,7 +150,7 @@ END:VCARD`;
             className="business-card__logo-button"
             aria-label="Ir a la página principal de ETÉREA"
           >
-            <img src={etereaLogo} alt="ETÉREA" className="business-card__logo" />
+            <span className="business-card__logo">ETÉREA</span>
           </button>
         </header>
 
@@ -170,33 +169,32 @@ END:VCARD`;
           <div className="business-card__info">
             <h1 className="business-card__name">{member.fullName}</h1>
             <p className="business-card__role">{member.role}</p>
-            <p className="business-card__company">ETÉREA EVENTS</p>
           </div>
 
           {/* Botones de acción */}
           <div className="business-card__actions">
             <button 
               onClick={handleCall}
-              className="business-card__button business-card__button--primary"
+              className="business-card__button"
               aria-label={`Llamar a ${member.name}`}
             >
-              📞 Llamar
+              LLAMAR
             </button>
             
             <button 
               onClick={handleEmail}
-              className="business-card__button business-card__button--secondary"
+              className="business-card__button"
               aria-label="Enviar correo electrónico"
             >
-              ✉️ Enviar correo
+              ENVIAR CORREO
             </button>
             
             <button 
               onClick={handleSaveContact}
-              className="business-card__button business-card__button--secondary"
+              className="business-card__button"
               aria-label="Guardar contacto en agenda"
             >
-              👤 Guardar contacto
+              GUARDAR CONTACTO
             </button>
           </div>
 
@@ -207,7 +205,7 @@ END:VCARD`;
               className="business-card__link"
               aria-label="Visitar la web de ETÉREA"
             >
-              🌐 Web Etérea
+              Web Etérea
             </a>
             
             <button 
@@ -215,7 +213,7 @@ END:VCARD`;
               className="business-card__link"
               aria-label="Seguir en Instagram"
             >
-              📷 Instagram
+              Instagram
             </button>
           </div>
         </main>
