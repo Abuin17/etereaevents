@@ -2,10 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Favicon por tema del SO -->
-    <link rel="icon" type="image/jpeg" media="(prefers-color-scheme: light)" href="/src/assets/images/Favicon-dark.jpg" />
-    <link rel="icon" type="image/jpeg" media="(prefers-color-scheme: dark)" href="/src/assets/images/Favicon-light.jpg" />
-    <!-- Fallback si no hay soporte de prefers-color-scheme -->
+    <!-- Favicon dinámico según el tema del SO -->
+    <link id="dynamic-favicon" rel="icon" type="image/png" sizes="32x32" href="/Favicon-dark.png" />
+    <script>
+      (function () {
+        var link = document.getElementById('dynamic-favicon');
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        function setFavicon() {
+          // En modo oscuro usamos Favicon-light (contraste); en claro, Favicon-dark
+          var href = mq.matches ? '/Favicon-light.png' : '/Favicon-dark.png';
+          // Cache-busting para evitar favicon cacheado
+          link.setAttribute('href', href + '?v=' + Date.now());
+        }
+        setFavicon();
+        if (mq.addEventListener) mq.addEventListener('change', setFavicon);
+        else if (mq.addListener) mq.addListener(setFavicon);
+      })();
+    </script>
+    <!-- Fallback (si el script no carga) -->
+    <link rel="icon" type="image/png" href="/Favicon-dark.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ETÉREA Events</title>
   </head>
