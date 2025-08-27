@@ -57,8 +57,10 @@ const BusinessCard: React.FC = () => {
     const updateMetaTags = () => {
       const title = `${member.fullName} - ${member.role} | ETÉREA EVENTS`;
       const description = `Conecta con ${member.fullName} de ETÉREA EVENTS. ${member.role} especializada en eventos de lujo y experiencias únicas.`;
-      // Construir URL absoluta para las imágenes de Open Graph
-      const imageUrl = `${window.location.origin}${member.image}`;
+      // Construir URL absoluta para las imágenes de Open Graph usando los hashes de Vite
+      const imageUrl = member.id === 'natalia' 
+        ? `${window.location.origin}/assets/natalia-Dpbt2cgO.jpg`
+        : `${window.location.origin}/assets/opt-virginia-RXcbdFsj.jpg`;
       console.log('Open Graph Image URL:', imageUrl);
       const pageUrl = `${window.location.origin}/card/${member.id}`;
 
