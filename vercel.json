@@ -7,26 +7,15 @@
   "regions": ["sfo1"],
   "rewrites": [
     {
-      "source": "/card/natalia",
+      "source": "/card/(natalia|virginia)",
       "has": [
         {
           "type": "header",
           "key": "user-agent",
-          "value": "(?i)(whatsapp|telegram|facebookexternalhit|twitterbot|linkedinbot|slackbot|discordbot)"
+          "value": "(?i)(whatsapp|telegram|facebookexternalhit|twitterbot|slackbot|discord|linkedin)"
         }
       ],
-      "destination": "/og/card-natalia.html"
-    },
-    {
-      "source": "/card/virginia",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": "(?i)(whatsapp|telegram|facebookexternalhit|twitterbot|linkedinbot|slackbot|discordbot)"
-        }
-      ],
-      "destination": "/og/card-virginia.html"
+      "destination": "/api/og/$1"
     },
     {
       "source": "/(.*)",
