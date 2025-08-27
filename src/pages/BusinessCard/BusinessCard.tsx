@@ -57,8 +57,8 @@ const BusinessCard: React.FC = () => {
     const updateMetaTags = () => {
       const title = `${member.fullName} - ${member.role} | ETÉREA EVENTS`;
       const description = `Conecta con ${member.fullName} de ETÉREA EVENTS. ${member.role} especializada en eventos de lujo y experiencias únicas.`;
-      // Usar las URLs de las imágenes importadas directamente (Vite las convierte en URLs absolutas)
-      const imageUrl = member.image;
+      // Construir URL absoluta para las imágenes de Open Graph
+      const imageUrl = `${window.location.origin}${member.image}`;
       console.log('Open Graph Image URL:', imageUrl);
       const pageUrl = `${window.location.origin}/card/${member.id}`;
 

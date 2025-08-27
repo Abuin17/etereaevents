@@ -6,37 +6,9 @@
   "devCommand": "npm run dev",
   "regions": ["sfo1"],
   "rewrites": [
-    {
-      "source": "/card/natalia",
-      "destination": "/card-natalia.html"
-    },
-    {
-      "source": "/card/virginia", 
-      "destination": "/card-virginia.html"
-    },
     { 
       "source": "/(.*)", 
       "destination": "/index.html" 
-    }
-  ],
-  "headers": [
-    {
-      "source": "/card-natalia.html",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/card-virginia.html",
-      "headers": [
-        {
-          "key": "Cache-Control", 
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
     }
   ]
 } 
