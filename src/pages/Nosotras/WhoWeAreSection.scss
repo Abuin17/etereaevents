@@ -93,6 +93,10 @@
     width: 8px;
     height: auto;
     margin-top: $spacing-2xl;
+
+    @media (orientation: portrait) {
+      margin-top: 0rem;
+    }
   }
 
   @media (max-width: $breakpoint-md) {

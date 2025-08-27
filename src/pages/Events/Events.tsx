@@ -32,7 +32,7 @@ const Events: React.FC = () => {
         scrollTrigger: {
           trigger: "body",
           start: "top top",
-          end: "+=50%",
+          end: "+=40%",
           scrub: 1,
           pin: false,
           pinSpacing: false
@@ -43,8 +43,8 @@ const Events: React.FC = () => {
         { width: "100vw", maxWidth: "100vw", ease: "none", duration: 1 }
       )
       .fromTo([leftTextRef.current, rightTextRef.current],
-        { x: (i) => i === 0 ? -60 : 60 },
-        { x: 0, ease: "none", duration: 0.3 }, 0
+        { x: (i) => i === 0 ? -60 : 60, y: 0 },
+        { x: 0, y: -40, ease: "none", duration: 1 }, 0
       );
     }
 
@@ -80,7 +80,7 @@ const Events: React.FC = () => {
           <div 
             className="events__image-text events__image-text--left"
             ref={leftTextRef}
-            style={isPortrait ? { left: 0, right: 'auto', paddingLeft: 16, paddingRight: 0, width: 'auto', boxSizing: 'border-box' } : undefined}
+            style={isPortrait ? { left: 12, bottom: 12, right: 'auto', paddingLeft: 0, paddingRight: 0, width: 'auto', boxSizing: 'border-box' } : undefined}
           >
             SOIRÉE PRIVÉE<br />
             Chamartín
@@ -88,7 +88,7 @@ const Events: React.FC = () => {
           <div 
             className="events__image-text events__image-text--right"
             ref={rightTextRef}
-            style={isPortrait ? { right: 0, left: 'auto', paddingRight: 16, paddingLeft: 0, width: 'auto', boxSizing: 'border-box' } : undefined}
+            style={isPortrait ? { right: 12, bottom: 12, left: 'auto', paddingRight: 0, paddingLeft: 0, width: 'auto', boxSizing: 'border-box' } : undefined}
           >
             NATURA BISÉE
           </div>

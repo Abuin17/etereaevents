@@ -109,26 +109,47 @@ const LandingSlider: React.FC = () => {
         duration: 0.7,
         ease: 'power3.out',
         overwrite: 'auto',
-        onUpdate: () => {
-          // Calcular opacidad para cada slide basado en su posición
-          slideRefs.current.forEach((slideRef, index) => {
-            if (slideRef && textRefs.current[index]) {
-              const slideRect = slideRef.getBoundingClientRect();
-              const sliderRect = sliderEl.getBoundingClientRect();
-              // Calcular qué tan centrada está la slide
-              const slideCenter = slideRect.left + (slideRect.width / 2);
-              const sliderCenter = sliderRect.left + (sliderRect.width / 2);
-              const distanceFromCenter = Math.abs(slideCenter - sliderCenter);
-              const maxDistance = slideRect.width * 0.5;
-              // Calcular opacidad basada en la distancia al centro
-              let opacity = 1 - (distanceFromCenter / maxDistance);
-              opacity = Math.max(0, Math.min(1, opacity));
-              // Aplicar opacidad al texto correspondiente
-              gsap.set(textRefs.current[index], {
-                opacity: opacity
-              });
-            }
-          });
+                 onUpdate: () => {
+           // Calcular opacidad para cada texto basado en el progreso del scroll
+           const maxScrollLeft = sliderEl.scrollWidth - sliderEl.clientWidth;
+           const currentScrollLeft = sliderEl.scrollLeft;
+           const progress = maxScrollLeft > 0 ? currentScrollLeft / maxScrollLeft : 0;
+           
+           // Calcular qué slide está activa basada en el progreso
+           const slideProgress = progress * (slides.length - 1);
+           const currentSlideIndex = Math.floor(slideProgress);
+           const slideFraction = slideProgress - currentSlideIndex;
+           
+           slideRefs.current.forEach((slideRef, index) => {
+             if (slideRef && textRefs.current[index]) {
+               let opacity = 0;
+               
+               if (index === currentSlideIndex) {
+                 // Texto actual: visible cuando su slide está activa
+                 if (slideFraction <= 0.5) {
+                   // Primera mitad de la transición: texto actual completamente visible
+                   opacity = 1;
+                 } else {
+                   // Segunda mitad: cross-fade con el siguiente
+                   opacity = 1 - ((slideFraction - 0.5) * 2);
+                 }
+               } else if (index === currentSlideIndex + 1) {
+                 // Texto siguiente: aparece en la segunda mitad de la transición
+                 if (slideFraction >= 0.5) {
+                   // Segunda mitad: cross-fade con el actual
+                   opacity = (slideFraction - 0.5) * 2;
+                 }
+               }
+               
+               // Asegurar que la opacidad esté entre 0 y 1
+               opacity = Math.max(0, Math.min(1, opacity));
+               
+               // Aplicar opacidad al texto correspondiente
+               gsap.set(textRefs.current[index], {
+                 opacity: opacity
+               });
+             }
+           });
 
           // Actualizar índice activo
           const slideWidth = sliderEl.clientWidth;
@@ -227,7 +248,7 @@ const LandingSlider: React.FC = () => {
         </div>
         <div className="landing-slider__polaroid" style={{ 
           position: 'absolute', 
-          top: '59%', 
+          top: '60%', 
           left: '50%', 
           transform: 'translate(-50%, -50%)', 
           display: 'flex', 
@@ -247,8 +268,11 @@ const LandingSlider: React.FC = () => {
             textAlign: 'center',
             width: '100%',
             position: 'relative',
-            minHeight: '200px', // Altura fija para el contenedor
-            padding: '32px 24px'
+            minHeight: '250px', // Altura fija para el contenedor
+            padding: '32px 24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}>
             {slides.map((_, idx) => (
               <div
@@ -262,14 +286,21 @@ const LandingSlider: React.FC = () => {
                   left: '0',
                   top: '50%',
                   transform: 'translateY(-50%)',
+                  height: '180px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
                   opacity: idx === 0 ? 1 : 0,
-                  padding: '0 24px',
-                  boxSizing: 'border-box'
+                  padding: '20px 24px 40px 24px',
+                  boxSizing: 'border-box',
+                  border: 'none'
                 }}
               >
-                <div className="landing-slider__polaroid-title">
+                <div className="landing-slider__polaroid-title" style={{ marginBottom: '0' }}>
                   {slideContent[idx].title}
                 </div>
+                <div style={{ height: '12px' }}></div>
                 <div className="landing-slider__polaroid-body">
                   {slideContent[idx].body}
                 </div>
