@@ -3,7 +3,7 @@
 
 .business-card {
   min-height: 100dvh;
-  background: #FFFFFF;
+  background: $beige-dark;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,6 +23,8 @@
     display: flex;
     flex-direction: column;
     margin: auto;
+    padding: $spacing-lg;
+    box-sizing: border-box;
     
     @media (orientation: landscape) {
       min-height: auto;
@@ -31,12 +33,12 @@
     
     @media (max-width: $breakpoint-sm) {
       max-width: 100%;
-      padding: 0 $spacing-md;
+      padding: $spacing-md;
     }
   }
 
   &__header {
-    padding: 1.5rem 0 1rem;
+    padding: 0 0 $spacing-md 0;
     text-align: center;
   }
 
@@ -59,12 +61,12 @@
   }
 
   &__logo {
-    height: 40px;
-    width: auto;
+    height: auto;
+    width: 132px;
     display: block;
     
     @media (max-width: $breakpoint-sm) {
-      height: 32px;
+      width: 100px;
     }
   }
 
@@ -72,11 +74,9 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0 1.5rem;
     gap: $spacing-lg;
     
     @media (max-width: $breakpoint-sm) {
-      padding: 0 $spacing-md;
       gap: $spacing-md;
     }
   }
@@ -150,18 +150,70 @@
     }
   }
 
+  // Botón específico para tarjetas de visita
+  .business-card-button {
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: $font-size-lg;
+    line-height: 1;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: $primary-color;
+    background: #F7F6F4;
+    border: none;
+    border-radius: 0;
+    padding: 0.7rem 2rem 0.5rem 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 175px;
+    box-sizing: border-box;
+
+    &:hover, &:focus {
+      background: #E8E2D5;
+      color: $primary-color;
+    }
+
+    // Variante de ancho automático
+    &--auto {
+      width: auto;
+      min-width: 175px;
+    }
+
+    // Variante de ancho completo
+    &--full {
+      width: 100%;
+    }
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 1rem;
+      padding: 0.875rem 1.5rem;
+    }
+
+    @media (max-width: $breakpoint-sm) {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.875rem;
+    }
+  }
+
   &__links {
     display: flex;
     justify-content: center;
     gap: $spacing-xl;
     margin-top: auto;
     padding-top: $spacing-lg;
-    padding-bottom: $spacing-lg;
+    padding-bottom: $spacing-2xl;
     
     @media (max-width: $breakpoint-sm) {
       gap: $spacing-lg;
       padding-top: $spacing-md;
-      padding-bottom: $spacing-md;
+      padding-bottom: $spacing-xl;
     }
   }
 
@@ -169,11 +221,11 @@
     font-family: $font-secondary;
     font-size: $font-size-sm;
     color: $primary-color;
-    text-decoration: underline;
+    text-decoration: none;
     background: none;
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: color 0.3s ease;
     
     @media (max-width: $breakpoint-sm) {
       font-size: $font-size-xs;
@@ -181,7 +233,8 @@
     
     &:hover,
     &:focus {
-      opacity: 0.8;
+      color: $primary-color;
+      text-decoration: underline;
     }
     
     &:focus {
@@ -204,11 +257,10 @@
     }
     
     &__header {
-      padding: $spacing-lg $spacing-md $spacing-md;
+      padding: 0 0 $spacing-md 0;
     }
     
     &__content {
-      padding: $spacing-md;
       gap: $spacing-md;
     }
     

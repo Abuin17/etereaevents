@@ -187,7 +187,7 @@ END:VCARD`;
           <div className="business-card__actions">
             <button 
               onClick={handleCall}
-              className="eterea-button eterea-button--auto"
+              className="business-card-button business-card-button--auto"
               aria-label={`Llamar a ${member.name}`}
             >
               LLAMAR
@@ -195,7 +195,7 @@ END:VCARD`;
             
             <button 
               onClick={handleEmail}
-              className="eterea-button eterea-button--auto"
+              className="business-card-button business-card-button--auto"
               aria-label="Enviar correo electrónico"
             >
               ENVIAR CORREO
@@ -203,7 +203,7 @@ END:VCARD`;
             
             <button 
               onClick={handleSaveContact}
-              className="eterea-button eterea-button--auto"
+              className="business-card-button business-card-button--auto"
               aria-label="Guardar contacto en agenda"
             >
               GUARDAR CONTACTO

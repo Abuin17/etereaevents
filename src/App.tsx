@@ -30,7 +30,7 @@ const routesConfig = [
   { path: '/privacidad', element: <Privacidad />, bg: '#F7F6F4' },
   { path: '/cookies', element: <Cookies />, bg: '#F7F6F4' },
   { path: '/propiedad-intelectual', element: <PropiedadIntelectual />, bg: '#F7F6F4' },
-  { path: '/card/:memberId', element: <BusinessCard />, bg: '#F7F6F4' },
+  { path: '/card/:memberId', element: <BusinessCard />, bg: '#EFECE7' },
   // Agregar otras rutas aquí
 ];
 
