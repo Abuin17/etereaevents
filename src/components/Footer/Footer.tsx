@@ -82,10 +82,12 @@ const Footer: React.FC<FooterProps> = ({ variant, onOpenCookiePreferences }) => 
             <span className="footer__separator">|</span>
             <Link to="/propiedad-intelectual" className="footer__info-link">Política de Propiedad Intelectual</Link>
             <span className="footer__separator">|</span>
-            <CookiePreferencesButton 
-              onOpenModal={onOpenCookiePreferences}
-              className="footer__info-link"
-            />
+            {onOpenCookiePreferences && (
+              <CookiePreferencesButton 
+                onOpenModal={onOpenCookiePreferences}
+                className="footer__info-link"
+              />
+            )}
           </div>
         </div>
       </div>

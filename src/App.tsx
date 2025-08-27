@@ -149,10 +149,9 @@ document.head.insertAdjacentHTML(
 const AppContent: React.FC = () => {
   const location = useLocation();
   const isContactPage = location.pathname === '/contacto';
-  const [showCookieModal, setShowCookieModal] = useState(false);
 
   const handleOpenCookiePreferences = () => {
-    setShowCookieModal(true);
+    // Esta función se pasa al Footer para abrir el modal de cookies
   };
 
   return (
@@ -162,7 +161,7 @@ const AppContent: React.FC = () => {
         <PageTransitionManager />
       </main>
       {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
-      <CookieConsent onOpenModal={() => setShowCookieModal(true)} />
+      <CookieConsent />
     </div>
   );
 };
