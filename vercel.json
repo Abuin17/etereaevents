@@ -7,28 +7,6 @@
   "regions": ["sfo1"],
   "rewrites": [
     {
-      "source": "/card/natalia",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": "(?i)(whatsapp|telegram|facebookexternalhit|twitterbot|slackbot|discord|linkedin)"
-        }
-      ],
-      "destination": "/og/card-natalia.html"
-    },
-    {
-      "source": "/card/virginia",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": "(?i)(whatsapp|telegram|facebookexternalhit|twitterbot|slackbot|discord|linkedin)"
-        }
-      ],
-      "destination": "/og/card-virginia.html"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
@@ -44,7 +22,7 @@
       ]
     },
     {
-      "source": "/og/card-*.html",
+      "source": "/og/card/*.html",
       "headers": [
         {
           "key": "Cache-Control",
