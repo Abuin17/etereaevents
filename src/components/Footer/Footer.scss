@@ -270,3 +270,27 @@
     }
   }
 }
+
+// Estilos para el botón de preferencias de cookies
+.cookie-preferences-button {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  
+  &:hover {
+    color: $primary-color;
+    text-decoration: underline;
+  }
+  
+  &:focus {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}

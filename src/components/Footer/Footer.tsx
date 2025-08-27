@@ -4,12 +4,14 @@ import './Footer.scss';
 import etereaBgLogoGrisMedio from '../../assets/logos/SIN_grisETÉREA_LOGO.svg';
 import etereaBgLogoBeigeMedio from '../../assets/logos/SIN_beige-medioETÉREA_LOGO.svg';
 import etereaBgLogoBeigeOro from '../../assets/logos/SIN_beige-oroETÉREA_LOGO.svg';
+import CookiePreferencesButton from '../CookieConsent/CookiePreferencesButton';
 
 interface FooterProps {
   variant?: 'light' | 'dark' | 'gold';
+  onOpenCookiePreferences?: () => void;
 }
 
-const Footer: React.FC<FooterProps> = ({ variant }) => {
+const Footer: React.FC<FooterProps> = ({ variant, onOpenCookiePreferences }) => {
   const location = useLocation();
   // Determinar variante por ruta si no se pasa explícitamente
   let resolvedVariant = variant;
@@ -72,11 +74,18 @@ const Footer: React.FC<FooterProps> = ({ variant }) => {
             <span className="footer__separator">|</span>
           </div>
           <div className="footer__info-links">
-            <a href="" className="footer__info-link">Aviso Legal</a>
+            <Link to="/aviso-legal" className="footer__info-link">Aviso Legal</Link>
             <span className="footer__separator">|</span>
-            <a href="" className="footer__info-link">Política de cookies</a>
+            <Link to="/cookies" className="footer__info-link">Política de cookies</Link>
             <span className="footer__separator">|</span>
-            <a href="" className="footer__info-link">Política de privacidad</a>
+            <Link to="/privacidad" className="footer__info-link">Política de privacidad</Link>
+            <span className="footer__separator">|</span>
+            <Link to="/propiedad-intelectual" className="footer__info-link">Política de Propiedad Intelectual</Link>
+            <span className="footer__separator">|</span>
+            <CookiePreferencesButton 
+              onOpenModal={onOpenCookiePreferences}
+              className="footer__info-link"
+            />
           </div>
         </div>
       </div>

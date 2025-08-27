@@ -3,6 +3,7 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import './styles/main.scss';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import CookieConsent from './components/CookieConsent/CookieConsent';
 import { AnimatePresence, motion } from 'framer-motion';
 
 // Importar páginas
@@ -11,6 +12,10 @@ import Events from './pages/Events/Events';
 import Nosotras from './pages/Nosotras/Nosotras';
 import VipAssistance from './pages/VipAssistance/VipAssistance';
 import Contacto from './pages/Contacto/Contacto';
+import AvisoLegal from './pages/Legal/AvisoLegal';
+import Privacidad from './pages/Legal/Privacidad';
+import Cookies from './pages/Legal/Cookies';
+import PropiedadIntelectual from './pages/Legal/PropiedadIntelectual';
 // Importar otras páginas aquí...
 
 const routesConfig = [
@@ -19,6 +24,10 @@ const routesConfig = [
   { path: '/nosotras', element: <Nosotras />, bg: '#F7F6F4' },
   { path: '/vip-assistance', element: <VipAssistance />, bg: '#393431' },
   { path: '/contacto', element: <Contacto />, bg: '#F7F6F4' },
+  { path: '/aviso-legal', element: <AvisoLegal />, bg: '#F7F6F4' },
+  { path: '/privacidad', element: <Privacidad />, bg: '#F7F6F4' },
+  { path: '/cookies', element: <Cookies />, bg: '#F7F6F4' },
+  { path: '/propiedad-intelectual', element: <PropiedadIntelectual />, bg: '#F7F6F4' },
   // Agregar otras rutas aquí
 ];
 
@@ -140,6 +149,11 @@ document.head.insertAdjacentHTML(
 const AppContent: React.FC = () => {
   const location = useLocation();
   const isContactPage = location.pathname === '/contacto';
+  const [showCookieModal, setShowCookieModal] = useState(false);
+
+  const handleOpenCookiePreferences = () => {
+    setShowCookieModal(true);
+  };
 
   return (
     <div className="app">
@@ -147,7 +161,8 @@ const AppContent: React.FC = () => {
       <main className="app__main">
         <PageTransitionManager />
       </main>
-      {!isContactPage && <Footer />}
+      {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
+      <CookieConsent onOpenModal={() => setShowCookieModal(true)} />
     </div>
   );
 };

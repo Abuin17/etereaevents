@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Integración de Analytics - Etérea</title>
+</head>
+<body>
+    <h1>Ejemplo de Integración de Analytics</h1>
+    
+    <p>Este archivo muestra cómo integrar scripts de analytics con el sistema de consentimiento de cookies.</p>
+    
+    <!-- Ejemplo de Google Analytics 4 -->
+    <!-- El script se carga solo si el usuario ha dado consentimiento para analytics -->
+    <script 
+        type="text/plain" 
+        data-cookie-category="analytics" 
+        data-src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
+        async
+    ></script>
+    
+    <script type="text/plain" data-cookie-category="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    
+    <!-- Ejemplo de Meta Pixel -->
+    <!-- El script se carga solo si el usuario ha dado consentimiento para marketing -->
+    <script type="text/plain" data-cookie-category="marketing">
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
+    
+    <!-- Ejemplo de uso de queueUntilConsent -->
+    <script>
+        // Ejecutar código solo cuando se dé consentimiento para analytics
+        if (window.queueUntilConsent) {
+            window.queueUntilConsent(function() {
+                console.log('Analytics consent granted - executing tracking code');
+                // Aquí iría el código de tracking personalizado
+            }, 'analytics');
+        }
+        
+        // Ejecutar código solo cuando se dé consentimiento para marketing
+        if (window.queueUntilConsent) {
+            window.queueUntilConsent(function() {
+                console.log('Marketing consent granted - executing marketing code');
+                // Aquí iría el código de marketing personalizado
+            }, 'marketing');
+        }
+    </script>
+</body>
+</html>
