@@ -67,6 +67,10 @@ const BusinessCard: React.FC = () => {
       // Actualizar título
       document.title = title;
 
+      // Limpiar meta tags existentes
+      const existingMetaTags = document.querySelectorAll('meta[property^="og:"], meta[name^="twitter:"], meta[name="robots"], meta[name="author"], meta[name="theme-color"]');
+      existingMetaTags.forEach(tag => tag.remove());
+
       // Open Graph
       updateMetaTag('og:title', title);
       updateMetaTag('og:description', description);
