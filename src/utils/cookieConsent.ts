@@ -12,6 +12,63 @@ interface CookieConsentData {
   expiresAt: string;
 }
 
+// Función para logging de consentimiento
+export const logConsentDecision = (consent: CookieConsentData) => {
+  const logData = {
+    event: 'cookie_consent_decision',
+    timestamp: new Date().toISOString(),
+    userAgent: navigator.userAgent,
+    consent: {
+      decision: consent.decision,
+      categories: consent.categories,
+      version: consent.version
+    },
+    // Información adicional útil
+    page: window.location.pathname,
+    referrer: document.referrer,
+    screenSize: `${window.screen.width}x${window.screen.height}`,
+    language: navigator.language
+  };
+
+  // 1. Log en consola (desarrollo)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🍪 Cookie Consent Decision:', logData);
+  }
+
+  // 2. Enviar a analytics si está habilitado
+  if (consent.categories.analytics) {
+    // Google Analytics 4
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'cookie_consent', {
+        consent_decision: consent.decision,
+        analytics_enabled: consent.categories.analytics,
+        marketing_enabled: consent.categories.marketing
+      });
+    }
+
+    // Google Tag Manager
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        event: 'cookie_consent',
+        consent_decision: consent.decision,
+        analytics_enabled: consent.categories.analytics,
+        marketing_enabled: consent.categories.marketing
+      });
+    }
+  }
+
+  // 3. Enviar a tu propio endpoint (opcional)
+  // Puedes crear un endpoint en tu backend para registrar las decisiones
+  if (process.env.NODE_ENV === 'production') {
+    // Ejemplo: enviar a tu API
+    // fetch('/api/consent-log', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(logData)
+    // }).catch(console.error);
+  }
+};
+
 // Cola de callbacks esperando consentimiento
 const consentQueue: { [key: string]: (() => void)[] } = {
   analytics: [],
@@ -84,4 +141,5 @@ export const applyConsentToScripts = (consent: CookieConsentData) => {
 if (typeof window !== 'undefined') {
   (window as any).queueUntilConsent = queueUntilConsent;
   (window as any).applyConsentToScripts = applyConsentToScripts;
+  (window as any).logConsentDecision = logConsentDecision;
 }

@@ -4,6 +4,8 @@ import './styles/main.scss';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import CookieConsent from './components/CookieConsent/CookieConsent';
+import CookieConsentDebug from './components/CookieConsent/CookieConsentDebug';
+import BusinessCard from './pages/BusinessCard/BusinessCard';
 import { AnimatePresence, motion } from 'framer-motion';
 
 // Importar páginas
@@ -28,6 +30,7 @@ const routesConfig = [
   { path: '/privacidad', element: <Privacidad />, bg: '#F7F6F4' },
   { path: '/cookies', element: <Cookies />, bg: '#F7F6F4' },
   { path: '/propiedad-intelectual', element: <PropiedadIntelectual />, bg: '#F7F6F4' },
+  { path: '/card/:memberId', element: <BusinessCard />, bg: '#F7F6F4' },
   // Agregar otras rutas aquí
 ];
 
@@ -162,6 +165,7 @@ const AppContent: React.FC = () => {
       </main>
       {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
       <CookieConsent />
+      <CookieConsentDebug />
     </div>
   );
 };

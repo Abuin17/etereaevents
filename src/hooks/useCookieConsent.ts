@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { logConsentDecision } from '../utils/cookieConsent';
 
 interface CookieConsentData {
   version: number;
@@ -62,6 +63,9 @@ export const useCookieConsent = () => {
     document.documentElement.setAttribute('data-consent', consent.decision);
     document.documentElement.setAttribute('data-consent-analytics', consent.categories.analytics.toString());
     document.documentElement.setAttribute('data-consent-marketing', consent.categories.marketing.toString());
+    
+    // Log de la decisión
+    logConsentDecision(consent);
     
     return consent;
   }, []);

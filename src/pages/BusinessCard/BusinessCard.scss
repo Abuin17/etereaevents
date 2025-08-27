@@ -1,0 +1,309 @@
+@import '../../styles/_base';
+@import '../../styles/variables';
+
+.business-card {
+  min-height: 100dvh;
+  background: linear-gradient(135deg, #F7F6F4 0%, #EFECE7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  
+  @media (orientation: landscape) {
+    padding: 2rem;
+  }
+
+  &__container {
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(57, 52, 49, 0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 400px;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    
+    @media (orientation: landscape) {
+      min-height: auto;
+      max-height: 90vh;
+    }
+  }
+
+  &__header {
+    padding: 2rem 2rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(57, 52, 49, 0.1);
+  }
+
+  &__logo-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    
+    &:hover,
+    &:focus {
+      background: rgba(57, 52, 49, 0.05);
+      transform: scale(1.05);
+    }
+    
+    &:focus {
+      outline: 2px solid #393431;
+      outline-offset: 2px;
+    }
+  }
+
+  &__logo {
+    width: 60px;
+    height: auto;
+    display: block;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  &__image-container {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  &__image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(57, 52, 49, 0.1);
+    box-shadow: 0 8px 24px rgba(57, 52, 49, 0.15);
+    
+    @media (max-width: $breakpoint-sm) {
+      width: 160px;
+      height: 160px;
+    }
+  }
+
+  &__info {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  &__name {
+    font-family: $font-primary;
+    font-size: 28px;
+    font-weight: 400;
+    color: $primary-color;
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    @media (max-width: $breakpoint-sm) {
+      font-size: 24px;
+    }
+  }
+
+  &__role {
+    font-family: $font-secondary;
+    font-size: 16px;
+    color: rgba(57, 52, 49, 0.8);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.4;
+    
+    @media (max-width: $breakpoint-sm) {
+      font-size: 14px;
+    }
+  }
+
+  &__company {
+    font-family: $font-primary;
+    font-size: 18px;
+    font-weight: 400;
+    color: $primary-color;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    @media (max-width: $breakpoint-sm) {
+      font-size: 16px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__button {
+    font-family: $font-secondary;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    
+    @media (max-width: $breakpoint-sm) {
+      font-size: 14px;
+      padding: 0.875rem 1.5rem;
+    }
+
+    &--primary {
+      background: $primary-color;
+      color: #F7F6F4;
+      
+      &:hover,
+      &:focus {
+        background: rgba(57, 52, 49, 0.9);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(57, 52, 49, 0.2);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    &--secondary {
+      background: transparent;
+      color: $primary-color;
+      border: 2px solid rgba(57, 52, 49, 0.2);
+      
+      &:hover,
+      &:focus {
+        background: rgba(57, 52, 49, 0.05);
+        border-color: rgba(57, 52, 49, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(57, 52, 49, 0.1);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    &:focus {
+      outline: 2px solid $primary-color;
+      outline-offset: 2px;
+    }
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(57, 52, 49, 0.1);
+  }
+
+  &__link {
+    font-family: $font-secondary;
+    font-size: 14px;
+    color: $primary-color;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    &:hover,
+    &:focus {
+      background: rgba(57, 52, 49, 0.05);
+      text-decoration: underline;
+    }
+    
+    &:focus {
+      outline: 2px solid $primary-color;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-sm) {
+  .business-card {
+    padding: 0;
+    
+    &__container {
+      border-radius: 0;
+      box-shadow: none;
+      min-height: 100dvh;
+    }
+    
+    &__header {
+      padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    &__content {
+      padding: 1.5rem;
+      gap: 1.5rem;
+    }
+    
+    &__actions {
+      gap: 0.875rem;
+    }
+    
+    &__links {
+      gap: 1.5rem;
+    }
+  }
+}
+
+// Landscape optimizations
+@media (orientation: landscape) and (max-height: 600px) {
+  .business-card {
+    &__container {
+      max-height: 95vh;
+    }
+    
+    &__content {
+      padding: 1.5rem;
+      gap: 1.5rem;
+    }
+    
+    &__image {
+      width: 120px;
+      height: 120px;
+    }
+    
+    &__name {
+      font-size: 22px;
+    }
+    
+    &__role {
+      font-size: 14px;
+    }
+    
+    &__company {
+      font-size: 16px;
+    }
+  }
+}
+
+// High DPI displays
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .business-card__image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
