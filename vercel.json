@@ -6,6 +6,14 @@
   "devCommand": "npm run dev",
   "regions": ["sfo1"],
   "rewrites": [
+    {
+      "source": "/card/natalia",
+      "destination": "/card-natalia.html"
+    },
+    {
+      "source": "/card/virginia",
+      "destination": "/card-virginia.html"
+    },
     { 
       "source": "/(.*)", 
       "destination": "/index.html" 
