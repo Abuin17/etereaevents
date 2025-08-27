@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <!-- Favicon dinámico según el tema del SO -->
-    <link id="dynamic-favicon" rel="icon" type="image/png" sizes="32x32" href="/Favicon-dark.png" />
+    <link id="dynamic-favicon" rel="icon" type="image/png" sizes="32x32" href="/Favicon-light.png" />
     <script>
       (function () {
         var link = document.getElementById('dynamic-favicon');
         var mq = window.matchMedia('(prefers-color-scheme: dark)');
         function setFavicon() {
-          // En modo oscuro usamos Favicon-light (contraste); en claro, Favicon-dark
-          var href = mq.matches ? '/Favicon-light.png' : '/Favicon-dark.png';
+          // Si el SO está en dark, usa Favicon-dark; en light, usa Favicon-light
+          var href = mq.matches ? '/Favicon-dark.png' : '/Favicon-light.png';
           // Cache-busting para evitar favicon cacheado
           link.setAttribute('href', href + '?v=' + Date.now());
         }
@@ -20,7 +20,7 @@
       })();
     </script>
     <!-- Fallback (si el script no carga) -->
-    <link rel="icon" type="image/png" href="/Favicon-dark.png" />
+    <link rel="icon" type="image/png" href="/Favicon-light.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ETÉREA Events</title>
   </head>
