@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation, Routes, Route } from 'react-router-dom';
 import './styles/main.scss';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
@@ -34,7 +34,7 @@ const routesConfig = [
   // Agregar otras rutas aquí
 ];
 
-const PageTransitionManager: React.FC = () => {
+const PageTransitionManager: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const [displayedLocation, setDisplayedLocation] = useState(location);
   const [isFadingOut, setIsFadingOut] = useState(false);
@@ -95,14 +95,7 @@ const PageTransitionManager: React.FC = () => {
     }, 10); // Small delay to ensure content is hidden before scroll
   };
 
-  const currentRoute = routesConfig.find(r => {
-    if (r.path.includes(':')) {
-      // Para rutas con parámetros, verificar si el path base coincide
-      const basePath = r.path.split(':')[0];
-      return displayedLocation.pathname.startsWith(basePath);
-    }
-    return r.path === displayedLocation.pathname;
-  });
+
 
   return (
     <>
@@ -156,7 +149,7 @@ const PageTransitionManager: React.FC = () => {
         }}
             style={{ minHeight: '100vh', position: 'relative', zIndex: 1 }}
       >
-        {currentRoute ? currentRoute.element : null}
+        {children}
       </motion.div>
         )}
     </AnimatePresence>
@@ -182,7 +175,19 @@ const AppContent: React.FC = () => {
     <div className="app">
       <Navbar />
       <main className="app__main">
-        <PageTransitionManager />
+        <Routes>
+          {routesConfig.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                <PageTransitionManager>
+                  {route.element}
+                </PageTransitionManager>
+              }
+            />
+          ))}
+        </Routes>
       </main>
       {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
       <CookieConsent />
