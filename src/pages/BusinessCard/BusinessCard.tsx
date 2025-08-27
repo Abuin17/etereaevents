@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './BusinessCard.scss';
+import nataliaImage from '../../assets/images/natalia.jpg';
+import virginiaImage from '../../assets/images/opt-virginia.jpg';
 
 interface TeamMember {
   id: string;
@@ -10,9 +12,6 @@ interface TeamMember {
   phone: string;
   image: string;
 }
-
-import nataliaImage from '../../assets/images/natalia.jpg';
-import virginiaImage from '../../assets/images/opt-virginia.jpg';
 
 const teamMembers: TeamMember[] = [
   {
@@ -38,6 +37,14 @@ const BusinessCard: React.FC = () => {
   const navigate = useNavigate();
   
   const member = teamMembers.find(m => m.id === memberId);
+  
+  console.log('BusinessCard Debug:', {
+    memberId,
+    member,
+    teamMembers,
+    nataliaImage,
+    virginiaImage
+  });
 
   useEffect(() => {
     if (!member) {
@@ -49,7 +56,7 @@ const BusinessCard: React.FC = () => {
     const updateMetaTags = () => {
       const title = `${member.fullName} - ${member.role} | ETÉREA EVENTS`;
       const description = `Conecta con ${member.name} de ETÉREA EVENTS. ${member.role} especializada en eventos de lujo y experiencias únicas.`;
-      const imageUrl = `${window.location.origin}${member.image}`; // URL absoluta para OG
+      const imageUrl = member.image; // Usar la URL importada directamente
       const pageUrl = `${window.location.origin}/card/${member.id}`;
 
       // Actualizar título

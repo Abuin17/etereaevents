@@ -47,7 +47,14 @@ const PageTransitionManager: React.FC = () => {
   const bgFadeTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const currentRoute = routesConfig.find(r => r.path === displayedLocation.pathname);
+    const currentRoute = routesConfig.find(r => {
+      if (r.path.includes(':')) {
+        // Para rutas con parámetros, verificar si el path base coincide
+        const basePath = r.path.split(':')[0];
+        return displayedLocation.pathname.startsWith(basePath);
+      }
+      return r.path === displayedLocation.pathname;
+    });
     setPrevBg(currentRoute?.bg || '#F7F6F4');
   }, [displayedLocation]);
 
@@ -55,7 +62,14 @@ const PageTransitionManager: React.FC = () => {
     if (location !== displayedLocation) {
       setIsFadingOut(true);
       setPendingLocation(location);
-      const nextRoute = routesConfig.find(r => r.path === location.pathname);
+      const nextRoute = routesConfig.find(r => {
+        if (r.path.includes(':')) {
+          // Para rutas con parámetros, verificar si el path base coincide
+          const basePath = r.path.split(':')[0];
+          return location.pathname.startsWith(basePath);
+        }
+        return r.path === location.pathname;
+      });
       setNextBg(nextRoute?.bg || '#F7F6F4');
       setShowBgFade(true);
       document.body.classList.add('body--no-scroll');
@@ -81,7 +95,14 @@ const PageTransitionManager: React.FC = () => {
     }, 10); // Small delay to ensure content is hidden before scroll
   };
 
-  const currentRoute = routesConfig.find(r => r.path === displayedLocation.pathname);
+  const currentRoute = routesConfig.find(r => {
+    if (r.path.includes(':')) {
+      // Para rutas con parámetros, verificar si el path base coincide
+      const basePath = r.path.split(':')[0];
+      return displayedLocation.pathname.startsWith(basePath);
+    }
+    return r.path === displayedLocation.pathname;
+  });
 
   return (
     <>
