@@ -8,6 +8,8 @@
   align-items: center;
   justify-content: center;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  position: relative;
+  z-index: 1;
   
   @media (orientation: landscape) {
     padding: 2rem;
@@ -16,14 +18,20 @@
   &__container {
     background: #FFFFFF;
     width: 100%;
-    max-width: 350px;
+    max-width: 380px;
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
+    margin: auto;
     
     @media (orientation: landscape) {
       min-height: auto;
       max-height: 90vh;
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+      max-width: 100%;
+      padding: 0 $spacing-md;
     }
   }
 
@@ -51,12 +59,13 @@
   }
 
   &__logo {
-    font-family: $font-primary;
-    font-size: 24px;
-    font-weight: 400;
-    color: $primary-color;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    height: 40px;
+    width: auto;
+    display: block;
+    
+    @media (max-width: $breakpoint-sm) {
+      height: 32px;
+    }
   }
 
   &__content {
@@ -64,7 +73,12 @@
     display: flex;
     flex-direction: column;
     padding: 0 1.5rem;
-    gap: 1.5rem;
+    gap: $spacing-lg;
+    
+    @media (max-width: $breakpoint-sm) {
+      padding: 0 $spacing-md;
+      gap: $spacing-md;
+    }
   }
 
   &__image-container {
@@ -73,15 +87,21 @@
   }
 
   &__image {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
+    width: 380px;
+    height: 380px;
     object-fit: cover;
     display: block;
     margin: 0 auto;
+    border-radius: 0;
     
     @media (max-width: $breakpoint-sm) {
-      max-width: 280px;
+      width: 280px;
+      height: 280px;
+    }
+    
+    @media (max-width: 480px) {
+      width: 240px;
+      height: 240px;
     }
   }
 
@@ -91,90 +111,73 @@
   }
 
   &__name {
-    font-family: $font-secondary;
-    font-size: 20px;
-    font-weight: 500;
+    font-family: $font-primary;
+    font-size: $font-size-xl;
+    font-weight: 400;
     color: $primary-color;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 $spacing-sm 0;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     
     @media (max-width: $breakpoint-sm) {
-      font-size: 18px;
+      font-size: $font-size-lg;
     }
   }
 
   &__role {
     font-family: $font-secondary;
-    font-size: 14px;
+    font-size: $font-size-sm;
     color: rgba(57, 52, 49, 0.8);
     margin: 0;
     line-height: 1.4;
     text-align: center;
     
     @media (max-width: $breakpoint-sm) {
-      font-size: 13px;
+      font-size: $font-size-xs;
     }
   }
 
   &__actions {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-  }
-
-  &__button {
-    font-family: $font-secondary;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 0.875rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background: #F7F6F4;
-    color: $primary-color;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xl;
     
     @media (max-width: $breakpoint-sm) {
-      font-size: 13px;
-      padding: 0.75rem 1.25rem;
-    }
-
-    &:hover,
-    &:focus {
-      background: #EFECE7;
-      transform: translateY(-1px);
-    }
-    
-    &:active {
-      transform: translateY(0);
-    }
-
-    &:focus {
-      outline: 2px solid $primary-color;
-      outline-offset: 2px;
+      gap: $spacing-xs;
+      margin-bottom: $spacing-lg;
     }
   }
 
   &__links {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: $spacing-xl;
     margin-top: auto;
-    padding-top: 1.5rem;
+    padding-top: $spacing-lg;
+    padding-bottom: $spacing-lg;
+    
+    @media (max-width: $breakpoint-sm) {
+      gap: $spacing-lg;
+      padding-top: $spacing-md;
+      padding-bottom: $spacing-md;
+    }
   }
 
   &__link {
     font-family: $font-secondary;
-    font-size: 14px;
+    font-size: $font-size-sm;
     color: $primary-color;
     text-decoration: underline;
     background: none;
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
+    
+    @media (max-width: $breakpoint-sm) {
+      font-size: $font-size-xs;
+    }
     
     &:hover,
     &:focus {
@@ -197,23 +200,24 @@
       border-radius: 0;
       box-shadow: none;
       min-height: 100dvh;
+      padding: 0;
     }
     
     &__header {
-      padding: 1.5rem 1.5rem 1rem;
+      padding: $spacing-lg $spacing-md $spacing-md;
     }
     
     &__content {
-      padding: 1.5rem;
-      gap: 1.5rem;
+      padding: $spacing-md;
+      gap: $spacing-md;
     }
     
     &__actions {
-      gap: 0.875rem;
+      gap: $spacing-xs;
     }
     
     &__links {
-      gap: 1.5rem;
+      gap: $spacing-lg;
     }
   }
 }
@@ -226,25 +230,21 @@
     }
     
     &__content {
-      padding: 1.5rem;
-      gap: 1.5rem;
+      padding: $spacing-lg;
+      gap: $spacing-md;
     }
     
     &__image {
-      width: 120px;
-      height: 120px;
+      width: 200px;
+      height: 200px;
     }
     
     &__name {
-      font-size: 22px;
+      font-size: $font-size-lg;
     }
     
     &__role {
-      font-size: 14px;
-    }
-    
-    &__company {
-      font-size: 16px;
+      font-size: $font-size-xs;
     }
   }
 }

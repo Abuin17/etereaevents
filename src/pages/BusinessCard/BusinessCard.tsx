@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './BusinessCard.scss';
 import nataliaImage from '../../assets/images/natalia.jpg';
 import virginiaImage from '../../assets/images/opt-virginia.jpg';
+import etereaLogo from '../../assets/logos/ETÉREA_Logo_antracita.svg';
 
 interface TeamMember {
   id: string;
@@ -17,7 +18,7 @@ const teamMembers: TeamMember[] = [
   {
     id: 'natalia',
     name: 'Natalia',
-    fullName: 'NATALIA ROMÁN PÉREZ',
+    fullName: 'NATALIA DEL RÍO PÉREZ',
     role: 'Fundadora y Directora Creativa',
     phone: '+34697309380',
     image: nataliaImage
@@ -55,7 +56,7 @@ const BusinessCard: React.FC = () => {
     // Actualizar meta tags dinámicamente
     const updateMetaTags = () => {
       const title = `${member.fullName} - ${member.role} | ETÉREA EVENTS`;
-      const description = `Conecta con ${member.name} de ETÉREA EVENTS. ${member.role} especializada en eventos de lujo y experiencias únicas.`;
+      const description = `Conecta con ${member.fullName} de ETÉREA EVENTS. ${member.role} especializada en eventos de lujo y experiencias únicas.`;
       const imageUrl = member.image; // Usar la URL importada directamente
       const pageUrl = `${window.location.origin}/card/${member.id}`;
 
@@ -157,7 +158,11 @@ END:VCARD`;
             className="business-card__logo-button"
             aria-label="Ir a la página principal de ETÉREA"
           >
-            <span className="business-card__logo">ETÉREA</span>
+            <img 
+              src={etereaLogo} 
+              alt="ETÉREA EVENTS" 
+              className="business-card__logo"
+            />
           </button>
         </header>
 
@@ -182,7 +187,7 @@ END:VCARD`;
           <div className="business-card__actions">
             <button 
               onClick={handleCall}
-              className="business-card__button"
+              className="eterea-button eterea-button--auto"
               aria-label={`Llamar a ${member.name}`}
             >
               LLAMAR
@@ -190,7 +195,7 @@ END:VCARD`;
             
             <button 
               onClick={handleEmail}
-              className="business-card__button"
+              className="eterea-button eterea-button--auto"
               aria-label="Enviar correo electrónico"
             >
               ENVIAR CORREO
@@ -198,7 +203,7 @@ END:VCARD`;
             
             <button 
               onClick={handleSaveContact}
-              className="business-card__button"
+              className="eterea-button eterea-button--auto"
               aria-label="Guardar contacto en agenda"
             >
               GUARDAR CONTACTO
