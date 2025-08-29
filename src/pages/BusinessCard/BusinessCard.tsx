@@ -217,7 +217,7 @@ END:VCARD`;
               className="business-card__link"
               aria-label="Visitar la web de ETÉREA"
             >
-              Web Etérea
+              Web
             </a>
             
             <button 
