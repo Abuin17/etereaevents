@@ -40,6 +40,39 @@
     }
   }
 
+  &__header {
+    padding: 0 0 $spacing-md 0;
+    text-align: center;
+  }
+
+  &__logo-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.2s ease;
+    
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+    }
+    
+    &:focus {
+      outline: 2px solid #393431;
+      outline-offset: 2px;
+    }
+  }
+
+  &__logo {
+    height: auto;
+    width: 132px;
+    display: block;
+    
+    @media (max-width: $breakpoint-sm) {
+      width: 100px;
+    }
+  }
+
 
 
   &__content {
@@ -230,6 +263,10 @@
       border-radius: 0;
       box-shadow: none;
       padding: $spacing-lg;
+    }
+    
+    &__header {
+      padding: 0 0 $spacing-md 0;
     }
     
     &__content {
