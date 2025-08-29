@@ -16,9 +16,8 @@ const WhoWeAreSection: React.FC = () => {
           <div className="who-we-are-section__block">
             <h3 className="who-we-are-section__subtitle">¿HASTA DÓNDE LLEGAMOS?</h3>
             <p className="who-we-are-section__body">
-              Somos precisión, sutileza y presencia. Hablamos con la seguridad de quien
-              no necesita demostrar, sino hacer sentir; de quien sabe que el verdadero lujo
-              no se impone, sino que se percibe.
+            Cada celebración es un reflejo de quienes la viven, y en ETÉREA nos dedicamos a darle forma con precisión, sensibilidad y un enfoque
+            profundamente personal. No marcamos el final.  Seguimos hasta donde tú imagines. Porque cada historia pide su propia escala, su propio cielo.
             </p>
             <img src={rhombusIcon} alt="" className="who-we-are-section__separator" />
           </div>
