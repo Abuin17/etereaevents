@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './BusinessCard.scss';
 import nataliaImage from '../../assets/images/natalia.jpg';
 import virginiaImage from '../../assets/images/opt-virginia.jpg';
-import etereaLogo from '../../assets/logos/ETÉREA_Logo_antracita.svg';
 
 interface TeamMember {
   id: string;
@@ -151,20 +150,7 @@ END:VCARD`;
   return (
     <div className="business-card">
       <div className="business-card__container">
-        {/* Header con logo */}
-        <header className="business-card__header">
-          <button 
-            onClick={() => navigate('/')}
-            className="business-card__logo-button"
-            aria-label="Ir a la página principal de ETÉREA"
-          >
-            <img 
-              src={etereaLogo} 
-              alt="ETÉREA EVENTS" 
-              className="business-card__logo"
-            />
-          </button>
-        </header>
+
 
         {/* Contenido principal */}
         <main className="business-card__content">

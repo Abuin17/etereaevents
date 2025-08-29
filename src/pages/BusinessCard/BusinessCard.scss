@@ -10,6 +10,8 @@
   padding: $spacing-2xl;
   position: relative;
   z-index: 1;
+  width: 100%;
+  height: 100vh;
   
   @media (orientation: landscape) {
     padding: $spacing-xl;
@@ -32,40 +34,13 @@
       max-width: 100%;
       padding: $spacing-lg;
     }
-  }
-
-  &__header {
-    padding: 0 0 $spacing-md 0;
-    text-align: center;
-  }
-
-  &__logo-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: all 0.2s ease;
     
-    &:hover,
-    &:focus {
-      opacity: 0.8;
-    }
-    
-    &:focus {
-      outline: 2px solid #393431;
-      outline-offset: 2px;
+    @media (orientation: landscape) {
+      max-height: 90vh;
     }
   }
 
-  &__logo {
-    height: auto;
-    width: 132px;
-    display: block;
-    
-    @media (max-width: $breakpoint-sm) {
-      width: 100px;
-    }
-  }
+
 
   &__content {
     flex: 1;
@@ -257,10 +232,6 @@
       padding: $spacing-lg;
     }
     
-    &__header {
-      padding: 0 0 $spacing-md 0;
-    }
-    
     &__content {
       gap: $spacing-md;
     }
@@ -282,6 +253,7 @@
     
     &__container {
       padding: $spacing-lg;
+      max-height: 95vh;
     }
     
     &__content {

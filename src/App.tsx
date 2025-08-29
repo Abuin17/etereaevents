@@ -166,11 +166,30 @@ document.head.insertAdjacentHTML(
 const AppContent: React.FC = () => {
   const location = useLocation();
   const isContactPage = location.pathname === '/contacto';
+  const isCardPage = location.pathname.startsWith('/card/');
 
   const handleOpenCookiePreferences = () => {
     // Esta función se pasa al Footer para abrir el modal de cookies
   };
 
+  // Modo chromeless para tarjetas de visita
+  if (isCardPage) {
+    return (
+      <div className="app app--chromeless">
+        <Routes>
+          {routesConfig.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={route.element}
+            />
+          ))}
+        </Routes>
+      </div>
+    );
+  }
+
+  // Modo normal para el resto de páginas
   return (
     <div className="app">
       <Navbar />
