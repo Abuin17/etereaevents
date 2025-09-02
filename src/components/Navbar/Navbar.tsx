@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
               <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
                 <img src={rhombusIcon} alt="" />
               </span>
-              BODAS
+              TAILORED WEDDINGS
               <span className="menu-overlay__rhombus menu-overlay__rhombus--right">
                 <img src={rhombusIcon} alt="" />
               </span>
@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
             Eventos
           </Link>
           <Link to="/bodas" className="navbar__menu-link" onClick={closeMenu}>
-            Bodas
+            Tailored Weddings
           </Link>
           <Link to="/vip-assistance" className="navbar__menu-link" onClick={closeMenu}>
             VIP Assistance

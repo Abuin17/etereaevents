@@ -60,7 +60,7 @@ const Bodas: React.FC = () => {
         <span className="events__subtitle">nuestro compromiso</span>
       </div>
       <p className="bodas__description">
-        Desde la idea inicial hasta el último detalle. Escuchamos atención, entendemos lo que importa, porque cada elección es parte de tu historia.
+        Desde la idea inicial hasta el último detalle. Escuchamos con atención, entendemos lo que importa, porque cada elección es parte de tu historia.
       </p>
       
       <div className="bodas__image-container" ref={imageContainerRef}>
