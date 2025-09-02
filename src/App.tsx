@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 // Importar páginas
 import Landing from './pages/Landing/Landing';
 import Events from './pages/Events/Events';
+import Bodas from './pages/Bodas/Bodas';
 import Nosotras from './pages/Nosotras/Nosotras';
 import VipAssistance from './pages/VipAssistance/VipAssistance';
 import Contacto from './pages/Contacto/Contacto';
@@ -23,6 +24,7 @@ import PropiedadIntelectual from './pages/Legal/PropiedadIntelectual';
 const routesConfig = [
   { path: '/', element: <Landing />, bg: '#F7F6F4' },
   { path: '/eventos', element: <Events />, bg: '#EFECE7' },
+  { path: '/bodas', element: <Bodas />, bg: '#FFFFFF' },
   { path: '/nosotras', element: <Nosotras />, bg: '#F7F6F4' },
   { path: '/vip-assistance', element: <VipAssistance />, bg: '#393431' },
   { path: '/contacto', element: <Contacto />, bg: '#F7F6F4' },

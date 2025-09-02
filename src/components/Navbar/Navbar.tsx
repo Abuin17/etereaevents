@@ -79,6 +79,15 @@ const Navbar: React.FC = () => {
                 <img src={rhombusIcon} alt="" />
               </span>
             </Link>
+            <Link to="/bodas" className="menu-overlay__item eterea-title" onClick={closeMenu}>
+              <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
+                <img src={rhombusIcon} alt="" />
+              </span>
+              BODAS
+              <span className="menu-overlay__rhombus menu-overlay__rhombus--right">
+                <img src={rhombusIcon} alt="" />
+              </span>
+            </Link>
             <Link to="/vip-assistance" className="menu-overlay__item eterea-title" onClick={closeMenu}>
               <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
                 <img src={rhombusIcon} alt="" />
@@ -115,12 +124,15 @@ const Navbar: React.FC = () => {
       {isMenuOpen && (
         <div className="navbar__menu">
           <div className="navbar__menu-content">
-            <Link to="/eventos" className="navbar__menu-link" onClick={closeMenu}>
-              Eventos
-            </Link>
-            <Link to="/vip-assistance" className="navbar__menu-link" onClick={closeMenu}>
-              VIP Assistance
-            </Link>
+                      <Link to="/eventos" className="navbar__menu-link" onClick={closeMenu}>
+            Eventos
+          </Link>
+          <Link to="/bodas" className="navbar__menu-link" onClick={closeMenu}>
+            Bodas
+          </Link>
+          <Link to="/vip-assistance" className="navbar__menu-link" onClick={closeMenu}>
+            VIP Assistance
+          </Link>
             <Link to="/nosotras" className="navbar__menu-link" onClick={closeMenu}>
               Nosotras
             </Link>

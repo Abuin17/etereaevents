@@ -67,7 +67,7 @@
   &__buttons {
     display: flex;
     flex-direction: row;
-    gap: 3rem;
+    gap: 2rem;
     margin-top: 1.5rem;
     flex-wrap: wrap;
     justify-content: center;
@@ -90,7 +90,7 @@
     }
 
     &__buttons {
-      gap: 2rem;
+      gap: 1.5rem;
     }
   }
 }
@@ -107,7 +107,7 @@
     &__buttons {
       gap: $spacing-md;
       align-items: center;
-      max-width: 280px;
+      max-width: 320px;
       height: auto;
       margin-left: auto;
       margin-right: auto;
