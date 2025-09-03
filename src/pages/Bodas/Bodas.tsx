@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Bodas.scss';
-import bodasImage from '../../assets/images/bodas.png';
+import bodasImage from '../../assets/images/boda-2.jpg';
 import etereaLogo from '../../assets/logos/ETÉREA_Icono_antracita.svg';
 import LandingSlider from '../Landing/LandingSlider';
 import gsap from 'gsap';
