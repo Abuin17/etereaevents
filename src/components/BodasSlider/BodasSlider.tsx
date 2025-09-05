@@ -8,18 +8,18 @@ import bodasImage1 from '../../assets/images/slider-boda-1.jpg';
 import bodasImage2 from '../../assets/images/copas-boda.jpg';
 import bodasImage3 from '../../assets/images/slider-boda-3.jpg';
 
-const slides = [bodasImage1, bodasImage2, bodasImage3];
+const slides = [bodasImage2, bodasImage1, bodasImage3];
 const SLIDE_HEIGHT = 700; // px
 const SLIDER_SCROLL_LENGTH = slides.length * SLIDE_HEIGHT;
 
 const slideContent = [
   {
-    title: "ÚNICO",
-    body: "Paso a paso tejemos tu historia mediante un relato inolvidable. Cada suceso es un hilo conductor que refleja vuestra esencia."
-  },
-  {
     title: "LIMITADO",
     body: "Lo que importa no se repite, permanece. Desarrollamos dos celebraciones al año porque lo extraordinario no admite prisas."
+  },
+  {
+    title: "ÚNICO",
+    body: "Paso a paso tejemos tu historia mediante un relato inolvidable. Cada suceso es un hilo conductor que refleja vuestra esencia."
   },
   {
     title: "SELECTO",
