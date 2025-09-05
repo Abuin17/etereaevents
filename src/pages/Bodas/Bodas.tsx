@@ -96,7 +96,10 @@ const Bodas: React.FC = () => {
       </section>
 
       <section className="bodas__cta eterea-content-block">
-        <button className="eterea-button bodas__cta-button">
+        <button 
+          className="eterea-button bodas__cta-button"
+          onClick={() => window.open('tel:+34697309380', '_self')}
+        >
           CUÉNTANOS TU HISTORIA
         </button>
       </section>
