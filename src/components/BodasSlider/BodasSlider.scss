@@ -1,0 +1,222 @@
+@import '../../styles/variables';
+
+.bodas-slider {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 auto;
+  position: relative;
+  padding: 4rem 0 3rem 0;
+  background: transparent;
+
+  &__swiper {
+    width: 100vw;
+    max-width: 100vw;
+    overflow: visible;
+  }
+
+  &__slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1062px;
+    max-width: 90vw;
+    height: 506px;
+    border-radius: 0;
+    overflow: visible;
+    position: relative;
+  }
+
+  &__slide-inner {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  &__polaroid {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 450px;
+    background: transparent;
+    border: 13px solid #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+  &__polaroid-window {
+    width: 100%;
+    height: 180px;
+    background: transparent;
+  }
+  &__polaroid-caption {
+    padding: 1.5rem 1.25rem 1.25rem 1.25rem;
+    text-align: center;
+    border: 10px solid #FFFFFF;
+  }
+  &__polaroid-title {
+    font-family: 'Revans', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #393431;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+  &__polaroid-body {
+    font-family: 'Hedvig Letters Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    color: #393431;
+  }
+
+  &__stepper {
+    width: 800px;
+    max-width: 90vw;
+    margin: 2.5rem auto 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 85px;
+  }
+  &__stepper-line {
+    width: 100%;
+    height: 1px;
+    background: #393431;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+    transform: translateY(-50%);
+  }
+  &__stepper-dots {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  &__stepper-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid #393431;
+    background: #fff;
+    transition: background 0.2s;
+    &--active {
+      background: #393431;
+      border: 1px solid #393431;
+    }
+  }
+  &__heading {
+    font-family: 'Hedvig Letters Sans', sans-serif;
+    font-weight: 400;
+    font-size: $body-font-size;
+    line-height: $body-line-height;
+    letter-spacing: 0%;
+    text-align: center;
+    color: #393431;
+    margin: 3.5rem 0 4.5rem 0;
+    white-space: pre-line;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 3rem 0 2rem 0;
+
+    &__slide {
+      height: 400px;
+    }
+
+    &__polaroid {
+      border-width: 10px;
+    }
+
+    &__polaroid-title {
+      font-size: 1.75rem;
+    }
+
+    &__polaroid-body {
+      font-size: 0.9375rem;
+    }
+
+    &__stepper {
+      top: 100px;
+    }
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 2rem 0 1.5rem 0;
+
+    &__slide {
+      height: 300px;
+    }
+
+    &__polaroid {
+      border-width: 8px;
+      top: 54% !important;
+    }
+
+    &__polaroid-caption {
+      padding: 1.25rem 1rem 1rem;
+      border-width: 8px;
+    }
+
+    &__polaroid-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &__polaroid-body {
+      font-size: 0.875rem;
+      line-height: 1.2;
+    }
+
+    &__stepper {
+      top: -30px;
+      max-width: calc(100vw - 48px);
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .bodas-slider__slide {
+      width: 708px;
+      min-width: 708px;
+      max-width: 50vw;
+    }
+  }
+}
+
+.bodas-slider__intro {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Hedvig Letters Sans', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  color: #393431;
+  width: 100%;
+  max-width: 700px;
+  padding: 0 20px;
+  margin-top: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+@media (max-width: $breakpoint-sm) {
+  .bodas-slider__intro {
+    font-size: 1.1rem;
+    top: 30px;
+    padding: 0 10px;
+  }
+}

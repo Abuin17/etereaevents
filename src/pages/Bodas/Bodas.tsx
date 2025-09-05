@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Bodas.scss';
 import bodasImage from '../../assets/images/boda-2.jpg';
 import etereaLogo from '../../assets/logos/ETÉREA_Icono_antracita.svg';
-import LandingSlider from '../Landing/LandingSlider';
+import BodasSlider from '../../components/BodasSlider/BodasSlider';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -84,7 +84,11 @@ const Bodas: React.FC = () => {
         </p>
       </section>
 
-      <LandingSlider />
+      <BodasSlider />
+
+      <div className="bodas__header-separator">
+        <img src={etereaLogo} alt="Eterea" />
+      </div>
 
       <section className="bodas__quote eterea-content-block">
         <h2 className="bodas__quote-title">LO QUE SE DICE, DA FORMA A LO QUE SE VIVE</h2>
@@ -93,12 +97,12 @@ const Bodas: React.FC = () => {
 
       <section className="bodas__cta eterea-content-block">
         <button className="eterea-button bodas__cta-button">
-          CUÉTANOS TU HISTORIA
+          CUÉNTANOS TU HISTORIA
         </button>
       </section>
 
       <div className="bodas__footer-separator">
-        <img src={etereaLogo} alt="Eterea" />
+        <img src={etereaLogo} alt="Eterea" style={{ transform: 'scaleY(-1)' }} />
       </div>
     </div>
   );
