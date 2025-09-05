@@ -6,9 +6,11 @@ import './CookieConsent.scss';
 interface CookieConsentProps {
   onConsentChange?: (consent: any) => void;
   onOpenModal?: () => void;
+  shouldOpenModal?: boolean;
+  onModalClose?: () => void;
 }
 
-const CookieConsent: React.FC<CookieConsentProps> = ({ onConsentChange, onOpenModal }) => {
+const CookieConsent: React.FC<CookieConsentProps> = ({ onConsentChange, onOpenModal, shouldOpenModal, onModalClose }) => {
   const { consent, isLoaded, saveConsent } = useCookieConsent();
   const [showBanner, setShowBanner] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -59,6 +61,7 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onConsentChange, onOpenMo
     setShowModal(false);
     onConsentChange?.(newConsent);
     applyConsent(newConsent);
+    onModalClose?.();
   };
 
   // Manejar cancelar configuración
@@ -68,7 +71,16 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onConsentChange, onOpenMo
       marketing: consent?.categories.marketing || false
     });
     setShowModal(false);
+    onModalClose?.();
   };
+
+  // Abrir modal desde el exterior
+  useEffect(() => {
+    if (shouldOpenModal) {
+      setShowModal(true);
+      onModalClose?.(); // Resetear el estado en el padre
+    }
+  }, [shouldOpenModal, onModalClose]);
 
   // Focus trap para el modal
   const handleKeyDown = (e: React.KeyboardEvent) => {

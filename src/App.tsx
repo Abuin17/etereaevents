@@ -169,9 +169,10 @@ const AppContent: React.FC = () => {
   const location = useLocation();
   const isContactPage = location.pathname === '/contacto';
   const isCardPage = location.pathname.startsWith('/card/');
+  const [shouldOpenCookieModal, setShouldOpenCookieModal] = useState(false);
 
   const handleOpenCookiePreferences = () => {
-    // Esta función se pasa al Footer para abrir el modal de cookies
+    setShouldOpenCookieModal(true);
   };
 
   // Modo chromeless para tarjetas de visita
@@ -211,7 +212,10 @@ const AppContent: React.FC = () => {
         </Routes>
       </main>
       {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
-      <CookieConsent />
+      <CookieConsent 
+        shouldOpenModal={shouldOpenCookieModal}
+        onModalClose={() => setShouldOpenCookieModal(false)}
+      />
       <CookieConsentDebug />
     </div>
   );

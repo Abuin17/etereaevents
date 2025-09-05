@@ -58,9 +58,7 @@ const Footer: React.FC<FooterProps> = ({ variant, onOpenCookiePreferences }) => 
             <Link to="/contacto" className="footer__nav-link">Contacto</Link>
           </div>
           <div className="footer__nav-line">
-            <a href="" className="footer__nav-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <span className="footer__separator">|</span>
-            <a href="" className="footer__nav-link" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.instagram.com/eterea.events?igsh=MWhvNDJxbHZoeXYzdQ==" className="footer__nav-link" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
         </nav>
         {/* Footer info */}
