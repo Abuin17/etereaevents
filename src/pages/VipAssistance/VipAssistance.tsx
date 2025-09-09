@@ -84,8 +84,8 @@ const VipAssistance: React.FC = () => {
         IT'S WHO BRINGS YOU THERE.</h2>
         <p className="vip-assistance__contact-text">
         Cada petición es una oportunidad para diseñar un instante único. Seleccionamos con precisión a los colaboradores adecuados en cada  situación, sin fórmulas fijas, para que cada instante se sienta hecho a tu medida.
-        <br>Nos aseguramos de que cada decisión responda a tu propia visión del lujo, cumpliendo con los estándares de calidad que tú defines y elevándolos a la medida exacta de tus expectativas. 
-        Cada detalle está pensado para que disfrutes con libertad y con la certeza de que todo estA bajo control.</br>
+        <br />Nos aseguramos de que cada decisión responda a tu propia visión del lujo, cumpliendo con los estándares de calidad que tú defines y elevándolos a la medida exacta de tus expectativas. 
+        Cada detalle está pensado para que disfrutes con libertad y con la certeza de que todo estA bajo control.
         </p>
         <Link to="/contacto" className="eterea-button eterea-button--vip">Contacto</Link>
       </section>
