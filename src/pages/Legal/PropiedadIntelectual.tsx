@@ -24,6 +24,7 @@ const PropiedadIntelectual: React.FC = () => {
         <div>
           <h2 className="legal-page__section-title">3. Prohibición de usos no autorizados</h2>
           <p className="legal-page__text">Queda prohibida la reproducción, distribución o transformación de los contenidos sin consentimiento expreso de Etérea Events.</p>
+          <p className="legal-page__text">Queda igualmente prohibido el uso del nombre comercial "Etérea Events" y de sus signos distintivos sin autorización expresa de su titular.</p>
         </div>
       </div>
     </section>

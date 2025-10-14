@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Bodas.scss';
 import bodasImage from '../../assets/images/boda-2.jpg';
 import etereaLogo from '../../assets/logos/ETÉREA_Icono_antracita.svg';
@@ -10,9 +11,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const Bodas: React.FC = () => {
+  const navigate = useNavigate();
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
-    const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
+  const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
 
 
 
@@ -98,7 +100,7 @@ const Bodas: React.FC = () => {
       <section className="bodas__cta eterea-content-block">
         <button 
           className="eterea-button bodas__cta-button"
-          onClick={() => window.open('tel:+34697309380', '_self')}
+          onClick={() => navigate('/bodas/formulario')}
         >
           CUÉNTANOS TU HISTORIA
         </button>

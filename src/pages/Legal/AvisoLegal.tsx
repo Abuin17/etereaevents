@@ -22,8 +22,8 @@ const AvisoLegal: React.FC = () => {
         <img src={rhombusIcon} alt="" className="legal-page__separator" />
 
         <div>
-          <h2 className="legal-page__section-title">2. Objeto del sitio web</h2>
-          <p className="legal-page__text">La finalidad del presente sitio web es dar a conocer los servicios de organización de eventos de alto nivel y lujo prestados por Etérea Events.</p>
+          <h2 className="legal-page__section-title">2. OBJETO DEL SITIO WEB</h2>
+          <p className="legal-page__text">La finalidad del presente sitio web es dar a conocer los servicios de organización de eventos de alto nivel y lujo prestados por Etérea Events, así como gestionar las consultas y solicitudes recibidas a través de sus formularios.</p>
         </div>
 
         <img src={rhombusIcon} alt="" className="legal-page__separator" />

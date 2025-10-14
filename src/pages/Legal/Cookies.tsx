@@ -8,38 +8,39 @@ const Cookies: React.FC = () => {
       <h1 className="legal-page__title">POLÍTICA DE COOKIES</h1>
       <div className="legal-page__container">
         <div>
-          <h2 className="legal-page__section-title">1. Uso de cookies</h2>
-          <p className="legal-page__text">Este sitio utiliza cookies propias y de terceros para mejorar la experiencia, analizar el tráfico y, en su caso, mostrar publicidad personalizada.</p>
+          <h2 className="legal-page__section-title">1. USO DE COOKIES</h2>
+          <p className="legal-page__text">Este sitio web utiliza cookies propias y de terceros para mejorar la experiencia de navegación, analizar el tráfico y, cuando el usuario lo autoriza, mostrar publicidad personalizada.</p>
         </div>
 
         <img src={rhombusIcon} alt="" className="legal-page__separator" />
 
         <div>
-          <h2 className="legal-page__section-title">2. Tipos de cookies utilizadas</h2>
+          <h2 className="legal-page__section-title">2. TIPOS DE COOKIES UTILIZADAS</h2>
           <ul className="legal-page__list legal-page__text">
-            <li>Cookies técnicas o necesarias: imprescindibles para el funcionamiento básico.</li>
-            <li>Cookies de análisis: Google Analytics.</li>
-            <li>Cookies de publicidad comportamental: Meta Pixel.</li>
+            <li><strong>Técnicas o necesarias:</strong> imprescindibles para el funcionamiento básico del sitio.</li>
+            <li><strong>Analíticas:</strong> utilizadas para medir la audiencia y el uso del sitio (por ejemplo, Google Analytics).</li>
+            <li><strong>Publicitarias o de remarketing:</strong> utilizadas para mostrar anuncios personalizados (por ejemplo, Meta Pixel).</li>
           </ul>
         </div>
 
         <img src={rhombusIcon} alt="" className="legal-page__separator" />
 
         <div>
-          <h2 className="legal-page__section-title">3. Gestión de cookies</h2>
-          <p className="legal-page__text">Al acceder a la web, el usuario puede aceptar, rechazar o configurar las cookies a través del banner habilitado. También puede gestionarlas desde su navegador.</p>
+          <h2 className="legal-page__section-title">3. GESTIÓN DE COOKIES</h2>
+          <p className="legal-page__text">Al acceder al sitio, el usuario puede aceptar, rechazar o configurar las cookies a través del banner habilitado.</p>
+          <p className="legal-page__text">Puede modificar su configuración en cualquier momento mediante el enlace "Preferencias de cookies" o desde su navegador.</p>
+          <p className="legal-page__text">Guías útiles:</p>
           <ul className="legal-page__list legal-page__text">
-            <li>Chrome: Ayuda Google</li>
-            <li>Firefox: Ayuda Mozilla</li>
-            <li>Safari: Ayuda Apple</li>
+            <li>Chrome | Firefox | Safari | Edge</li>
           </ul>
         </div>
 
         <img src={rhombusIcon} alt="" className="legal-page__separator" />
 
         <div>
-          <h2 className="legal-page__section-title">4. Consentimiento</h2>
-          <p className="legal-page__text">La instalación de cookies de análisis y publicidad requiere consentimiento expreso, que puede retirarse en cualquier momento desde el panel de configuración o contactando en info@etereaevents.com.</p>
+          <h2 className="legal-page__section-title">4. CONSENTIMIENTO</h2>
+          <p className="legal-page__text">Las cookies analíticas y publicitarias solo se instalan tras el consentimiento expreso del usuario.</p>
+          <p className="legal-page__text">Hasta ese momento, estos scripts permanecerán bloqueados.</p>
         </div>
       </div>
     </section>
@@ -47,5 +48,3 @@ const Cookies: React.FC = () => {
 };
 
 export default Cookies;
-
-
