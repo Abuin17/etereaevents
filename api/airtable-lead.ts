@@ -1,33 +1,5 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
-// Define a type for the expected form data structure
-interface FormData {
-  contrayente1: string;
-  contrayente2: string;
-  contrayente1_fechaNacimiento: { dia: string; mes: string; año: string };
-  contrayente1_ciudadNacimiento: string;
-  contrayente1_ciudadResidencia: string;
-  contrayente1_profesion: string;
-  contrayente2_fechaNacimiento: { dia: string; mes: string; año: string };
-  contrayente2_ciudadNacimiento: string;
-  contrayente2_ciudadResidencia: string;
-  contrayente2_profesion: string;
-  contrayente1_sobre_contrayente2: string;
-  contrayente2_sobre_contrayente1: string;
-  historia: string;
-  momento_si: string;
-  lugar_huella: string;
-  fecha: string;
-  numero_invitados: string;
-  tipo: 'Religiosa' | 'Civil';
-  localizacion: 'España' | 'Destination';
-  duracion: 'Un día' | 'Fin de semana';
-  marco_economico: string;
-  email: string;
-  telefono: string;
-  consent: boolean;
-}
-
 // Helper for validation
 const isValidEmail = (email: string): boolean => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -66,7 +38,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const rawFormData: Partial<FormData> = req.body;
+    const rawFormData = req.body;
 
     // 3. Validate required environment variables
     const airtableToken = process.env.AIRTABLE_TOKEN;
@@ -79,10 +51,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // 4. Basic Data Validation and Sanitization
-    const sanitized: Partial<FormData> = {};
+    const sanitized: any = {};
 
     // Define expected fields and their validation rules
-    const requiredStringFields: Array<keyof FormData> = [
+    const requiredStringFields = [
       'contrayente1', 'contrayente2', 'contrayente1_ciudadNacimiento',
       'contrayente1_ciudadResidencia', 'contrayente1_profesion',
       'contrayente2_ciudadNacimiento', 'contrayente2_ciudadResidencia',
@@ -91,14 +63,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       'lugar_huella', 'fecha', 'email', 'telefono', 'tipo', 'localizacion', 'duracion'
     ];
 
-    const requiredBooleanFields: Array<keyof FormData> = ['consent'];
-    const optionalNumberFields: Array<keyof FormData> = ['numero_invitados', 'marco_economico'];
+    const requiredBooleanFields = ['consent'];
+    const optionalNumberFields = ['numero_invitados', 'marco_economico'];
 
     // Process string fields
     requiredStringFields.forEach(field => {
       const value = rawFormData[field];
       if (typeof value === 'string' && value.trim().length > 0) {
-        (sanitized as any)[field] = value.trim().substring(0, 255);
+        sanitized[field] = value.trim().substring(0, 255);
       } else {
         console.warn(`[Airtable API] Validation Error: Missing or invalid string field: ${String(field)}`);
         return res.status(400).json({ error: `Falta información requerida: ${String(field)}. Por favor, revisa el formulario.` });
@@ -109,7 +81,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     requiredBooleanFields.forEach(field => {
       const value = rawFormData[field];
       if (typeof value === 'boolean') {
-        (sanitized as any)[field] = value;
+        sanitized[field] = value;
       } else {
         console.warn(`[Airtable API] Validation Error: Missing or invalid boolean field: ${String(field)}`);
         return res.status(400).json({ error: `Falta información requerida: ${String(field)}. Por favor, revisa el formulario.` });
@@ -128,7 +100,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (typeof value === 'string' && value.trim().length > 0) {
         const parsed = parseFloat(value.replace(',', '.'));
         if (!isNaN(parsed)) {
-          (sanitized as any)[field] = parsed;
+          sanitized[field] = parsed;
         } else {
           console.warn(`[Airtable API] Validation Error: Invalid number format for field: ${String(field)}`);
           return res.status(400).json({ error: `Formato numérico inválido para ${String(field)}. Por favor, introduce un número válido.` });
@@ -147,13 +119,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Sanitize date fields
-    const dateFields: Array<keyof FormData> = ['contrayente1_fechaNacimiento', 'contrayente2_fechaNacimiento'];
+    const dateFields = ['contrayente1_fechaNacimiento', 'contrayente2_fechaNacimiento'];
     dateFields.forEach(field => {
       const dateObj = rawFormData[field];
       if (dateObj && typeof dateObj === 'object' && 'dia' in dateObj && 'mes' in dateObj && 'año' in dateObj) {
         const { dia, mes, año } = dateObj;
         if (dia && mes && año) {
-          (sanitized as any)[field] = `${String(dia).trim()}/${String(mes).trim()}/${String(año).trim()}`;
+          sanitized[field] = `${String(dia).trim()}/${String(mes).trim()}/${String(año).trim()}`;
         } else {
           console.warn(`[Airtable API] Validation Error: Incomplete date for field: ${String(field)}`);
           return res.status(400).json({ error: `Fecha incompleta para ${String(field)}. Por favor, introduce día, mes y año.` });
