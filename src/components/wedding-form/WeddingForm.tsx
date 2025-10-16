@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import WeddingStep from './WeddingStep';
 import WeddingProgress from './WeddingProgress';
-import { submitToAirtable } from '../../utils/airtable';
+import { submitLead } from '../../utils/submitLead';
 import styles from './WeddingForm.module.scss';
 
 export interface FormData {
@@ -145,23 +145,42 @@ const WeddingForm: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log('🔍 DEBUG - FormData completo:', formData);
-      console.log('🔍 DEBUG - contrayente1 específico:', formData.contrayente1);
-      console.log('🔍 DEBUG - contrayente1 tipo:', typeof formData.contrayente1);
-      console.log('🔍 DEBUG - contrayente1 longitud:', formData.contrayente1?.length);
-      console.log('🔍 DEBUG - contrayente1 es string vacío?', formData.contrayente1 === '');
-      console.log('🔍 DEBUG - contrayente1 es undefined?', formData.contrayente1 === undefined);
-      console.log('Enviando datos a Airtable...', formData);
+      // Construye el objeto con todas las claves que el backend valida
+      const payload = {
+        contrayente1: formData.contrayente1,   // string
+        contrayente2: formData.contrayente2,   // string
+        email: formData.email,                 // string
+        telefono: formData.telefono,           // string
+        consent: formData.consent === true,    // boolean true
+        // resto de pasos/campos…
+        c1AboutC2: formData.contrayente1_sobre_contrayente2,
+        c2AboutC1: formData.contrayente2_sobre_contrayente1,
+        story: formData.historia,
+        proposal: formData.momento_si,
+        favoritePlace: formData.lugar_huella,
+        eventDateText: formData.fecha,
+        guests: formData.numero_invitados,
+        ceremonyType: formData.tipo,
+        locationType: formData.localizacion,
+        duration: formData.duracion,
+        budget: formData.marco_economico,
+        // Additional fields for compatibility
+        contrayente1_ciudadNacimiento: formData.contrayente1_ciudadNacimiento,
+        contrayente1_ciudadResidencia: formData.contrayente1_ciudadResidencia,
+        contrayente1_profesion: formData.contrayente1_profesion,
+        contrayente2_ciudadNacimiento: formData.contrayente2_ciudadNacimiento,
+        contrayente2_ciudadResidencia: formData.contrayente2_ciudadResidencia,
+        contrayente2_profesion: formData.contrayente2_profesion,
+        contrayente1_fechaNacimiento: formData.contrayente1_fechaNacimiento,
+        contrayente2_fechaNacimiento: formData.contrayente2_fechaNacimiento
+      };
       
-      const result = await submitToAirtable(formData);
+      console.log('[submit] Voy a enviar:', payload);
+      await submitLead(payload);
       
-      if (result.success) {
-        console.log('✅ Datos enviados correctamente a Airtable');
-        setCurrentStep(13); // Go to thank you step
-      } else {
-        console.error('❌ Error submitting form:', result.error);
-        alert(`Error al enviar el formulario: ${result.error}`);
-      }
+      console.log('✅ Datos enviados correctamente');
+      setCurrentStep(13); // Go to thank you step
+      
     } catch (error) {
       console.error('❌ Error:', error);
       alert(`Error inesperado: ${error instanceof Error ? error.message : 'Error desconocido'}`);
@@ -647,7 +666,7 @@ const WeddingForm: React.FC = () => {
                 <button 
                   className={styles.submitButton} 
                   onClick={handleSubmit}
-                  disabled={!formData.email || !formData.telefono || !formData.consent}
+                  disabled={!formData.contrayente1 || !formData.contrayente2 || !formData.consent}
                 >
                   ENVIAR
                 </button>
