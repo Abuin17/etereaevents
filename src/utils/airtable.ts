@@ -42,42 +42,27 @@ export const submitToAirtable = async (formData: FormData): Promise<{ success: b
       fields: airtableFields
     };
 
-    // Check if we're in development or production
-    const isDevelopment = import.meta.env.DEV;
+    // TEMPORARY: Use Airtable directly in both development and production
+    // until Vercel build issues are resolved
+    const airtableToken = import.meta.env.VITE_AIRTABLE_TOKEN;
+    const airtableBaseId = import.meta.env.VITE_AIRTABLE_BASE_ID;
+    const airtableTableId = import.meta.env.VITE_AIRTABLE_TABLE_ID;
     
-    let response;
+    if (!airtableToken || !airtableBaseId || !airtableTableId) {
+      throw new Error('Missing Airtable environment variables');
+    }
     
-    if (isDevelopment) {
-      // In development, call Airtable directly
-      const airtableToken = import.meta.env.VITE_AIRTABLE_TOKEN;
-      const airtableBaseId = import.meta.env.VITE_AIRTABLE_BASE_ID;
-      const airtableTableId = import.meta.env.VITE_AIRTABLE_TABLE_ID;
-      
-      if (!airtableToken || !airtableBaseId || !airtableTableId) {
-        throw new Error('Missing Airtable environment variables for development');
-      }
-      
-      response = await fetch(
-        `https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${airtableToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(airtableRecord),
-        }
-      );
-    } else {
-      // In production, use the Vercel API endpoint
-      response = await fetch('/api/airtable-lead', {
+    const response = await fetch(
+      `https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}`,
+      {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${airtableToken}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(airtableRecord),
-      });
-    }
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.text();
