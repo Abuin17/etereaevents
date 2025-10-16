@@ -145,7 +145,14 @@ const WeddingForm: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
+      console.log('🔍 DEBUG - FormData completo:', formData);
+      console.log('🔍 DEBUG - contrayente1 específico:', formData.contrayente1);
+      console.log('🔍 DEBUG - contrayente1 tipo:', typeof formData.contrayente1);
+      console.log('🔍 DEBUG - contrayente1 longitud:', formData.contrayente1?.length);
+      console.log('🔍 DEBUG - contrayente1 es string vacío?', formData.contrayente1 === '');
+      console.log('🔍 DEBUG - contrayente1 es undefined?', formData.contrayente1 === undefined);
       console.log('Enviando datos a Airtable...', formData);
+      
       const result = await submitToAirtable(formData);
       
       if (result.success) {

@@ -37,6 +37,13 @@ export default async function handler(req, res) {
 
   try {
     const rawFormData = req.body;
+    
+    // 🔍 DEBUG LOGS
+    console.log('🔍 DEBUG - Raw form data received:', rawFormData);
+    console.log('🔍 DEBUG - contrayente1 from request:', rawFormData.contrayente1);
+    console.log('🔍 DEBUG - contrayente1 type:', typeof rawFormData.contrayente1);
+    console.log('🔍 DEBUG - contrayente1 length:', rawFormData.contrayente1?.length);
+    console.log('🔍 DEBUG - All keys in request:', Object.keys(rawFormData));
 
     // 3. Validate required environment variables
     const airtableToken = process.env.AIRTABLE_TOKEN;
