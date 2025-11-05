@@ -6,7 +6,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/card/'],
+        disallow: ['/api/'],
+      },
+      {
+        // Permitir que los bots de redes sociales accedan a /card/ para previews
+        userAgent: ['facebookexternalhit', 'Twitterbot', 'LinkedInBot', 'WhatsApp', 'TelegramBot'],
+        allow: ['/card/'],
       },
     ],
     sitemap: 'https://www.etereaevents.com/sitemap.xml',
