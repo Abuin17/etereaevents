@@ -27,7 +27,9 @@ const Events: React.FC = () => {
     window.addEventListener('resize', checkOrientation);
 
     // Establecer el color de fondo cuando el componente se monta
-    document.documentElement.style.setProperty('--page-background', '#EFECE7');
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty('--page-background', '#EFECE7');
+    }
 
     let tl: gsap.core.Timeline | null = null;
     if (!isPortrait) {
@@ -53,7 +55,9 @@ const Events: React.FC = () => {
 
     // Limpiar cuando el componente se desmonta
     return () => {
-      document.documentElement.style.setProperty('--page-background', '#F7F6F4');
+      if (typeof document !== 'undefined') {
+        document.documentElement.style.setProperty('--page-background', '#F7F6F4');
+      }
       window.removeEventListener('resize', checkOrientation);
       if (tl) tl.kill();
     };

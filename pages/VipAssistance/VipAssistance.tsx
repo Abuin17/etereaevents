@@ -24,7 +24,9 @@ const VipAssistance: React.FC = () => {
     checkOrientation();
     window.addEventListener('resize', checkOrientation);
 
-    document.documentElement.style.setProperty('--page-background', '#393431');
+    if (typeof document !== 'undefined') {
+      document.documentElement.style.setProperty('--page-background', '#393431');
+    }
 
     let tl: gsap.core.Timeline | null = null;
     if (!isPortrait) {
@@ -45,7 +47,9 @@ const VipAssistance: React.FC = () => {
     }
 
     return () => {
-      document.documentElement.style.setProperty('--page-background', '#F7F6F4');
+      if (typeof document !== 'undefined') {
+        document.documentElement.style.setProperty('--page-background', '#F7F6F4');
+      }
       window.removeEventListener('resize', checkOrientation);
       if (tl) tl.kill();
     };

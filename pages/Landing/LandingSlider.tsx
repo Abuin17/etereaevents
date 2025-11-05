@@ -38,11 +38,12 @@ const LandingSlider: React.FC = () => {
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
+  const [isPortrait, setIsPortrait] = useState(false);
   const [parallaxOffsets, setParallaxOffsets] = useState<number[]>(slides.map(() => 0));
 
   // Calcula el ancho ideal de la slide para que la polaroid esté centrada
   function getSlideWidth() {
+    if (typeof window === 'undefined') return { slideWidth: 800, polaroidWidth: 422 };
     const vw = window.innerWidth;
     let polaroidWidth = Math.min(POLAROID_MAX_WIDTH, Math.round(vw * 0.6));
     // El ancho de la slide debe ser igual al ancho del viewport menos el padding lateral
@@ -52,7 +53,8 @@ const LandingSlider: React.FC = () => {
     return { slideWidth, polaroidWidth };
   }
 
-  const { slideWidth, polaroidWidth } = getSlideWidth();
+  const [slideDimensions, setSlideDimensions] = useState(() => getSlideWidth());
+  const { slideWidth, polaroidWidth } = slideDimensions;
 
   // Inicializar los arrays de refs
   useEffect(() => {
@@ -61,10 +63,14 @@ const LandingSlider: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const handleResize = () => {
       setIsPortrait(window.innerHeight > window.innerWidth);
+      setSlideDimensions(getSlideWidth());
     };
 
+    setIsPortrait(window.innerHeight > window.innerWidth);
+    setSlideDimensions(getSlideWidth());
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);

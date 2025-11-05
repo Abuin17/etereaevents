@@ -53,6 +53,8 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ memberId }) => {
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    
     if (!member) {
       router.push('/');
       return;
