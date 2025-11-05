@@ -17,6 +17,9 @@ dist-ssr
 out/
 build/
 
+# Temporary disabled files
+.temp-disabled/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
