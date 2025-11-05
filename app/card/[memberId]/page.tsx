@@ -36,11 +36,12 @@ export async function generateMetadata(
     };
   }
 
-  // Construir URL base - usar el dominio principal de producción, no preview deployments
-  // VERCEL_URL puede ser un preview deployment, necesitamos el dominio principal
+  // Construir URL base - usar siempre el dominio de producción
+  // VERCEL_URL puede ser un preview deployment, usar VERCEL_BRANCH_URL para producción
+  // O usar NEXT_PUBLIC_SITE_URL si está configurado, sino usar el dominio principal
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
-                  (process.env.VERCEL_URL && !process.env.VERCEL_URL.includes('gebg3sgnh')) 
-                    ? `https://${process.env.VERCEL_URL}` 
+                  (process.env.VERCEL && process.env.VERCEL_URL && !process.env.VERCEL_URL.includes('-gebg3sgnh-'))
+                    ? `https://etereaevents-14.vercel.app`
                     : 'https://etereaevents-14.vercel.app';
   
   // La imagen debe ser URL absoluta para que funcione en previews de WhatsApp/Telegram
