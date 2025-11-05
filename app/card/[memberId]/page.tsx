@@ -24,9 +24,10 @@ const teamMembers = [
 ];
 
 export async function generateMetadata(
-  { params }: { params: { memberId: string } }
+  { params }: { params: Promise<{ memberId: string }> }
 ): Promise<Metadata> {
-  const member = teamMembers.find(m => m.id === params.memberId);
+  const { memberId } = await params;
+  const member = teamMembers.find(m => m.id === memberId);
   
   if (!member) {
     return {
@@ -35,16 +36,14 @@ export async function generateMetadata(
     };
   }
 
-  // Construir URL base - usar metadataBase del layout como referencia
-  // En producción, Vercel proporciona VERCEL_URL automáticamente
+  // Construir URL base - en producción, Vercel proporciona VERCEL_URL automáticamente
+  // Usar el dominio correcto de Vercel
   const baseUrl = process.env.VERCEL_URL 
     ? `https://${process.env.VERCEL_URL}` 
     : process.env.NEXT_PUBLIC_SITE_URL || 'https://etereaevents-14.vercel.app';
   
-  // La imagen debe ser URL absoluta para que funcione en previews
-  const imageUrl = member.image.startsWith('http') 
-    ? member.image 
-    : `${baseUrl}${member.image}`;
+  // La imagen debe ser URL absoluta para que funcione en previews de WhatsApp/Telegram
+  const imageUrl = `${baseUrl}${member.image}`;
   const pageUrl = `${baseUrl}/card/${member.id}`;
 
   return {
@@ -78,10 +77,11 @@ export async function generateMetadata(
   };
 }
 
-export default function CardPage({ params }: { params: { memberId: string } }) {
+export default async function CardPage({ params }: { params: Promise<{ memberId: string }> }) {
+  const { memberId } = await params;
   return (
     <PageWrapper chromeless>
-      <BusinessCard memberId={params.memberId} />
+      <BusinessCard memberId={memberId} />
     </PageWrapper>
   );
 }
