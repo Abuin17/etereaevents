@@ -17,6 +17,10 @@ const VipAssistance: React.FC = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    
+    // Registrar el plugin ScrollTrigger solo en el cliente
+    gsap.registerPlugin(ScrollTrigger);
+    
     const checkOrientation = () => {
       setIsPortrait(window.innerWidth < window.innerHeight);
     };

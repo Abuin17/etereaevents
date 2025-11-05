@@ -7,9 +7,6 @@ import EventsInvisible from './EventsInvisible';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Registrar el plugin ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
-
 const Events: React.FC = () => {
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const imageWrapperRef = useRef<HTMLDivElement>(null);
@@ -19,6 +16,10 @@ const Events: React.FC = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    
+    // Registrar el plugin ScrollTrigger solo en el cliente
+    gsap.registerPlugin(ScrollTrigger);
+    
     const checkOrientation = () => {
       setIsPortrait(window.innerWidth < window.innerHeight);
     };

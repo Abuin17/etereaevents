@@ -9,9 +9,6 @@ import BodasSlider from '../../components/BodasSlider/BodasSlider';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Registrar el plugin ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
-
 const Bodas: React.FC = () => {
   const router = useRouter();
   const imageContainerRef = useRef<HTMLDivElement>(null);
@@ -22,6 +19,9 @@ const Bodas: React.FC = () => {
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    
+    // Registrar el plugin ScrollTrigger solo en el cliente
+    gsap.registerPlugin(ScrollTrigger);
     const checkOrientation = () => {
       setIsPortrait(window.innerWidth < window.innerHeight);
     };
