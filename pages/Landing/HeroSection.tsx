@@ -1,0 +1,96 @@
+import React, { useRef, useEffect, useState } from 'react';
+import './HeroSection.scss';
+// const heroImage1 = '/assets/images/wedding.jpg';
+// const heroImage2 = '/assets/images/home3.jpg';
+const heroImage3 = '/assets/images/opt-hero-sabana.jpg';
+const etereaLogo = '/assets/logos/ETÉREA_Logo_beige-claro.svg';
+
+const MARQUEE_ITEMS = 6;
+// const SLIDE_INTERVAL = 8000; // 8 segundos
+
+const HeroSection: React.FC = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  // const images = [heroImage1, heroImage2, heroImage3];
+  const images = [heroImage3]; // Solo la imagen de la sabana
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const handleResize = () => {
+      setIsPortrait(window.innerHeight > window.innerWidth);
+    };
+
+    const handleScroll = () => {
+      if (sectionRef.current && !isPortrait) {
+        const scrollY = window.scrollY;
+        sectionRef.current.style.backgroundPositionY = `${scrollY * 0.4}px`;
+      }
+    };
+
+    setIsPortrait(window.innerHeight > window.innerWidth);
+
+    // Carrusel automático
+    // const carouselInterval = setInterval(() => {
+    //   setIsTransitioning(true);
+    //   setTimeout(() => {
+    //     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    //     setIsTransitioning(false);
+    //   }, 1000); // Duración del fade
+    // }, SLIDE_INTERVAL);
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+      // clearInterval(carouselInterval);
+    };
+  }, [isPortrait]);
+
+  const items = Array.from({ length: MARQUEE_ITEMS }).map((_, i) => (
+    <div className="hero-section__item" key={i}>
+      <img src={etereaLogo} alt="Eterea Logo" className="hero-section__logo" />
+      <div className="hero-section__text">
+        NO ES APARIENCIA,<br />ES PRESENCIA
+      </div>
+    </div>
+  ));
+
+  return (
+    <section
+      className={`hero-section ${isPortrait ? 'hero-section--portrait' : ''}`}
+      ref={sectionRef}
+    >
+      <div className="hero-section__background">
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className={`hero-section__background-image hero-section__background-image--active`}
+            style={{ backgroundImage: `url(${image})` }}
+          />
+        ))}
+      </div>
+
+      {isPortrait ? (
+        <div className="hero-section__static">
+          <img src={etereaLogo} alt="Eterea Logo" className="hero-section__logo" />
+          <div className="hero-section__text">
+            NO ES APARIENCIA,<br />ES PRESENCIA
+          </div>
+        </div>
+      ) : (
+        <div className="hero-section__marquee">
+          <div className="hero-section__track">
+            {items}
+            {items}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default HeroSection; 
