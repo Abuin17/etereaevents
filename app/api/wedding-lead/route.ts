@@ -92,6 +92,9 @@ export async function POST(req: NextRequest) {
       telefono: insertData.telefono
     });
 
+    // Asegurarse de que estamos en el esquema public
+    await sql`SET search_path TO public`;
+    
     // Verificar que la tabla existe antes de insertar
     const tableCheck = await sql`
       SELECT EXISTS (
@@ -109,7 +112,7 @@ export async function POST(req: NextRequest) {
 
     // Insertar en la base de datos usando sql() helper para mejor manejo
     const result = await sql`
-      INSERT INTO wedding_leads (
+      INSERT INTO public.wedding_leads (
         contrayente1,
         contrayente2,
         c1_fecha_nacimiento,
@@ -179,7 +182,7 @@ export async function POST(req: NextRequest) {
     // Verificar que realmente se insertó
     const verify = await sql`
       SELECT id, email, created_at 
-      FROM wedding_leads 
+      FROM public.wedding_leads 
       WHERE id = ${insertedId}
     `;
     
@@ -225,6 +228,9 @@ export async function GET() {
 
     const sql = getDatabase();
 
+    // Asegurarse de que estamos en el esquema public
+    await sql`SET search_path TO public`;
+
     // Inicializar base de datos si es la primera vez
     if (!isInitialized) {
       console.log('[wedding-lead GET] Inicializando base de datos...');
@@ -234,28 +240,47 @@ export async function GET() {
     }
 
     // Probar conexión y obtener información de la base de datos
-    const [timeResult, dbResult, tableCheck, countResult] = await Promise.all([
-      sql`SELECT NOW() as current_time`,
-      sql`SELECT current_database() as database_name, version() as postgres_version`,
-      sql`
+    const timeResult = await sql`SELECT NOW() as current_time`;
+    const dbResult = await sql`SELECT current_database() as database_name, current_schema() as current_schema, version() as postgres_version`;
+    
+    let tableExists = false;
+    let totalRecords = 0;
+    let tableError = null;
+    
+    try {
+      const tableCheck = await sql`
         SELECT EXISTS (
           SELECT FROM information_schema.tables 
           WHERE table_schema = 'public' 
           AND table_name = 'wedding_leads'
         ) as table_exists
-      `,
-      sql`SELECT COUNT(*) as total FROM wedding_leads`
-    ]);
+      `;
+      tableExists = tableCheck[0]?.table_exists || false;
+    } catch (err) {
+      tableError = err instanceof Error ? err.message : String(err);
+      console.error('[wedding-lead GET] Error checking table:', tableError);
+    }
+    
+    try {
+      if (tableExists) {
+        const countResult = await sql`SELECT COUNT(*)::int as total FROM public.wedding_leads`;
+        totalRecords = Number(countResult[0]?.total || 0);
+      }
+    } catch (err) {
+      console.error('[wedding-lead GET] Error counting records:', err instanceof Error ? err.message : String(err));
+    }
     
     return NextResponse.json({
       status: 'connected',
       database: 'Neon PostgreSQL',
       databaseName: dbResult[0]?.database_name,
+      currentSchema: dbResult[0]?.current_schema,
       serverTime: timeResult[0]?.current_time,
       postgresVersion: dbResult[0]?.postgres_version?.split(' ')[0] + ' ' + dbResult[0]?.postgres_version?.split(' ')[1],
-      tableExists: tableCheck[0]?.table_exists,
-      totalRecords: Number(countResult[0]?.total || 0),
-      isInitialized: isInitialized
+      tableExists: tableExists,
+      totalRecords: totalRecords,
+      isInitialized: isInitialized,
+      tableError: tableError || undefined
     });
   } catch (err) {
     console.error('[wedding-lead GET] Error:', err);

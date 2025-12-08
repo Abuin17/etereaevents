@@ -45,8 +45,16 @@ export function getDatabase(): NeonQueryFunction<false, false> {
 // Función helper para inicializar la tabla si no existe
 export async function initializeDatabase() {
   const sql = getDatabase();
+  
+  // Asegurarse de que estamos en el esquema public
+  try {
+    await sql`SET search_path TO public`;
+  } catch (e) {
+    console.warn('[initializeDatabase] Could not set search_path:', e);
+  }
+  
   await sql`
-    CREATE TABLE IF NOT EXISTS wedding_leads (
+    CREATE TABLE IF NOT EXISTS public.wedding_leads (
       id SERIAL PRIMARY KEY,
       
       -- Contrayentes
