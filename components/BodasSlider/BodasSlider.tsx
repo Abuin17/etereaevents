@@ -1,7 +1,8 @@
+'use client';
+
 import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import ScrollToPlugin from 'gsap/ScrollToPlugin';
-gsap.registerPlugin(ScrollToPlugin);
 import './BodasSlider.scss';
 
 const bodasImage1 = '/assets/images/slider-boda-1.jpg';
@@ -36,11 +37,13 @@ const BodasSlider: React.FC = () => {
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const textRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
+  const [isPortrait, setIsPortrait] = useState(false);
   const [parallaxOffsets, setParallaxOffsets] = useState<number[]>(slides.map(() => 0));
+  const [isClient, setIsClient] = useState(false);
 
   // Calcula el ancho ideal de la slide para que la polaroid esté centrada
   function getSlideWidth() {
+    if (typeof window === 'undefined') return { slideWidth: 800, polaroidWidth: 400 };
     const vw = window.innerWidth;
     let polaroidWidth = Math.min(POLAROID_MAX_WIDTH, Math.round(vw * 0.6));
     // El ancho de la slide debe ser igual al ancho del viewport menos el padding lateral
@@ -52,6 +55,13 @@ const BodasSlider: React.FC = () => {
 
   const { slideWidth, polaroidWidth } = getSlideWidth();
 
+  // Inicializar cliente y registrar GSAP
+  useEffect(() => {
+    setIsClient(true);
+    gsap.registerPlugin(ScrollToPlugin);
+    setIsPortrait(window.innerHeight > window.innerWidth);
+  }, []);
+
   // Inicializar los arrays de refs
   useEffect(() => {
     slideRefs.current = slideRefs.current.slice(0, slides.length);
@@ -59,15 +69,19 @@ const BodasSlider: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (!isClient) return;
+    
     const handleResize = () => {
       setIsPortrait(window.innerHeight > window.innerWidth);
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [isClient]);
 
   useEffect(() => {
+    if (!isClient) return;
+    
     const scrollEl = scrollRef.current;
     const stickyEl = stickyRef.current;
     const sliderEl = sliderRef.current;
@@ -75,7 +89,7 @@ const BodasSlider: React.FC = () => {
 
     // Asegurar que empiece por la primera slide
     setTimeout(() => {
-      sliderEl.scrollTo({ left: 0, behavior: 'instant' });
+      sliderEl.scrollTo({ left: 0, behavior: 'instant' as ScrollBehavior });
     }, 0);
 
     let lastIndex = 0;
@@ -190,7 +204,7 @@ const BodasSlider: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isClient]);
 
   return (
     <div

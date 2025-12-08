@@ -13,8 +13,8 @@ interface PageTransitionProps {
 const routeBackgrounds: Record<string, string> = {
   '/': '#F7F6F4',
   '/eventos': '#EFECE7',
-  '/bodas': '#F7F6F4',
-  '/bodas/formulario': '#F7F6F4',
+  '/bodas': '#FFFFFF',
+  '/bodas/formulario': '#FFFFFF',
   '/nosotras': '#F7F6F4',
   '/vip-assistance': '#393431',
   '/contacto': '#393431',

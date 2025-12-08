@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 
 export default function BodasFormularioPage() {
   return (
-    <PageWrapper>
+    <PageWrapper backgroundColor="#FFFFFF">
       <WeddingsFormPage />
     </PageWrapper>
   );

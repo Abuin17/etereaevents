@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function BodasPage() {
   return (
-    <PageWrapper>
+    <PageWrapper backgroundColor="#FFFFFF">
       <Bodas />
     </PageWrapper>
   );
