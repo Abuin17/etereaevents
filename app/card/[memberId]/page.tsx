@@ -38,7 +38,8 @@ export async function generateMetadata(
 
   // Construir URL base - usar siempre el dominio de producción
   // NEXT_PUBLIC_SITE_URL debe estar configurado en Vercel, sino usar el dominio por defecto
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://etereaevents-14.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://www.etereaevents.com');
   
   // La imagen debe ser URL absoluta para que funcione en previews de WhatsApp/Telegram
   const imageUrl = `${baseUrl}${member.image}`;
