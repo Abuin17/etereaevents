@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from './FeedbackForm.module.scss';
 
+const nataliaVirginiaImage = '/assets/images/natalia-virginia.jpg';
+
 export interface FeedbackFormData {
   // Step 1: Datos personales
   nombre: string;
@@ -309,7 +311,7 @@ const FeedbackForm: React.FC = () => {
           <div className={styles.step}>
             <div className={styles.stepContentScrollable}>
               <div className={styles.questionBlock}>
-                <h2 className={styles.titleSmall}>¿CÓMO DESCRIBIRÍAS TU EXPERIENCIA TRABAJANDO CON ETÉREA? *</h2>
+                <h2 className={styles.titleSmall}>¿CÓMO DESCRIBIRÍAS TU EXPERIENCIA CON ETÉREA? *</h2>
                 <textarea
                   placeholder="Mi experiencia con Etérea..."
                   value={formData.experiencia}
@@ -384,6 +386,11 @@ const FeedbackForm: React.FC = () => {
                     Gracias por confiar en Etérea y por tomarte el tiempo 
                     de compartir tu experiencia con nosotras.
                   </p>
+                  <img 
+                    src={nataliaVirginiaImage} 
+                    alt="Natalia y Virginia - Equipo Etérea" 
+                    className={styles.thankYouImage}
+                  />
                 </div>
                 <div className={styles.thankYouButtons}>
                   <button 
