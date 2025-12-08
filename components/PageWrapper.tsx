@@ -7,6 +7,7 @@ import Footer from './Footer/Footer';
 import CookieConsent from './CookieConsent/CookieConsent';
 import PageTransition from './PageTransition/PageTransition';
 import SmoothScroll from './SmoothScroll/SmoothScroll';
+import ScrollToTop from './ScrollToTop/ScrollToTop';
 
 interface PageWrapperProps {
   children: React.ReactNode;
@@ -40,6 +41,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({
   // Modo normal con transiciones elegantes y smooth scroll
   return (
     <SmoothScroll>
+      <ScrollToTop />
       <div className="app">
         <Navbar />
         <main className="app__main">

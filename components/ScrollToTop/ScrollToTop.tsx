@@ -7,10 +7,18 @@ const ScrollToTop = () => {
   const pathname = usePathname();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll inmediato al cambiar de página (sin animación para mejor UX)
+    // Usar Lenis si está disponible, sino usar window.scrollTo
+    const lenis = (window as any).lenis;
+    
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
   }, [pathname]);
 
   return null;
 };
 
-export default ScrollToTop; 
+export default ScrollToTop;
