@@ -1,13 +1,38 @@
 import { neon } from '@neondatabase/serverless';
 
-// Crear cliente de Neon usando la variable de entorno DATABASE_URL
-const databaseUrl = process.env.DATABASE_URL;
+// Función para limpiar y validar la cadena de conexión
+function cleanDatabaseUrl(url: string | undefined): string {
+  if (!url) {
+    throw new Error(
+      'DATABASE_URL no está configurada. Por favor, añade DATABASE_URL a tu archivo .env.local'
+    );
+  }
 
-if (!databaseUrl) {
-  throw new Error(
-    'DATABASE_URL no está configurada. Por favor, añade DATABASE_URL a tu archivo .env.local'
-  );
+  // Limpiar la cadena: remover 'psql', comillas simples/dobles, y espacios extra
+  let cleaned = url.trim();
+  
+  // Remover comillas al inicio y final
+  cleaned = cleaned.replace(/^['"]|['"]$/g, '');
+  
+  // Si empieza con 'psql', removerlo y limpiar
+  if (cleaned.startsWith('psql')) {
+    cleaned = cleaned.replace(/^psql\s+/, '').trim();
+    // Remover comillas que puedan quedar después de psql
+    cleaned = cleaned.replace(/^['"]|['"]$/g, '');
+  }
+  
+  // Validar que sea una URL válida de PostgreSQL
+  if (!cleaned.startsWith('postgresql://') && !cleaned.startsWith('postgres://')) {
+    throw new Error(
+      `DATABASE_URL no es una URL válida de PostgreSQL. Formato esperado: postgresql://user:password@host/database`
+    );
+  }
+
+  return cleaned;
 }
+
+// Crear cliente de Neon usando la variable de entorno DATABASE_URL
+const databaseUrl = cleanDatabaseUrl(process.env.DATABASE_URL);
 
 export const sql = neon(databaseUrl);
 
