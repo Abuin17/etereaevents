@@ -143,37 +143,70 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         
+        {/* Favicon estático por defecto para compatibilidad */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/Favicon-dark.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/Favicon-dark.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/Favicon-dark.png" />
+        
         {/* Favicon dinámico basado en el tema del sistema operativo */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function () {
-                var existingFavicons = document.querySelectorAll('link[rel="icon"]');
-                existingFavicons.forEach(function(el) { el.remove(); });
-                
-                var link = document.createElement('link');
-                link.id = 'dynamic-favicon';
-                link.rel = 'icon';
-                link.type = 'image/png';
-                link.sizes = '32x32';
-                document.head.appendChild(link);
-                
-                var mq = window.matchMedia('(prefers-color-scheme: dark)');
-                
-                function setFavicon() {
-                  var href = mq.matches 
-                    ? '/assets/images/Favicon-light.png' 
-                    : '/assets/images/Favicon-dark.png';
-                  link.setAttribute('href', href + '?v=' + Date.now());
+                // Esperar a que el DOM esté completamente cargado
+                function initFavicon() {
+                  // Remover favicons estáticos de Next.js/Vercel
+                  var existingFavicons = document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]');
+                  existingFavicons.forEach(function(el) { 
+                    if (!el.id || el.id !== 'dynamic-favicon') {
+                      el.remove(); 
+                    }
+                  });
+                  
+                  // Crear o actualizar el favicon dinámico
+                  var link = document.getElementById('dynamic-favicon') || document.createElement('link');
+                  if (!link.id) {
+                    link.id = 'dynamic-favicon';
+                    link.rel = 'icon';
+                    link.type = 'image/png';
+                    link.sizes = '32x32';
+                    document.head.appendChild(link);
+                  }
+                  
+                  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+                  
+                  function setFavicon() {
+                    var href = mq.matches 
+                      ? '/assets/images/Favicon-light.png' 
+                      : '/assets/images/Favicon-dark.png';
+                    link.setAttribute('href', href + '?v=' + Date.now());
+                    
+                    // También actualizar apple-touch-icon
+                    var appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
+                    if (appleIcon) {
+                      appleIcon.setAttribute('href', href);
+                    }
+                  }
+                  
+                  setFavicon();
+                  
+                  // Escuchar cambios en el tema
+                  if (mq.addEventListener) {
+                    mq.addEventListener('change', setFavicon);
+                  } else if (mq.addListener) {
+                    mq.addListener(setFavicon);
+                  }
                 }
                 
-                setFavicon();
-                
-                if (mq.addEventListener) {
-                  mq.addEventListener('change', setFavicon);
-                } else if (mq.addListener) {
-                  mq.addListener(setFavicon);
+                // Ejecutar cuando el DOM esté listo
+                if (document.readyState === 'loading') {
+                  document.addEventListener('DOMContentLoaded', initFavicon);
+                } else {
+                  initFavicon();
                 }
+                
+                // También ejecutar después de un pequeño delay para asegurar que Next.js haya cargado sus favicons
+                setTimeout(initFavicon, 100);
               })();
             `,
           }}

@@ -43,14 +43,14 @@
 .formTitle {
   font-family: $font-primary;
   font-weight: 400;
-  font-size: calc($font-size-sm * 2); // x2 tamaño
+  font-size: calc($font-size-sm * 1.5); // 1.5x tamaño
   letter-spacing: 0.15em;
   color: $primary-color;
   margin: 0;
   text-align: center;
   
   @media (max-width: $breakpoint-sm) {
-    font-size: calc($font-size-sm * 1.5);
+    font-size: calc($font-size-sm * 1.2);
     letter-spacing: 0.1em;
   }
 }
