@@ -108,8 +108,18 @@ const FeedbackForm: React.FC = () => {
     }
   };
 
-  const canProceedStep1 = formData.nombre.trim() && formData.empresa.trim() && formData.cargo.trim();
-  const canSubmit = formData.experiencia.trim() && formData.autorizacion;
+  // Validación reactiva para el paso 1
+  const canProceedStep1 = Boolean(
+    formData.nombre.trim() && 
+    formData.empresa.trim() && 
+    formData.cargo.trim()
+  );
+  
+  // Validación para el último paso
+  const canSubmit = Boolean(
+    formData.experiencia.trim() && 
+    formData.autorizacion
+  );
 
   const handleSubmit = async () => {
     if (isSubmitting || !canSubmit) return;
