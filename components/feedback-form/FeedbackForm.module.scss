@@ -401,10 +401,16 @@
 // Authorization simple (sin título, recuadro ni descripción)
 .authorizationSimple {
   width: 100%;
-  max-width: 500px;
+  max-width: 500px; // Mismo ancho que el textarea
   display: flex;
   flex-direction: column;
   margin-top: $spacing-lg;
+  align-items: center; // Centrar el contenido
+}
+
+.authorizationSimple .radioGroupVertical {
+  width: 100%;
+  max-width: 100%; // Asegurar que ocupe todo el ancho disponible
 }
 
 .radioOptionAuth {
