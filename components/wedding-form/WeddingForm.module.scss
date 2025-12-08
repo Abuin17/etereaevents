@@ -672,11 +672,14 @@
   z-index: 100;
   width: 100%;
   margin-top: auto; // Empuja el footer hacia abajo
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08), 0 -2px 8px rgba(0, 0, 0, 0.04);
+  border-top: 1px solid rgba(57, 52, 49, 0.08);
   
   // Mobile adjustments
   @media (max-width: $breakpoint-sm) {
     gap: $spacing-md;
     padding: $spacing-md 0;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06), 0 -1px 4px rgba(0, 0, 0, 0.03);
   }
 }
 

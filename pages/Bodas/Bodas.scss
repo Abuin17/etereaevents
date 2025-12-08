@@ -19,6 +19,33 @@
     gap: $spacing-lg;
   }
 
+  &__title {
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: $title-size;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: center;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-family: $font-accent;
+    font-weight: 400;
+    font-size: $events-subtitle-size;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: $primary-color;
+    position: absolute;
+    bottom: -1.5rem;
+    left: 65%;
+    transform: rotate(-4deg);
+    width: 100%;
+    white-space: nowrap;
+    margin: 0;
+  }
+
   &__description {
     font-family: $font-secondary;
     font-size: $body-font-size;
@@ -195,6 +222,15 @@
 
   @media (max-width: $breakpoint-sm) {
     padding: 6rem $spacing-md $spacing-xl $spacing-md;
+
+    &__title {
+      font-size: $font-size-2xl;
+    }
+
+    &__subtitle {
+      font-size: $font-size-xl;
+      bottom: -1.25rem;
+    }
 
     &__description {
       font-size: $font-size-base;

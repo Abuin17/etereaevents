@@ -54,8 +54,8 @@ const Bodas: React.FC = () => {
   return (
     <div className="bodas">
       <div className="bodas__header">
-        <h1 className="events__title">BODAS</h1>
-        <span className="events__subtitle">nuestro compromiso</span>
+        <h1 className="bodas__title">BODAS</h1>
+        <span className="bodas__subtitle">nuestro compromiso</span>
       </div>
       <p className="bodas__description">
         Desde la idea inicial hasta el último detalle. Escuchamos con atención, entendemos lo que importa, porque cada elección es parte de tu historia.
