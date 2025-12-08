@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './error.module.scss';
 
 export default function FeedbackErrorPage() {
@@ -10,13 +9,10 @@ export default function FeedbackErrorPage() {
       {/* Header with logo */}
       <div className={styles.header}>
         <Link href="/" className={styles.logoLink}>
-          <Image
-            src="/assets/logos/ETÉREA_Logo_antracita.svg"
+          <img
+            src="/assets/logos/ETÉREA_Icono_antracita.svg"
             alt="Etérea Events"
-            width={120}
-            height={35}
             className={styles.logo}
-            priority
           />
         </Link>
       </div>

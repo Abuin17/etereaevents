@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './FeedbackForm.module.scss';
 
 export interface FeedbackFormData {
@@ -432,13 +431,10 @@ const FeedbackForm: React.FC = () => {
       {/* Header with logo */}
       <div className={styles.formHeader}>
         <Link href="/" className={styles.logoLink}>
-          <Image
-            src="/assets/logos/ETÉREA_Logo_antracita.svg"
+          <img
+            src="/assets/logos/ETÉREA_Icono_antracita.svg"
             alt="Etérea Events"
-            width={120}
-            height={35}
             className={styles.logo}
-            priority
           />
         </Link>
         <h1 className={styles.formTitle}>FORMULARIO POST-EVENTO</h1>
