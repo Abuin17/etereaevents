@@ -82,8 +82,7 @@ const Navbar: React.FC = () => {
                 <img src={rhombusIcon} alt="" />
               </span>
             </Link>
-            {/* TEMPORARILY DISABLED - Bodas page */}
-            {/* <Link href="/bodas" className="menu-overlay__item eterea-title" onClick={closeMenu}>
+            <Link href="/bodas" className="menu-overlay__item eterea-title" onClick={closeMenu}>
               <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
                 <img src={rhombusIcon} alt="" />
               </span>
@@ -91,7 +90,7 @@ const Navbar: React.FC = () => {
               <span className="menu-overlay__rhombus menu-overlay__rhombus--right">
                 <img src={rhombusIcon} alt="" />
               </span>
-            </Link> */}
+            </Link>
             <Link href="/vip-assistance" className="menu-overlay__item eterea-title" onClick={closeMenu}>
               <span className="menu-overlay__rhombus menu-overlay__rhombus--left">
                 <img src={rhombusIcon} alt="" />
@@ -131,10 +130,9 @@ const Navbar: React.FC = () => {
                       <Link href="/eventos" className="navbar__menu-link" onClick={closeMenu}>
             Eventos
           </Link>
-          {/* TEMPORARILY DISABLED - Bodas page */}
-          {/* <Link href="/bodas" className="navbar__menu-link" onClick={closeMenu}>
+          <Link href="/bodas" className="navbar__menu-link" onClick={closeMenu}>
             Tailored Weddings
-          </Link> */}
+          </Link>
           <Link href="/vip-assistance" className="navbar__menu-link" onClick={closeMenu}>
             VIP Assistance
           </Link>

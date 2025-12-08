@@ -19,8 +19,7 @@ const ServicesSection: React.FC = () => (
       </div>
       <div className="services-section__buttons">
         <Link href="/eventos" className="eterea-button">EVENTOS</Link>
-        {/* TEMPORARILY DISABLED - Bodas page */}
-        {/* <Link href="/bodas" className="eterea-button" onClick={() => window.scrollTo(0, 0)}>BODAS</Link> */}
+        <Link href="/bodas" className="eterea-button" onClick={() => window.scrollTo(0, 0)}>BODAS</Link>
         <Link href="/vip-assistance" className="eterea-button" onClick={() => window.scrollTo(0, 0)}>VIP ASSISTANCE</Link>
       </div>
     </div>
