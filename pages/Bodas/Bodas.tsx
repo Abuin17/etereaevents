@@ -97,7 +97,7 @@ const Bodas: React.FC = () => {
         <Link 
           href="/bodas/formulario" 
           className="eterea-button bodas__cta-button"
-          onClick={() => window.scrollTo(0, 0)}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           CUÉNTANOS TU HISTORIA
         </Link>

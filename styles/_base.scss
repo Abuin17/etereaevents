@@ -12,6 +12,16 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  
+  // Fallback para navegadores que no soportan scroll-behavior
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+  }
+  
+  // Respeta la preferencia de movimiento reducido
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+  }
 }
   
 html::-webkit-scrollbar, body::-webkit-scrollbar {
@@ -23,6 +33,7 @@ body {
   line-height: 1.5;
   color: $primary-color;
   background-color: $secondary-color;
+  scroll-behavior: smooth;
 }
 
 // Typography
