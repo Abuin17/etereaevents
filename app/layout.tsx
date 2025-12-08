@@ -12,6 +12,16 @@ export const metadata: Metadata = {
   authors: [{ name: 'Etérea Events', url: 'https://www.etereaevents.com' }],
   creator: 'Etérea Events',
   publisher: 'Etérea Events',
+  icons: {
+    icon: [
+      { url: '/assets/images/Favicon-dark.png', sizes: '32x32', type: 'image/png' },
+      { url: '/assets/images/Favicon-dark.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/assets/images/Favicon-dark.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/assets/images/Favicon-dark.png',
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -143,70 +153,45 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         
-        {/* Favicon estático por defecto para compatibilidad */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/Favicon-dark.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/Favicon-dark.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/Favicon-dark.png" />
-        
         {/* Favicon dinámico basado en el tema del sistema operativo */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function () {
-                // Esperar a que el DOM esté completamente cargado
-                function initFavicon() {
-                  // Remover favicons estáticos de Next.js/Vercel
-                  var existingFavicons = document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]');
-                  existingFavicons.forEach(function(el) { 
-                    if (!el.id || el.id !== 'dynamic-favicon') {
-                      el.remove(); 
-                    }
+                function setFavicon() {
+                  var mq = window.matchMedia('(prefers-color-scheme: dark)');
+                  var href = mq.matches 
+                    ? '/assets/images/Favicon-light.png' 
+                    : '/assets/images/Favicon-dark.png';
+                  
+                  // Actualizar todos los favicons
+                  var icons = document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]');
+                  icons.forEach(function(el) {
+                    el.setAttribute('href', href + '?v=' + Date.now());
                   });
                   
-                  // Crear o actualizar el favicon dinámico
-                  var link = document.getElementById('dynamic-favicon') || document.createElement('link');
-                  if (!link.id) {
-                    link.id = 'dynamic-favicon';
-                    link.rel = 'icon';
-                    link.type = 'image/png';
-                    link.sizes = '32x32';
-                    document.head.appendChild(link);
-                  }
-                  
-                  var mq = window.matchMedia('(prefers-color-scheme: dark)');
-                  
-                  function setFavicon() {
-                    var href = mq.matches 
-                      ? '/assets/images/Favicon-light.png' 
-                      : '/assets/images/Favicon-dark.png';
-                    link.setAttribute('href', href + '?v=' + Date.now());
-                    
-                    // También actualizar apple-touch-icon
-                    var appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
-                    if (appleIcon) {
-                      appleIcon.setAttribute('href', href);
-                    }
-                  }
-                  
-                  setFavicon();
-                  
-                  // Escuchar cambios en el tema
-                  if (mq.addEventListener) {
-                    mq.addEventListener('change', setFavicon);
-                  } else if (mq.addListener) {
-                    mq.addListener(setFavicon);
+                  // Apple touch icon
+                  var appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
+                  if (appleIcon) {
+                    appleIcon.setAttribute('href', href);
                   }
                 }
                 
-                // Ejecutar cuando el DOM esté listo
+                // Ejecutar inmediatamente y cuando cambie el tema
                 if (document.readyState === 'loading') {
-                  document.addEventListener('DOMContentLoaded', initFavicon);
+                  document.addEventListener('DOMContentLoaded', setFavicon);
                 } else {
-                  initFavicon();
+                  setFavicon();
                 }
                 
-                // También ejecutar después de un pequeño delay para asegurar que Next.js haya cargado sus favicons
-                setTimeout(initFavicon, 100);
+                // Escuchar cambios en el tema
+                var mq = window.matchMedia('(prefers-color-scheme: dark)');
+                if (mq.addEventListener) {
+                  mq.addEventListener('change', setFavicon);
+                }
+                
+                // Delay para asegurar que Next.js haya terminado
+                setTimeout(setFavicon, 500);
               })();
             `,
           }}
