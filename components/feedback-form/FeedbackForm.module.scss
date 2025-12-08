@@ -12,18 +12,55 @@
 
 .formHeader {
   width: 100%;
-  padding: $spacing-xl $spacing-md;
-  text-align: center;
+  padding: $spacing-md $spacing-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid rgba($primary-color, 0.1);
+  background: $secondary-color;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.logo {
+  height: 35px;
+  width: auto;
+  object-fit: contain;
 }
 
 .formTitle {
   font-family: $font-primary;
   font-weight: 400;
-  font-size: $font-size-lg;
-  letter-spacing: 0.1em;
+  font-size: $font-size-sm;
+  letter-spacing: 0.15em;
   color: $primary-color;
   margin: 0;
+  text-align: center;
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+.headerSpacer {
+  width: 120px; // Same as logo for balance
+  
+  @media (max-width: $breakpoint-sm) {
+    width: 60px;
+  }
 }
 
 .formWrapper {
@@ -36,7 +73,7 @@
 
 .formContainer {
   width: 100%;
-  max-width: 600px;
+  max-width: 650px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,9 +114,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex: 1;
-  padding: $spacing-2xl 0;
+  padding: $spacing-xl 0;
+  position: relative;
 }
 
 .stepContent {
@@ -89,6 +127,44 @@
   align-items: center;
   gap: $spacing-xl;
   text-align: center;
+}
+
+.stepContentScrollable {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-2xl;
+  text-align: center;
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+  padding: $spacing-md;
+  padding-bottom: $spacing-2xl;
+  
+  // Hide scrollbar but keep functionality
+  scrollbar-width: thin;
+  scrollbar-color: rgba($primary-color, 0.3) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba($primary-color, 0.3);
+    border-radius: 2px;
+  }
+}
+
+.questionBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
 }
 
 .titleGroup {
@@ -101,15 +177,37 @@
 .title {
   font-family: $font-primary;
   font-weight: 400;
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   line-height: 1.2;
   letter-spacing: 0;
   text-align: center;
   text-transform: uppercase;
   color: $primary-color;
   margin: 0;
-  max-width: 580px;
+  max-width: 550px;
   text-wrap: balance;
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.25rem;
+  }
+}
+
+.titleSmall {
+  font-family: $font-primary;
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  color: $primary-color;
+  margin: 0;
+  max-width: 500px;
+  text-wrap: balance;
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1rem;
+  }
 }
 
 .subtitleRevans {
@@ -134,7 +232,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: $spacing-2xl;
+  gap: $spacing-xl;
   align-items: center;
 }
 
@@ -175,8 +273,8 @@
 
 .textarea {
   width: 100%;
-  max-width: 450px;
-  min-height: 120px;
+  max-width: 500px;
+  min-height: 100px;
   font-family: $font-secondary;
   font-weight: 400;
   font-size: $font-size-base;
@@ -202,47 +300,91 @@
 }
 
 .textareaLarge {
-  @extend .textarea;
-  min-height: 180px;
+  width: 100%;
+  max-width: 500px;
+  min-height: 150px;
+  font-family: $font-secondary;
+  font-weight: 400;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: $primary-color;
+  background: $beige-light;
+  border: 1px solid lighten($primary-color, 20%);
+  border-radius: 4px;
+  padding: $spacing-md;
+  text-align: left;
+  outline: none;
+  resize: vertical;
+  transition: all 0.3s ease;
+
+  &::placeholder {
+    color: lighten($primary-color, 30%);
+  }
+
+  &:focus {
+    border-color: lighten($primary-color, 10%);
+    background: lighten($beige-light, 2%);
+  }
 }
 
 .disclaimer {
   font-family: $font-secondary;
   font-weight: 400;
-  font-size: $font-size-sm;
+  font-size: 12px; // Fixed at 12px as requested
   line-height: 1.4;
   color: lighten($primary-color, 20%);
   text-align: center;
-  max-width: 400px;
+  max-width: 380px;
   font-style: italic;
   margin-top: $spacing-md;
-  padding: $spacing-md;
+  padding: $spacing-sm $spacing-md;
   background: rgba($primary-color, 0.03);
   border-radius: 4px;
 }
 
-.experienceNote {
-  font-family: $font-secondary;
-  font-weight: 400;
-  font-size: $font-size-sm;
-  line-height: 1.4;
+// Scroll indicator
+.scrollIndicator {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  pointer-events: none;
+}
+
+.scrollArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba($secondary-color, 0.95);
+  border: 1px solid rgba($primary-color, 0.2);
+  border-radius: 50%;
   color: $primary-color;
-  text-align: center;
-  max-width: 450px;
-  padding: $spacing-md;
-  background: rgba($primary-color, 0.05);
-  border-left: 3px solid $primary-color;
-  border-radius: 0 4px 4px 0;
-  margin-bottom: $spacing-md;
+  font-size: 1rem;
+  animation: bounceDown 1.5s ease-in-out infinite;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes bounceDown {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.7;
+  }
 }
 
 // Radio buttons vertical
 .radioGroupVertical {
   display: flex;
   flex-direction: column;
-  gap: $spacing-sm;
+  gap: $spacing-xs;
   width: 100%;
-  max-width: 300px;
+  max-width: 280px;
 }
 
 .radioOption {
@@ -254,11 +396,12 @@
   border-radius: 4px;
   transition: all 0.3s ease;
   background: $secondary-color;
-  border: 1px solid lighten($primary-color, 20%);
+  border: 1px solid lighten($primary-color, 25%);
   width: 100%;
 
   &:hover {
     background: $beige-light;
+    border-color: lighten($primary-color, 15%);
   }
 
   input[type="radio"] {
@@ -269,10 +412,10 @@
 .radioLabel {
   font-family: $font-primary;
   font-weight: 400;
-  font-size: $font-size-base;
+  font-size: 0.85rem;
   letter-spacing: 0.02em;
   text-align: center;
-  color: lighten($primary-color, 30%);
+  color: lighten($primary-color, 25%);
   transition: color 0.3s ease;
 }
 
@@ -295,92 +438,123 @@
   max-width: 500px;
   display: flex;
   flex-direction: column;
-  gap: $spacing-lg;
+  gap: $spacing-md;
   padding: $spacing-lg;
-  background: rgba($secondary-color, 0.5);
-  border: 1px solid rgba($primary-color, 0.15);
-  border-radius: 4px;
+  background: rgba($primary-color, 0.03);
+  border: 1px solid rgba($primary-color, 0.12);
+  border-radius: 6px;
+  margin-top: $spacing-md;
 }
 
-.checkboxOption {
+.authTitle {
+  font-family: $font-primary;
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: $primary-color;
+  margin: 0;
+  text-align: center;
+}
+
+.authDescription {
+  font-family: $font-secondary;
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: lighten($primary-color, 15%);
+  margin: 0;
+  text-align: center;
+}
+
+.radioOptionAuth {
   display: flex;
   align-items: flex-start;
   gap: $spacing-sm;
   cursor: pointer;
-  text-align: left;
-}
-
-.checkbox {
-  position: relative;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 2px solid $primary-color;
-  border-radius: 3px;
-  background: $secondary-color;
-  cursor: pointer;
-  margin-top: 2px;
-  flex-shrink: 0;
+  padding: $spacing-md;
+  border-radius: 4px;
   transition: all 0.3s ease;
-  
+  background: $secondary-color;
+  border: 1px solid lighten($primary-color, 25%);
+  width: 100%;
+  text-align: left;
+
   &:hover {
-    border-color: lighten($primary-color, 20%);
-    background: rgba($primary-color, 0.05);
+    background: $beige-light;
+    border-color: lighten($primary-color, 15%);
   }
-  
-  &:checked {
-    background: $primary-color;
-    border-color: $primary-color;
+
+  input[type="radio"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid $primary-color;
+    border-radius: 50%;
+    background: $secondary-color;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.3s ease;
+    position: relative;
     
-    &::after {
-      content: '';
-      position: absolute;
-      left: 4px;
-      width: 6px;
-      height: 10px;
-      border: solid $secondary-color;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg);
+    &:checked {
+      background: $primary-color;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 6px;
+        height: 6px;
+        background: $secondary-color;
+        border-radius: 50%;
+      }
     }
   }
-  
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
-  }
 }
 
-.checkboxLabel {
+.radioLabelAuth {
   font-family: $font-secondary;
   font-weight: 400;
-  font-size: $font-size-sm;
+  font-size: 0.9rem;
   line-height: 1.4;
   color: $primary-color;
   cursor: pointer;
 }
 
-.privacyLink {
-  color: $primary-color;
-  text-decoration: underline;
-  font-weight: 500;
-  
-  &:hover {
-    color: lighten($primary-color, 20%);
-  }
+.radioOptionAuth:has(input:checked) {
+  background: rgba($primary-color, 0.08);
+  border-color: $primary-color;
+}
+
+// Error message
+.errorMessage {
+  width: 100%;
+  max-width: 500px;
+  padding: $spacing-md;
+  background: rgba(211, 47, 47, 0.1);
+  border: 1px solid rgba(211, 47, 47, 0.3);
+  border-radius: 4px;
+  color: #c62828;
+  font-family: $font-secondary;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 // Buttons
 .submitButtonContainer {
-  margin-top: $spacing-xl;
+  margin-top: $spacing-lg;
   display: flex;
   justify-content: center;
   width: 100%;
+  padding-bottom: $spacing-md;
 }
 
 .submitButton {
   font-family: $font-primary;
   font-weight: 400;
-  font-size: $font-size-lg;
+  font-size: $font-size-base;
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
@@ -394,7 +568,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 175px;
+  min-width: 160px;
 
   &:hover, &:focus {
     background: lighten($primary-color, 10%);
@@ -410,6 +584,11 @@
     opacity: 0.6;
     transform: none;
     box-shadow: none;
+    
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 }
 
@@ -430,7 +609,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  width: 200px;
+  min-width: 200px;
 
   &:hover, &:focus {
     background: $primary-color;
@@ -494,7 +673,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 800px;
+  width: 500px;
   max-width: 90vw;
   pointer-events: none;
 }
@@ -522,6 +701,16 @@
     transform: scale(1.1);
     background: rgba($primary-color, 0.05);
   }
+  
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    
+    &:hover {
+      transform: none;
+      background: transparent;
+    }
+  }
 }
 
 .navPlaceholder {
@@ -535,7 +724,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 400px;
+  width: 250px;
   max-width: 90vw;
 }
 
@@ -570,15 +759,15 @@
   z-index: 2;
   
   @media (max-width: $breakpoint-sm) {
-    width: 4px;
-    height: 4px;
+    width: 5px;
+    height: 5px;
   }
 }
 
 .progressDotActive {
   background: $primary-color;
   border-color: $primary-color;
-  transform: scale(1.3);
+  transform: scale(1.4);
   box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
 }
 
@@ -589,12 +778,12 @@
 
 // Responsive
 @media (max-width: $breakpoint-md) {
-  .title {
-    font-size: $font-size-xl;
+  .formHeader {
+    padding: $spacing-sm $spacing-md;
   }
   
-  .formTitle {
-    font-size: $font-size-base;
+  .logo {
+    height: 28px;
   }
 }
 
@@ -604,11 +793,12 @@
   }
   
   .step {
-    padding: $spacing-lg 0;
+    padding: $spacing-md 0;
   }
   
-  .title {
-    font-size: $font-size-lg;
+  .stepContentScrollable {
+    max-height: calc(100vh - 220px);
+    padding: $spacing-sm;
   }
   
   .textInput,
@@ -624,5 +814,12 @@
   .authorizationBlock {
     padding: $spacing-md;
   }
+  
+  .logo {
+    height: 24px;
+  }
+  
+  .headerSpacer {
+    display: none;
+  }
 }
-

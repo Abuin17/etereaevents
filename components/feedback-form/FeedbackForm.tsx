@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 import styles from './FeedbackForm.module.scss';
 
 export interface FeedbackFormData {
@@ -7,22 +9,21 @@ export interface FeedbackFormData {
   empresa: string;
   cargo: string;
   
-  // Step 2-3: Preguntas abiertas
+  // Step 2: Preguntas abiertas
   sorpresa_positiva: string;
   tranquilidad: string;
   
-  // Step 4-6: Multiple choice
+  // Step 3: Multiple choice
   cuidado_detalles: string;
   anticipacion: string;
   interpretacion_identidad: string;
   
-  // Step 7-8: Preguntas abiertas
+  // Step 4: Pregunta abierta
   buenas_manos: string;
-  experiencia: string;
   
-  // Autorizaciones
-  autoriza_nombre_web: boolean;
-  autoriza_experiencia_anonima: boolean;
+  // Step 5: Experiencia + autorización
+  experiencia: string;
+  autorizacion: 'nombre_completo' | 'anonimo' | '';
 }
 
 const FeedbackForm: React.FC = () => {
@@ -30,6 +31,9 @@ const FeedbackForm: React.FC = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [animationDirection, setAnimationDirection] = useState<'next' | 'prev'>('next');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
   
   const [formData, setFormData] = useState<FeedbackFormData>({
     nombre: '',
@@ -42,11 +46,36 @@ const FeedbackForm: React.FC = () => {
     interpretacion_identidad: '',
     buenas_manos: '',
     experiencia: '',
-    autoriza_nombre_web: false,
-    autoriza_experiencia_anonima: false,
+    autorizacion: '',
   });
 
-  const totalSteps = 10; // Including thank you
+  const totalSteps = 6; // 5 steps + success
+
+  // Check if content overflows and show scroll indicator
+  useEffect(() => {
+    const checkScroll = () => {
+      if (contentRef.current) {
+        const { scrollHeight, clientHeight, scrollTop } = contentRef.current;
+        const hasMoreContent = scrollHeight > clientHeight;
+        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 20;
+        setShowScrollIndicator(hasMoreContent && !isAtBottom);
+      }
+    };
+
+    checkScroll();
+    const content = contentRef.current;
+    if (content) {
+      content.addEventListener('scroll', checkScroll);
+      window.addEventListener('resize', checkScroll);
+    }
+
+    return () => {
+      if (content) {
+        content.removeEventListener('scroll', checkScroll);
+      }
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, [currentStep]);
 
   const updateFormData = (updates: Partial<FeedbackFormData>) => {
     setFormData(prev => ({ ...prev, ...updates }));
@@ -80,15 +109,24 @@ const FeedbackForm: React.FC = () => {
     }
   };
 
+  const canProceedStep1 = formData.nombre.trim() && formData.empresa.trim() && formData.cargo.trim();
+  const canSubmit = formData.experiencia.trim() && formData.autorizacion;
+
   const handleSubmit = async () => {
-    if (isSubmitting) return;
+    if (isSubmitting || !canSubmit) return;
     
     setIsSubmitting(true);
+    setSubmitError(null);
+    
     try {
       const response = await fetch('/api/client-feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          autoriza_nombre_web: formData.autorizacion === 'nombre_completo',
+          autoriza_experiencia_anonima: formData.autorizacion === 'anonimo',
+        }),
       });
       
       if (!response.ok) {
@@ -97,11 +135,11 @@ const FeedbackForm: React.FC = () => {
       }
       
       console.log('✅ Feedback enviado correctamente');
-      setCurrentStep(10); // Go to thank you step
+      setCurrentStep(6); // Go to success step
       
     } catch (error) {
       console.error('❌ Error:', error);
-      alert(`Error al enviar: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+      setSubmitError(error instanceof Error ? error.message : 'Error desconocido');
     } finally {
       setIsSubmitting(false);
     }
@@ -121,28 +159,31 @@ const FeedbackForm: React.FC = () => {
                   <div className={styles.inputWithLabel}>
                     <input
                       type="text"
-                      placeholder="Tu nombre"
+                      placeholder="Tu nombre *"
                       value={formData.nombre}
                       onChange={(e) => updateFormData({ nombre: e.target.value })}
                       className={styles.textInput}
+                      required
                     />
                   </div>
                   <div className={styles.inputWithLabel}>
                     <input
                       type="text"
-                      placeholder="Empresa"
+                      placeholder="Empresa *"
                       value={formData.empresa}
                       onChange={(e) => updateFormData({ empresa: e.target.value })}
                       className={styles.textInput}
+                      required
                     />
                   </div>
                   <div className={styles.inputWithLabel}>
                     <input
                       type="text"
-                      placeholder="Cargo"
+                      placeholder="Cargo *"
                       value={formData.cargo}
                       onChange={(e) => updateFormData({ cargo: e.target.value })}
                       className={styles.textInput}
+                      required
                     />
                   </div>
                 </div>
@@ -158,11 +199,9 @@ const FeedbackForm: React.FC = () => {
       case 2:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.title}>¿QUÉ FUE LO QUE MÁS TE SORPRENDIÓ POSITIVAMENTE DE NUESTRO TRABAJO?</h2>
-              </div>
-              <div className={styles.stepBody}>
+            <div className={styles.stepContentScrollable} ref={contentRef}>
+              <div className={styles.questionBlock}>
+                <h2 className={styles.titleSmall}>¿QUÉ FUE LO QUE MÁS TE SORPRENDIÓ POSITIVAMENTE DE NUESTRO TRABAJO?</h2>
                 <textarea
                   placeholder="Cuéntanos..."
                   value={formData.sorpresa_positiva}
@@ -170,18 +209,9 @@ const FeedbackForm: React.FC = () => {
                   className={styles.textarea}
                 />
               </div>
-            </div>
-          </div>
-        );
-
-      case 3:
-        return (
-          <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.title}>¿QUÉ PARTE DEL PROCESO TE DIO MÁS TRANQUILIDAD?</h2>
-              </div>
-              <div className={styles.stepBody}>
+              
+              <div className={styles.questionBlock}>
+                <h2 className={styles.titleSmall}>¿QUÉ PARTE DEL PROCESO TE DIO MÁS TRANQUILIDAD?</h2>
                 <textarea
                   placeholder="Cuéntanos..."
                   value={formData.tranquilidad}
@@ -190,17 +220,21 @@ const FeedbackForm: React.FC = () => {
                 />
               </div>
             </div>
+            
+            {showScrollIndicator && (
+              <div className={styles.scrollIndicator}>
+                <span className={styles.scrollArrow}>↓</span>
+              </div>
+            )}
           </div>
         );
 
-      case 4:
+      case 3:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.title}>¿CÓMO DESCRIBIRÍAS EL NIVEL DE CUIDADO EN LOS DETALLES?</h2>
-              </div>
-              <div className={styles.stepBody}>
+            <div className={styles.stepContentScrollable} ref={contentRef}>
+              <div className={styles.questionBlock}>
+                <h2 className={styles.titleSmall}>¿CÓMO DESCRIBIRÍAS EL NIVEL DE CUIDADO EN LOS DETALLES?</h2>
                 <div className={styles.radioGroupVertical}>
                   {['Excepcional', 'Muy alto', 'Adecuado', 'Mejorable'].map((option) => (
                     <label key={option} className={styles.radioOption}>
@@ -216,18 +250,9 @@ const FeedbackForm: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
-        );
 
-      case 5:
-        return (
-          <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.title}>¿CÓMO CALIFICARÍAS NUESTRA CAPACIDAD PARA ANTICIPARNOS A PROBLEMAS O NECESIDADES?</h2>
-              </div>
-              <div className={styles.stepBody}>
+              <div className={styles.questionBlock}>
+                <h2 className={styles.titleSmall}>¿CÓMO CALIFICARÍAS NUESTRA CAPACIDAD PARA ANTICIPARNOS A PROBLEMAS O NECESIDADES?</h2>
                 <div className={styles.radioGroupVertical}>
                   {['Excelente', 'Muy buena', 'Correcta', 'Insuficiente'].map((option) => (
                     <label key={option} className={styles.radioOption}>
@@ -243,18 +268,9 @@ const FeedbackForm: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
-        );
 
-      case 6:
-        return (
-          <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.title}>¿SENTISTE QUE INTERPRETAMOS BIEN VUESTRA IDENTIDAD Y OBJETIVOS?</h2>
-              </div>
-              <div className={styles.stepBody}>
+              <div className={styles.questionBlock}>
+                <h2 className={styles.titleSmall}>¿SENTISTE QUE INTERPRETAMOS BIEN VUESTRA IDENTIDAD Y OBJETIVOS?</h2>
                 <div className={styles.radioGroupVertical}>
                   {['Sí, completamente', 'En gran medida', 'Parcialmente', 'No'].map((option) => (
                     <label key={option} className={styles.radioOption}>
@@ -271,10 +287,16 @@ const FeedbackForm: React.FC = () => {
                 </div>
               </div>
             </div>
+            
+            {showScrollIndicator && (
+              <div className={styles.scrollIndicator}>
+                <span className={styles.scrollArrow}>↓</span>
+              </div>
+            )}
           </div>
         );
 
-      case 7:
+      case 4:
         return (
           <div className={styles.step}>
             <div className={styles.stepContent}>
@@ -293,83 +315,82 @@ const FeedbackForm: React.FC = () => {
           </div>
         );
 
-      case 8:
+      case 5:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.title}>¿CÓMO DESCRIBIRÍAS TU EXPERIENCIA TRABAJANDO CON ETÉREA?</h2>
-              </div>
-              <div className={styles.stepBody}>
-                <p className={styles.experienceNote}>
-                  Esta descripción podría convertirse en una reseña para nuestra web, 
-                  de forma anónima o con tu autorización. Tenlo en cuenta al escribir.
-                </p>
+            <div className={styles.stepContentScrollable} ref={contentRef}>
+              <div className={styles.questionBlock}>
+                <h2 className={styles.titleSmall}>¿CÓMO DESCRIBIRÍAS TU EXPERIENCIA TRABAJANDO CON ETÉREA? *</h2>
                 <textarea
                   placeholder="Mi experiencia con Etérea..."
                   value={formData.experiencia}
                   onChange={(e) => updateFormData({ experiencia: e.target.value })}
                   className={styles.textareaLarge}
+                  required
                 />
               </div>
-            </div>
-          </div>
-        );
 
-      case 9:
-        return (
-          <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.title}>AUTORIZACIONES</h2>
-              </div>
-              <div className={styles.stepBody}>
-                <div className={styles.authorizationBlock}>
-                  <label className={styles.checkboxOption}>
+              <div className={styles.authorizationBlock}>
+                <h3 className={styles.authTitle}>AUTORIZACIÓN DE PUBLICACIÓN *</h3>
+                <p className={styles.authDescription}>
+                  Selecciona cómo te gustaría que apareciera tu feedback en nuestra web:
+                </p>
+                
+                <div className={styles.radioGroupVertical}>
+                  <label className={styles.radioOptionAuth}>
                     <input
-                      type="checkbox"
-                      checked={formData.autoriza_nombre_web}
-                      onChange={(e) => updateFormData({ autoriza_nombre_web: e.target.checked })}
-                      className={styles.checkbox}
+                      type="radio"
+                      name="autorizacion"
+                      value="nombre_completo"
+                      checked={formData.autorizacion === 'nombre_completo'}
+                      onChange={(e) => updateFormData({ autorizacion: e.target.value as 'nombre_completo' })}
                     />
-                    <span className={styles.checkboxLabel}>
-                      Autorizo a que mi nombre personal, nombre de empresa y cargo aparezcan 
-                      en la web de Etérea como referencia, conforme a la{' '}
-                      <a href="/privacidad" target="_blank" rel="noopener noreferrer" className={styles.privacyLink}>
-                        Política de Privacidad
-                      </a>.
+                    <span className={styles.radioLabelAuth}>
+                      Autorizo a que mi nombre, empresa y cargo aparezcan junto a mi reseña
                     </span>
                   </label>
                   
-                  <label className={styles.checkboxOption}>
+                  <label className={styles.radioOptionAuth}>
                     <input
-                      type="checkbox"
-                      checked={formData.autoriza_experiencia_anonima}
-                      onChange={(e) => updateFormData({ autoriza_experiencia_anonima: e.target.checked })}
-                      className={styles.checkbox}
+                      type="radio"
+                      name="autorizacion"
+                      value="anonimo"
+                      checked={formData.autorizacion === 'anonimo'}
+                      onChange={(e) => updateFormData({ autorizacion: e.target.value as 'anonimo' })}
                     />
-                    <span className={styles.checkboxLabel}>
-                      Autorizo la publicación de la descripción de mi experiencia de forma anónima 
-                      en la web de Etérea.
+                    <span className={styles.radioLabelAuth}>
+                      Prefiero que mi reseña aparezca de forma anónima
                     </span>
                   </label>
                 </div>
-                
-                <div className={styles.submitButtonContainer}>
-                  <button 
-                    className={styles.submitButton} 
-                    onClick={handleSubmit}
-                    disabled={!formData.nombre || isSubmitting}
-                  >
-                    {isSubmitting ? 'ENVIANDO...' : 'ENVIAR'}
-                  </button>
+              </div>
+
+              {submitError && (
+                <div className={styles.errorMessage}>
+                  {submitError}
                 </div>
+              )}
+              
+              <div className={styles.submitButtonContainer}>
+                <button 
+                  className={styles.submitButton} 
+                  onClick={handleSubmit}
+                  disabled={!canSubmit || isSubmitting}
+                >
+                  {isSubmitting ? 'ENVIANDO...' : 'ENVIAR'}
+                </button>
               </div>
             </div>
+            
+            {showScrollIndicator && (
+              <div className={styles.scrollIndicator}>
+                <span className={styles.scrollArrow}>↓</span>
+              </div>
+            )}
           </div>
         );
 
-      case 10:
+      case 6:
         return (
           <div className={styles.step}>
             <div className={styles.stepContent}>
@@ -408,9 +429,20 @@ const FeedbackForm: React.FC = () => {
 
   return (
     <div className={styles.feedbackForm}>
-      {/* Header */}
+      {/* Header with logo */}
       <div className={styles.formHeader}>
-        <h1 className={styles.formTitle}>FORMULARIO POST-EVENTO · ETÉREA</h1>
+        <Link href="/" className={styles.logoLink}>
+          <Image
+            src="/assets/logos/ETÉREA_Logo_antracita.svg"
+            alt="Etérea Events"
+            width={120}
+            height={35}
+            className={styles.logo}
+            priority
+          />
+        </Link>
+        <h1 className={styles.formTitle}>FORMULARIO POST-EVENTO</h1>
+        <div className={styles.headerSpacer} />
       </div>
       
       <div className={styles.formWrapper}>
@@ -429,7 +461,7 @@ const FeedbackForm: React.FC = () => {
         </div>
         
         {/* Navigation */}
-        {currentStep < 10 && (
+        {currentStep < 6 && (
           <div className={styles.navigationContainer}>
             <div className={styles.navigation}>
               {currentStep > 1 ? (
@@ -444,10 +476,11 @@ const FeedbackForm: React.FC = () => {
                 <div className={styles.navPlaceholder} />
               )}
               
-              {currentStep < 9 ? (
+              {currentStep < 5 ? (
                 <button 
                   className={styles.navButton}
                   onClick={handleNext}
+                  disabled={currentStep === 1 && !canProceedStep1}
                   aria-label="Siguiente paso"
                 >
                   →
@@ -460,7 +493,7 @@ const FeedbackForm: React.FC = () => {
             {/* Progress indicator */}
             <div className={styles.progress}>
               <div className={styles.progressLine}>
-                {Array.from({ length: 9 }, (_, i) => (
+                {Array.from({ length: 5 }, (_, i) => (
                   <div
                     key={i}
                     className={`${styles.progressDot} ${
@@ -478,4 +511,3 @@ const FeedbackForm: React.FC = () => {
 };
 
 export default FeedbackForm;
-
