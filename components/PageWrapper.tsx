@@ -6,6 +6,7 @@ import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
 import CookieConsent from './CookieConsent/CookieConsent';
 import PageTransition from './PageTransition/PageTransition';
+import SmoothScroll from './SmoothScroll/SmoothScroll';
 
 interface PageWrapperProps {
   children: React.ReactNode;
@@ -36,21 +37,23 @@ const PageWrapper: React.FC<PageWrapperProps> = ({
     );
   }
 
-  // Modo normal con transiciones elegantes
+  // Modo normal con transiciones elegantes y smooth scroll
   return (
-    <div className="app">
-      <Navbar />
-      <main className="app__main">
-        <PageTransition backgroundColor={backgroundColor}>
-          {children}
-        </PageTransition>
-      </main>
-      {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
-      <CookieConsent 
-        shouldOpenModal={shouldOpenCookieModal}
-        onModalClose={() => setShouldOpenCookieModal(false)}
-      />
-    </div>
+    <SmoothScroll>
+      <div className="app">
+        <Navbar />
+        <main className="app__main">
+          <PageTransition backgroundColor={backgroundColor}>
+            {children}
+          </PageTransition>
+        </main>
+        {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
+        <CookieConsent 
+          shouldOpenModal={shouldOpenCookieModal}
+          onModalClose={() => setShouldOpenCookieModal(false)}
+        />
+      </div>
+    </SmoothScroll>
   );
 };
 
