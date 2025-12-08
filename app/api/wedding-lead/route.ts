@@ -92,7 +92,22 @@ export async function POST(req: NextRequest) {
       telefono: insertData.telefono
     });
 
-    // Insertar en la base de datos
+    // Verificar que la tabla existe antes de insertar
+    const tableCheck = await sql`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND table_name = 'wedding_leads'
+      ) as exists
+    `;
+    
+    if (!tableCheck[0]?.exists) {
+      console.error('[wedding-lead] La tabla wedding_leads no existe, intentando crearla...');
+      await initializeDatabase();
+      isInitialized = true;
+    }
+
+    // Insertar en la base de datos usando sql() helper para mejor manejo
     const result = await sql`
       INSERT INTO wedding_leads (
         contrayente1,
@@ -145,11 +160,34 @@ export async function POST(req: NextRequest) {
         ${insertData.telefono},
         ${insertData.consentimiento_rgpd}
       )
-      RETURNING id
+      RETURNING id, created_at
     `;
 
+    if (!result || result.length === 0) {
+      throw new Error('La inserción no devolvió ningún resultado');
+    }
+
     const insertedId = result[0]?.id;
-    console.log('[wedding-lead] Lead saved successfully, id:', insertedId);
+    const createdAt = result[0]?.created_at;
+    
+    console.log('[wedding-lead] ✅ Lead saved successfully:', {
+      id: insertedId,
+      createdAt: createdAt,
+      email: insertData.email
+    });
+
+    // Verificar que realmente se insertó
+    const verify = await sql`
+      SELECT id, email, created_at 
+      FROM wedding_leads 
+      WHERE id = ${insertedId}
+    `;
+    
+    if (!verify || verify.length === 0) {
+      console.error('[wedding-lead] ⚠️ Advertencia: El registro no se encontró después de insertar');
+    } else {
+      console.log('[wedding-lead] ✅ Verificación exitosa, registro encontrado:', verify[0]);
+    }
 
     return NextResponse.json(
       { ok: true, id: insertedId },
