@@ -377,12 +377,14 @@ const FeedbackForm: React.FC = () => {
               <div className={styles.thankYouLeft}>
                 <div className={styles.titleGroup}>
                   <h2 className={styles.title}>GRACIAS POR CONFIAR EN NOSOTRAS.</h2>
-                  <p className={styles.subtitleRevans}>
+                  <p className={styles.subtitleHedvig}>
                     Y por dedicar unos minutos a contarnos cómo lo viviste.
                   </p>
                 </div>
                 <p className={styles.thankYouSubtitle}>
                   Tus palabras nos ayudan a seguir afinando que a veces no se ve, pero siempre se siente.
+                </p>
+                <p className={styles.thankYouSignature}>
                   Con cariño, el equipo de Etérea.
                 </p>
                 <div className={styles.thankYouButtons}>
