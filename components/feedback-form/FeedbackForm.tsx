@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from './FeedbackForm.module.scss';
 
@@ -12,15 +12,15 @@ export interface FeedbackFormData {
   sorpresa_positiva: string;
   tranquilidad: string;
   
-  // Step 3: Multiple choice
+  // Step 3-5: Multiple choice (separadas)
   cuidado_detalles: string;
   anticipacion: string;
   interpretacion_identidad: string;
   
-  // Step 4: Pregunta abierta
+  // Step 6: Pregunta abierta
   buenas_manos: string;
   
-  // Step 5: Experiencia + autorización
+  // Step 7: Experiencia + autorización
   experiencia: string;
   autorizacion: 'nombre_completo' | 'anonimo' | '';
 }
@@ -31,8 +31,6 @@ const FeedbackForm: React.FC = () => {
   const [animationDirection, setAnimationDirection] = useState<'next' | 'prev'>('next');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
-  const contentRef = useRef<HTMLDivElement>(null);
   
   const [formData, setFormData] = useState<FeedbackFormData>({
     nombre: '',
@@ -48,33 +46,7 @@ const FeedbackForm: React.FC = () => {
     autorizacion: '',
   });
 
-  const totalSteps = 6; // 5 steps + success
-
-  // Check if content overflows and show scroll indicator
-  useEffect(() => {
-    const checkScroll = () => {
-      if (contentRef.current) {
-        const { scrollHeight, clientHeight, scrollTop } = contentRef.current;
-        const hasMoreContent = scrollHeight > clientHeight;
-        const isAtBottom = scrollTop + clientHeight >= scrollHeight - 20;
-        setShowScrollIndicator(hasMoreContent && !isAtBottom);
-      }
-    };
-
-    checkScroll();
-    const content = contentRef.current;
-    if (content) {
-      content.addEventListener('scroll', checkScroll);
-      window.addEventListener('resize', checkScroll);
-    }
-
-    return () => {
-      if (content) {
-        content.removeEventListener('scroll', checkScroll);
-      }
-      window.removeEventListener('resize', checkScroll);
-    };
-  }, [currentStep]);
+  const totalSteps = 8; // 7 steps + success
 
   const updateFormData = (updates: Partial<FeedbackFormData>) => {
     setFormData(prev => ({ ...prev, ...updates }));
@@ -144,7 +116,7 @@ const FeedbackForm: React.FC = () => {
       }
       
       console.log('✅ Feedback enviado correctamente');
-      setCurrentStep(6); // Go to success step
+      setCurrentStep(8); // Go to success step
       
     } catch (error) {
       console.error('❌ Error:', error);
@@ -208,7 +180,7 @@ const FeedbackForm: React.FC = () => {
       case 2:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContentScrollable} ref={contentRef}>
+            <div className={styles.stepContentScrollable}>
               <div className={styles.questionBlock}>
                 <h2 className={styles.titleSmall}>¿QUÉ FUE LO QUE MÁS TE SORPRENDIÓ POSITIVAMENTE DE NUESTRO TRABAJO?</h2>
                 <textarea
@@ -229,21 +201,17 @@ const FeedbackForm: React.FC = () => {
                 />
               </div>
             </div>
-            
-            {showScrollIndicator && (
-              <div className={styles.scrollIndicator}>
-                <span className={styles.scrollArrow}>↓</span>
-              </div>
-            )}
           </div>
         );
 
       case 3:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContentScrollable} ref={contentRef}>
-              <div className={styles.questionBlock}>
+            <div className={styles.stepContent}>
+              <div className={styles.titleGroup}>
                 <h2 className={styles.titleSmall}>¿CÓMO DESCRIBIRÍAS EL NIVEL DE CUIDADO EN LOS DETALLES?</h2>
+              </div>
+              <div className={styles.stepBody}>
                 <div className={styles.radioGroupVertical}>
                   {['Excepcional', 'Muy alto', 'Adecuado', 'Mejorable'].map((option) => (
                     <label key={option} className={styles.radioOption}>
@@ -259,9 +227,18 @@ const FeedbackForm: React.FC = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        );
 
-              <div className={styles.questionBlock}>
+      case 4:
+        return (
+          <div className={styles.step}>
+            <div className={styles.stepContent}>
+              <div className={styles.titleGroup}>
                 <h2 className={styles.titleSmall}>¿CÓMO CALIFICARÍAS NUESTRA CAPACIDAD PARA ANTICIPARNOS A PROBLEMAS O NECESIDADES?</h2>
+              </div>
+              <div className={styles.stepBody}>
                 <div className={styles.radioGroupVertical}>
                   {['Excelente', 'Muy buena', 'Correcta', 'Insuficiente'].map((option) => (
                     <label key={option} className={styles.radioOption}>
@@ -277,9 +254,18 @@ const FeedbackForm: React.FC = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        );
 
-              <div className={styles.questionBlock}>
+      case 5:
+        return (
+          <div className={styles.step}>
+            <div className={styles.stepContent}>
+              <div className={styles.titleGroup}>
                 <h2 className={styles.titleSmall}>¿SENTISTE QUE INTERPRETAMOS BIEN VUESTRA IDENTIDAD Y OBJETIVOS?</h2>
+              </div>
+              <div className={styles.stepBody}>
                 <div className={styles.radioGroupVertical}>
                   {['Sí, completamente', 'En gran medida', 'Parcialmente', 'No'].map((option) => (
                     <label key={option} className={styles.radioOption}>
@@ -296,21 +282,15 @@ const FeedbackForm: React.FC = () => {
                 </div>
               </div>
             </div>
-            
-            {showScrollIndicator && (
-              <div className={styles.scrollIndicator}>
-                <span className={styles.scrollArrow}>↓</span>
-              </div>
-            )}
           </div>
         );
 
-      case 4:
+      case 6:
         return (
           <div className={styles.step}>
             <div className={styles.stepContent}>
               <div className={styles.titleGroup}>
-                <h2 className={styles.title}>¿QUÉ TE HIZO SENTIR QUE ESTABAS EN BUENAS MANOS?</h2>
+                <h2 className={styles.titleSmall}>¿QUÉ TE HIZO SENTIR QUE ESTABAS EN BUENAS MANOS?</h2>
               </div>
               <div className={styles.stepBody}>
                 <textarea
@@ -324,10 +304,10 @@ const FeedbackForm: React.FC = () => {
           </div>
         );
 
-      case 5:
+      case 7:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContentScrollable} ref={contentRef}>
+            <div className={styles.stepContentScrollable}>
               <div className={styles.questionBlock}>
                 <h2 className={styles.titleSmall}>¿CÓMO DESCRIBIRÍAS TU EXPERIENCIA TRABAJANDO CON ETÉREA? *</h2>
                 <textarea
@@ -339,12 +319,7 @@ const FeedbackForm: React.FC = () => {
                 />
               </div>
 
-              <div className={styles.authorizationBlock}>
-                <h3 className={styles.authTitle}>AUTORIZACIÓN DE PUBLICACIÓN *</h3>
-                <p className={styles.authDescription}>
-                  Selecciona cómo te gustaría que apareciera tu feedback en nuestra web:
-                </p>
-                
+              <div className={styles.authorizationSimple}>
                 <div className={styles.radioGroupVertical}>
                   <label className={styles.radioOptionAuth}>
                     <input
@@ -390,16 +365,10 @@ const FeedbackForm: React.FC = () => {
                 </button>
               </div>
             </div>
-            
-            {showScrollIndicator && (
-              <div className={styles.scrollIndicator}>
-                <span className={styles.scrollArrow}>↓</span>
-              </div>
-            )}
           </div>
         );
 
-      case 6:
+      case 8:
         return (
           <div className={styles.step}>
             <div className={styles.stepContent}>
@@ -467,7 +436,7 @@ const FeedbackForm: React.FC = () => {
         </div>
         
         {/* Navigation */}
-        {currentStep < 6 && (
+        {currentStep < 8 && (
           <div className={styles.navigationContainer}>
             <div className={styles.navigation}>
               {currentStep > 1 ? (
@@ -482,7 +451,7 @@ const FeedbackForm: React.FC = () => {
                 <div className={styles.navPlaceholder} />
               )}
               
-              {currentStep < 5 ? (
+              {currentStep < 7 ? (
                 <button 
                   className={styles.navButton}
                   onClick={handleNext}
@@ -499,7 +468,7 @@ const FeedbackForm: React.FC = () => {
             {/* Progress indicator */}
             <div className={styles.progress}>
               <div className={styles.progressLine}>
-                {Array.from({ length: 5 }, (_, i) => (
+                {Array.from({ length: 7 }, (_, i) => (
                   <div
                     key={i}
                     className={`${styles.progressDot} ${

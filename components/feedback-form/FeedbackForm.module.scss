@@ -43,14 +43,14 @@
 .formTitle {
   font-family: $font-primary;
   font-weight: 400;
-  font-size: $font-size-sm;
+  font-size: calc($font-size-sm * 2); // x2 tamaño
   letter-spacing: 0.15em;
   color: $primary-color;
   margin: 0;
   text-align: center;
   
   @media (max-width: $breakpoint-sm) {
-    font-size: 0.7rem;
+    font-size: calc($font-size-sm * 1.5);
     letter-spacing: 0.1em;
   }
 }
@@ -342,41 +342,7 @@
   border-radius: 4px;
 }
 
-// Scroll indicator
-.scrollIndicator {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 50;
-  pointer-events: none;
-}
-
-.scrollArrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: rgba($secondary-color, 0.95);
-  border: 1px solid rgba($primary-color, 0.2);
-  border-radius: 50%;
-  color: $primary-color;
-  font-size: 1rem;
-  animation: bounceDown 1.5s ease-in-out infinite;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-@keyframes bounceDown {
-  0%, 100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  50% {
-    transform: translateY(6px);
-    opacity: 0.7;
-  }
-}
+// Scroll indicator removed
 
 // Radio buttons vertical
 .radioGroupVertical {
@@ -432,37 +398,13 @@
   color: $primary-color;
 }
 
-// Authorization block
-.authorizationBlock {
+// Authorization simple (sin título, recuadro ni descripción)
+.authorizationSimple {
   width: 100%;
   max-width: 500px;
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
-  padding: $spacing-lg;
-  background: rgba($primary-color, 0.03);
-  border: 1px solid rgba($primary-color, 0.12);
-  border-radius: 6px;
-  margin-top: $spacing-md;
-}
-
-.authTitle {
-  font-family: $font-primary;
-  font-weight: 400;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-  color: $primary-color;
-  margin: 0;
-  text-align: center;
-}
-
-.authDescription {
-  font-family: $font-secondary;
-  font-weight: 400;
-  font-size: 0.85rem;
-  color: lighten($primary-color, 15%);
-  margin: 0;
-  text-align: center;
+  margin-top: $spacing-lg;
 }
 
 .radioOptionAuth {
