@@ -372,26 +372,19 @@ const FeedbackForm: React.FC = () => {
 
       case 8:
         return (
-          <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.title}>MUCHAS GRACIAS.</h2>
-                <p className={styles.subtitleRevans}>
-                  Tu feedback es muy valioso para nosotras.
-                </p>
-              </div>
-              <div className={styles.stepBody}>
-                <div className={styles.thankYouContent}>
-                  <p className={styles.thankYouSubtitle}>
-                    Gracias por confiar en Etérea y por tomarte el tiempo 
-                    de compartir tu experiencia con nosotras.
+          <div className={`${styles.step} ${styles.thankYouStep}`}>
+            <div className={styles.thankYouContainer}>
+              <div className={styles.thankYouLeft}>
+                <div className={styles.titleGroup}>
+                  <h2 className={styles.title}>MUCHAS GRACIAS.</h2>
+                  <p className={styles.subtitleRevans}>
+                    Tu feedback es muy valioso para nosotras.
                   </p>
-                  <img 
-                    src={nataliaVirginiaImage} 
-                    alt="Natalia y Virginia - Equipo Etérea" 
-                    className={styles.thankYouImage}
-                  />
                 </div>
+                <p className={styles.thankYouSubtitle}>
+                  Gracias por confiar en Etérea y por tomarte el tiempo 
+                  de compartir tu experiencia con nosotras.
+                </p>
                 <div className={styles.thankYouButtons}>
                   <button 
                     className={styles.secondaryButton}
@@ -402,6 +395,13 @@ const FeedbackForm: React.FC = () => {
                     VOLVER A ETÉREA
                   </button>
                 </div>
+              </div>
+              <div className={styles.thankYouRight}>
+                <img 
+                  src={nataliaVirginiaImage} 
+                  alt="Natalia y Virginia - Equipo Etérea" 
+                  className={styles.thankYouImage}
+                />
               </div>
             </div>
           </div>

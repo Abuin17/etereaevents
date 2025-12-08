@@ -575,14 +575,77 @@
   }
 }
 
-// Thank you
-.thankYouContent {
-  width: 100%;
+// Thank you - Layout horizontal
+.thankYouStep {
+  padding: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100px;
+  min-height: calc(100vh - 200px);
+  
+  @media (max-width: $breakpoint-md) {
+    min-height: auto;
+    padding: $spacing-xl 0;
+  }
+}
+
+.thankYouContainer {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-2xl;
+  padding: 0 $spacing-md;
+  
+  // Fade in animation
+  animation: fadeIn 0.8s ease-in-out;
+  
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+    gap: $spacing-xl;
+    max-width: 600px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.thankYouLeft {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: $spacing-lg;
+  max-width: 450px;
+  
+  @media (max-width: $breakpoint-md) {
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+  }
+}
+
+.thankYouRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 450px;
+  
+  @media (max-width: $breakpoint-md) {
+    max-width: 100%;
+  }
 }
 
 .thankYouSubtitle {
@@ -590,33 +653,38 @@
   font-weight: 400;
   font-size: $font-size-lg;
   color: $primary-color;
-  text-align: center;
-  line-height: 1.4;
-  max-width: 400px;
-  margin-bottom: $spacing-xl;
+  text-align: left;
+  line-height: 1.5;
+  margin: 0;
+  
+  @media (max-width: $breakpoint-md) {
+    text-align: center;
+  }
 }
 
 .thankYouImage {
   width: 100%;
-  max-width: 400px;
+  max-width: 100%;
   height: auto;
   object-fit: cover;
-  margin: $spacing-xl 0;
   border-radius: 0;
   display: block;
   
-  @media (max-width: $breakpoint-sm) {
-    max-width: 100%;
-    margin: $spacing-lg 0;
-  }
+  // Fade in animation con delay
+  animation: fadeIn 1s ease-in-out 0.2s both;
 }
 
 .thankYouButtons {
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
-  align-items: center;
-  margin-top: $spacing-xl;
+  align-items: flex-start;
+  margin-top: $spacing-md;
+  
+  @media (max-width: $breakpoint-md) {
+    align-items: center;
+    width: 100%;
+  }
 }
 
 // Navigation
