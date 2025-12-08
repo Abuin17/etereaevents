@@ -2,52 +2,65 @@
 
 ## Problema Identificado
 
-La API está conectándose a la base de datos `neondb`, pero tu base de datos se llama `eterea-weddings`.
+Tu connection string actual apunta a:
+```
+postgresql://...@host/neondb?sslmode=require
+```
+
+Pero necesitas que apunte a:
+```
+postgresql://...@host/eterea-weddings?sslmode=require
+```
 
 ## Solución
 
-### 1. Obtener la URL correcta de Neon
+### 1. Obtener la Connection String correcta en Neon
 
 1. Ve a tu dashboard de Neon: https://console.neon.tech
-2. Selecciona el proyecto **eterea-weddings**
-3. Ve a **Connection Details** o **Connection String**
-4. Copia la **Connection String** que apunte a la base de datos `eterea-weddings`
+2. Selecciona el proyecto **eterea-weddings** (no el proyecto que tiene `neondb`)
+3. Ve a **Connection Details** o haz clic en el proyecto
+4. Busca la sección **Connection String** o **Connection Details**
+5. **IMPORTANTE**: Asegúrate de seleccionar la base de datos `eterea-weddings` (no `neondb`)
+6. Copia la Connection String
 
-La URL debería verse así:
+### 2. Si no ves la base de datos `eterea-weddings`
+
+Puede que necesites crearla:
+
+1. En Neon Dashboard → Tu proyecto
+2. Ve a **Databases** o **SQL Editor**
+3. Ejecuta:
+   ```sql
+   CREATE DATABASE "eterea-weddings";
+   ```
+4. Luego obtén la Connection String para esa base de datos
+
+### 3. Formato correcto para Vercel
+
+La URL que debes poner en Vercel debe ser **SOLO** esto (sin `psql`, sin comillas):
+
 ```
-postgresql://usuario:password@ep-xxxxx.region.aws.neon.tech/eterea-weddings?sslmode=require
+postgresql://neondb_owner:npg_zibDNV1TdlK7@ep-square-recipe-ahbnc2d5-pooler.c-3.us-east-1.aws.neon.tech/eterea-weddings?sslmode=require&channel_binding=require
 ```
 
-**IMPORTANTE**: El nombre de la base de datos (`eterea-weddings`) debe estar en la URL, justo antes del `?`.
+**Nota**: Cambia `/neondb?` por `/eterea-weddings?` en la URL.
 
-### 2. Actualizar en Vercel
+### 4. Actualizar en Vercel
 
-1. Ve a tu proyecto en Vercel: https://vercel.com/dashboard
-2. Settings → **Environment Variables**
+1. Ve a Vercel: https://vercel.com/dashboard
+2. Tu proyecto → **Settings** → **Environment Variables**
 3. Busca `DATABASE_URL`
-4. **Edita** el valor y reemplázalo con la URL correcta que incluye `eterea-weddings`
-5. Asegúrate de que el formato sea:
-   ```
-   postgresql://user:password@host/eterea-weddings?sslmode=require
-   ```
-   (sin `psql`, sin comillas)
+4. **Edita** y pega la URL correcta (sin `psql`, sin comillas, con `/eterea-weddings?`)
+5. Asegúrate de que esté marcada para **Production**
+6. **Save**
 
-### 3. Verificar en todas las entornos
+### 5. Redesplegar
 
-Asegúrate de que `DATABASE_URL` esté configurada para:
-- ✅ **Production**
-- ✅ **Preview** (opcional)
-- ✅ **Development** (opcional)
-
-### 4. Redesplegar
-
-Después de actualizar la variable de entorno:
 1. Ve a **Deployments**
-2. Haz clic en los **3 puntos** del último deployment
-3. Selecciona **Redeploy**
-4. O simplemente haz un nuevo commit y push
+2. Último deployment → **3 puntos** → **Redeploy**
+3. O haz un nuevo commit
 
-### 5. Verificar
+### 6. Verificar
 
 Después del redespliegue, visita:
 ```
@@ -57,29 +70,22 @@ https://www.etereaevents.com/api/wedding-lead
 Deberías ver:
 ```json
 {
-  "databaseName": "eterea-weddings",  // ← Debe decir esto, no "neondb"
+  "databaseName": "eterea-weddings",  // ← Debe decir esto
   "tableExists": true,
-  "totalRecords": 2
+  "totalRecords": 0  // Empezará en 0 porque es una nueva base de datos
 }
 ```
 
-## Formato Correcto de DATABASE_URL
+## ⚠️ Importante
 
-✅ **Correcto:**
-```
-postgresql://usuario:password@ep-xxxxx.region.aws.neon.tech/eterea-weddings?sslmode=require
-```
+Si cambias la base de datos de `neondb` a `eterea-weddings`:
+- Los 2 registros que ya están en `neondb` **NO** se moverán automáticamente
+- La nueva base de datos `eterea-weddings` empezará vacía
+- La tabla se creará automáticamente en el primer POST
 
-❌ **Incorrecto:**
-```
-postgresql://usuario:password@ep-xxxxx.region.aws.neon.tech/neondb?sslmode=require
-psql 'postgresql://.../neondb?sslmode=require'
-```
+## Alternativa: Usar la base de datos actual
 
-## Nota sobre Neon
-
-En Neon, cada proyecto puede tener múltiples bases de datos. Asegúrate de:
-1. Estar en el proyecto correcto (`eterea-weddings`)
-2. Seleccionar la base de datos correcta en el Connection String
-3. Usar la URL que apunta específicamente a `eterea-weddings`
-
+Si prefieres seguir usando `neondb` (y los 2 registros que ya tienes):
+- No cambies nada
+- La tabla ya existe y funciona
+- Solo asegúrate de consultar en el SQL Editor de Neon usando la base de datos `neondb`
