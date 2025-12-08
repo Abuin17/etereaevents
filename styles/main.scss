@@ -1,13 +1,12 @@
 :root {
-  --page-background: #F7F6F4; // Color por defecto
+  --page-background: #F7F6F4;
 }
 
 @import './fonts';
 @import './variables';
 @import './base';
 @import './components';
- 
-// Importar estilos de componentes aquí
-// @import '../components/Button/Button.scss';
-// @import '../components/Navbar/Navbar.scss';
-// etc... 
+
+// Componentes
+@import '../components/PageTransition/PageTransition.scss';
+@import '../pages/Bodas/Bodas.scss'; 

@@ -1,0 +1,116 @@
+@import '../../styles/variables';
+
+.page-transition {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.page-transition__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &--next {
+    z-index: -1;
+    opacity: 0;
+    animation: crossFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+}
+
+@keyframes crossFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-transition__content {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: 
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animaciones de entrada para elementos hijos (staggered)
+.page-transition__content--visible {
+  // Títulos principales
+  h1, .eterea-title {
+    animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 0.1s;
+  }
+  
+  // Subtítulos
+  .eterea-subtitle, h2 {
+    animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 0.2s;
+  }
+  
+  // Descripciones y párrafos
+  .eterea-body, p:not(.page-transition__content p p) {
+    animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 0.3s;
+  }
+  
+  // Botones y CTAs
+  .eterea-button, button[class*="button"] {
+    animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 0.4s;
+  }
+  
+  // Imágenes principales
+  img:not([class*="logo"]):not([class*="icon"]) {
+    animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 0.2s;
+  }
+  
+  // Secciones
+  section {
+    animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation-delay: 0.15s;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

@@ -1,0 +1,229 @@
+@import '../../styles/variables';
+
+.bodas-landing {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 120px;
+  padding-bottom: 0;
+  background: transparent;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-family: $font-accent;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: $primary-color;
+    line-height: 1;
+  }
+
+  &__description {
+    font-family: $font-secondary;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    color: $primary-color;
+    max-width: 420px;
+    margin: 0 auto 2.5rem auto;
+    padding: 0 1rem;
+  }
+
+  &__image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 0;
+  }
+
+  &__image-wrapper {
+    width: 90vw;
+    max-width: 90vw;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  &__image-text {
+    position: absolute;
+    font-family: $font-secondary;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: $secondary-color;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    z-index: 2;
+    padding: 0 2vw;
+    pointer-events: none;
+
+    &--left {
+      left: 0;
+      bottom: 24px;
+      text-align: left;
+    }
+
+    &--right {
+      right: 0;
+      bottom: 24px;
+      text-align: right;
+    }
+  }
+
+  // Sección de proceso
+  &__process {
+    width: 100%;
+    max-width: 1200px;
+    padding: 6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+
+    .eterea-title {
+      margin-bottom: 0;
+    }
+
+    .eterea-body {
+      max-width: 600px;
+    }
+  }
+
+  &__steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 2rem;
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  &__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  &__step-number {
+    font-family: $font-primary;
+    font-size: 0.875rem;
+    color: rgba($primary-color, 0.4);
+    letter-spacing: 0.1em;
+  }
+
+  &__step-title {
+    font-family: $font-primary;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: $primary-color;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  &__step-text {
+    font-family: $font-secondary;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: $primary-color;
+    max-width: 280px;
+    margin: 0;
+  }
+
+  // CTA Section
+  &__cta {
+    width: 100%;
+    padding: 5rem 2rem 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background: linear-gradient(to bottom, transparent 0%, rgba($beige-dark, 0.3) 100%);
+
+    .eterea-title {
+      margin-bottom: 0;
+    }
+
+    .eterea-body {
+      max-width: 500px;
+      margin-bottom: 1rem;
+    }
+
+    .eterea-button {
+      margin-top: 1rem;
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding-top: 100px;
+
+    &__title {
+      font-size: 2rem;
+    }
+
+    &__subtitle {
+      font-size: 1.25rem;
+    }
+
+    &__process {
+      padding: 4rem 1.5rem;
+    }
+
+    &__cta {
+      padding: 4rem 1.5rem 5rem;
+    }
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding-top: 80px;
+
+    &__title {
+      font-size: 1.75rem;
+    }
+
+    &__description {
+      font-size: 0.9375rem;
+    }
+
+    &__image-text {
+      font-size: 0.625rem;
+    }
+  }
+}
+

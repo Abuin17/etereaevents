@@ -17,7 +17,6 @@ const Events: React.FC = () => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
-    // Registrar el plugin ScrollTrigger solo en el cliente
     gsap.registerPlugin(ScrollTrigger);
     
     const checkOrientation = () => {
@@ -26,11 +25,6 @@ const Events: React.FC = () => {
 
     checkOrientation();
     window.addEventListener('resize', checkOrientation);
-
-    // Establecer el color de fondo cuando el componente se monta
-    if (typeof document !== 'undefined') {
-      document.documentElement.style.setProperty('--page-background', '#EFECE7');
-    }
 
     let tl: gsap.core.Timeline | null = null;
     if (!isPortrait) {
@@ -54,11 +48,7 @@ const Events: React.FC = () => {
       );
     }
 
-    // Limpiar cuando el componente se desmonta
     return () => {
-      if (typeof document !== 'undefined') {
-        document.documentElement.style.setProperty('--page-background', '#F7F6F4');
-      }
       window.removeEventListener('resize', checkOrientation);
       if (tl) tl.kill();
     };

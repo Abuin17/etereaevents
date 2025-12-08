@@ -1,4 +1,4 @@
-import { neon } from '@neondatabase/serverless';
+import { neon, NeonQueryFunction } from '@neondatabase/serverless';
 
 // Función para limpiar y validar la cadena de conexión
 function cleanDatabaseUrl(url: string | undefined): string {
@@ -31,13 +31,20 @@ function cleanDatabaseUrl(url: string | undefined): string {
   return cleaned;
 }
 
-// Crear cliente de Neon usando la variable de entorno DATABASE_URL
-const databaseUrl = cleanDatabaseUrl(process.env.DATABASE_URL);
+// Cliente SQL lazy - se inicializa solo cuando se necesita (no durante build)
+let _sql: NeonQueryFunction<false, false> | null = null;
 
-export const sql = neon(databaseUrl);
+export function getDatabase(): NeonQueryFunction<false, false> {
+  if (!_sql) {
+    const databaseUrl = cleanDatabaseUrl(process.env.DATABASE_URL);
+    _sql = neon(databaseUrl);
+  }
+  return _sql;
+}
 
 // Función helper para inicializar la tabla si no existe
 export async function initializeDatabase() {
+  const sql = getDatabase();
   await sql`
     CREATE TABLE IF NOT EXISTS wedding_leads (
       id SERIAL PRIMARY KEY,
@@ -89,4 +96,3 @@ export async function initializeDatabase() {
     )
   `;
 }
-

@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sql, initializeDatabase } from '../../../lib/db';
+import { getDatabase, initializeDatabase } from '../../../lib/db';
+
+// Forzar que esta ruta sea dinámica (no pre-renderizada durante build)
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 // Inicializar tabla al primer request (solo crea si no existe)
 let isInitialized = false;
 
 export async function POST(req: NextRequest) {
   try {
+    const sql = getDatabase();
+    
     // Inicializar base de datos si es la primera vez
     if (!isInitialized) {
       await initializeDatabase();
@@ -119,6 +125,8 @@ export async function GET() {
       );
     }
 
+    const sql = getDatabase();
+
     // Inicializar base de datos si es la primera vez
     if (!isInitialized) {
       await initializeDatabase();
@@ -149,4 +157,3 @@ export async function GET() {
     );
   }
 }
-

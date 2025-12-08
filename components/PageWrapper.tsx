@@ -5,14 +5,19 @@ import { usePathname } from 'next/navigation';
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
 import CookieConsent from './CookieConsent/CookieConsent';
-import CookieConsentDebug from './CookieConsent/CookieConsentDebug';
+import PageTransition from './PageTransition/PageTransition';
 
 interface PageWrapperProps {
   children: React.ReactNode;
   chromeless?: boolean;
+  backgroundColor?: string;
 }
 
-const PageWrapper: React.FC<PageWrapperProps> = ({ children, chromeless = false }) => {
+const PageWrapper: React.FC<PageWrapperProps> = ({ 
+  children, 
+  chromeless = false,
+  backgroundColor 
+}) => {
   const pathname = usePathname();
   const isContactPage = pathname === '/contacto';
   const isCardPage = pathname?.startsWith('/card/');
@@ -31,22 +36,22 @@ const PageWrapper: React.FC<PageWrapperProps> = ({ children, chromeless = false 
     );
   }
 
-  // Modo normal para el resto de páginas
+  // Modo normal con transiciones elegantes
   return (
     <div className="app">
       <Navbar />
       <main className="app__main">
-        {children}
+        <PageTransition backgroundColor={backgroundColor}>
+          {children}
+        </PageTransition>
       </main>
       {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
       <CookieConsent 
         shouldOpenModal={shouldOpenCookieModal}
         onModalClose={() => setShouldOpenCookieModal(false)}
       />
-      <CookieConsentDebug />
     </div>
   );
 };
 
 export default PageWrapper;
-
