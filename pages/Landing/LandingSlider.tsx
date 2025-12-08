@@ -41,20 +41,17 @@ const LandingSlider: React.FC = () => {
   const [isPortrait, setIsPortrait] = useState(false);
   const [parallaxOffsets, setParallaxOffsets] = useState<number[]>(slides.map(() => 0));
 
-  // Calcula el ancho ideal de la slide para que la polaroid esté centrada
-  function getSlideWidth() {
-    if (typeof window === 'undefined') return { slideWidth: 800, polaroidWidth: 422 };
+  // Calcula el ancho de la polaroid
+  function getPolaroidWidth() {
+    if (typeof window === 'undefined') return POLAROID_MAX_WIDTH;
     const vw = window.innerWidth;
-    let polaroidWidth = Math.min(POLAROID_MAX_WIDTH, Math.round(vw * 0.6));
-    // El ancho de la slide debe ser igual al ancho del viewport menos el padding lateral
-    let slideWidth = vw - 200; // 100px padding a cada lado
-    // Nunca menor que la polaroid + 2*32px margen
-    if (slideWidth < polaroidWidth + 64) slideWidth = polaroidWidth + 64;
-    return { slideWidth, polaroidWidth };
+    return Math.min(POLAROID_MAX_WIDTH, Math.round(vw * 0.6));
   }
 
-  const [slideDimensions, setSlideDimensions] = useState(() => getSlideWidth());
-  const { slideWidth, polaroidWidth } = slideDimensions;
+  const [polaroidWidth, setPolaroidWidth] = useState(POLAROID_MAX_WIDTH);
+  
+  // Estado para saber si ya se inicializaron las dimensiones en cliente
+  const [isClientReady, setIsClientReady] = useState(false);
 
   // Inicializar los arrays de refs
   useEffect(() => {
@@ -66,25 +63,49 @@ const LandingSlider: React.FC = () => {
     if (typeof window === 'undefined') return;
     const handleResize = () => {
       setIsPortrait(window.innerHeight > window.innerWidth);
-      setSlideDimensions(getSlideWidth());
+      setPolaroidWidth(getPolaroidWidth());
     };
 
     setIsPortrait(window.innerHeight > window.innerWidth);
-    setSlideDimensions(getSlideWidth());
+    setPolaroidWidth(getPolaroidWidth());
+    setIsClientReady(true);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Establecer scroll inicial después de que las dimensiones estén listas
+  // Usamos un ref para rastrear si ya inicializamos el scroll
+  const hasInitializedScroll = useRef(false);
+  
+  useEffect(() => {
+    // Solo ejecutar cuando el cliente esté listo y no se haya inicializado el scroll
+    if (!isClientReady || hasInitializedScroll.current) return;
+    
+    const sliderEl = sliderRef.current;
+    if (!sliderEl) return;
+    
+    // Deshabilitar scroll-snap temporalmente para evitar que interfiera
+    sliderEl.style.scrollSnapType = 'none';
+    
+    // Forzar scroll a 0 inmediatamente
+    sliderEl.scrollLeft = 0;
+    
+    // Marcar como inicializado
+    hasInitializedScroll.current = true;
+    
+    // Restaurar scroll-snap después de un frame
+    requestAnimationFrame(() => {
+      if (sliderEl) {
+        sliderEl.style.scrollSnapType = 'x mandatory';
+      }
+    });
+  }, [isClientReady]);
 
   useEffect(() => {
     const scrollEl = scrollRef.current;
     const stickyEl = stickyRef.current;
     const sliderEl = sliderRef.current;
     if (!scrollEl || !stickyEl || !sliderEl) return;
-
-    // Asegurar que empiece por la primera slide
-    setTimeout(() => {
-      sliderEl.scrollTo({ left: 0, behavior: 'instant' });
-    }, 0);
 
     let lastIndex = 0;
 
@@ -239,8 +260,9 @@ const LandingSlider: React.FC = () => {
               }}
               className="landing-slider__slide"
               style={{
-                minWidth: isPortrait ? 'calc(100vw - 48px)' : `${slideWidth}px`,
-                width: isPortrait ? 'calc(100vw - 48px)' : `${slideWidth}px`,
+                // Usar calc() para evitar problemas de hidratación SSR
+                minWidth: isPortrait ? 'calc(100vw - 48px)' : 'calc(100vw - 200px)',
+                width: isPortrait ? 'calc(100vw - 48px)' : 'calc(100vw - 200px)',
                 height: '506px',
                 scrollSnapAlign: 'center',
                 backgroundImage: `url(${img})`,

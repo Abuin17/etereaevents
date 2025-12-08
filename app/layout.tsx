@@ -53,25 +53,46 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <link rel="icon" type="image/png" sizes="32x32" href="/assets/Favicon-light.png" />
+        {/* Favicon dinámico basado en el tema del sistema operativo */}
+        {/* SO en dark mode → Favicon-light.png (icono claro para fondo oscuro) */}
+        {/* SO en light mode → Favicon-dark.png (icono oscuro para fondo claro) */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function () {
-                var link = document.getElementById('dynamic-favicon') || document.createElement('link');
+                // Eliminar cualquier favicon existente para evitar conflictos
+                var existingFavicons = document.querySelectorAll('link[rel="icon"]');
+                existingFavicons.forEach(function(el) { el.remove(); });
+                
+                // Crear el enlace del favicon
+                var link = document.createElement('link');
                 link.id = 'dynamic-favicon';
                 link.rel = 'icon';
                 link.type = 'image/png';
                 link.sizes = '32x32';
                 document.head.appendChild(link);
+                
+                // Detectar preferencia de color del sistema
                 var mq = window.matchMedia('(prefers-color-scheme: dark)');
+                
                 function setFavicon() {
-                  var href = mq.matches ? '/assets/Favicon-dark.png' : '/assets/Favicon-light.png';
+                  // Si el SO está en dark mode → usar Favicon-light.png (icono claro)
+                  // Si el SO está en light mode → usar Favicon-dark.png (icono oscuro)
+                  var href = mq.matches 
+                    ? '/assets/images/Favicon-light.png' 
+                    : '/assets/images/Favicon-dark.png';
                   link.setAttribute('href', href + '?v=' + Date.now());
                 }
+                
+                // Establecer el favicon inicial
                 setFavicon();
-                if (mq.addEventListener) mq.addEventListener('change', setFavicon);
-                else if (mq.addListener) mq.addListener(setFavicon);
+                
+                // Escuchar cambios en la preferencia del sistema
+                if (mq.addEventListener) {
+                  mq.addEventListener('change', setFavicon);
+                } else if (mq.addListener) {
+                  mq.addListener(setFavicon);
+                }
               })();
             `,
           }}
