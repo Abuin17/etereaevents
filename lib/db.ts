@@ -28,6 +28,19 @@ function cleanDatabaseUrl(url: string | undefined): string {
     );
   }
 
+  // Verificar que la URL apunte a la base de datos correcta
+  // La base de datos debe ser "eterea-weddings" (puede tener guiones)
+  const urlMatch = cleaned.match(/postgres(ql)?:\/\/[^\/]+\/([^?]+)/);
+  if (urlMatch) {
+    const dbName = urlMatch[2];
+    console.log(`[db] Conectando a la base de datos: ${dbName}`);
+    
+    // Advertencia si no es la base de datos esperada
+    if (!dbName.includes('wedding') && !dbName.includes('eterea')) {
+      console.warn(`[db] ⚠️ Advertencia: La base de datos "${dbName}" no parece ser la correcta. Se espera "eterea-weddings"`);
+    }
+  }
+
   return cleaned;
 }
 
