@@ -11,6 +11,26 @@ export async function GET() {
       return NextResponse.json({ error: 'DATABASE_URL no configurada' }, { status: 500 });
     }
 
+    // Extraer información del hostname para identificar el proyecto
+    const dbUrl = process.env.DATABASE_URL;
+    let hostInfo = 'No disponible';
+    let projectEndpoint = 'No disponible';
+    
+    try {
+      // Parsear la URL para obtener el host
+      const urlMatch = dbUrl.match(/postgresql:\/\/[^@]+@([^\/]+)/);
+      if (urlMatch) {
+        hostInfo = urlMatch[1];
+        // El endpoint de Neon tiene formato: ep-xxx-xxx-xxxx-pooler.region.aws.neon.tech
+        const endpointMatch = hostInfo.match(/ep-[a-z]+-[a-z]+-[a-z0-9]+/);
+        if (endpointMatch) {
+          projectEndpoint = endpointMatch[0];
+        }
+      }
+    } catch (e) {
+      // Ignorar errores de parseo
+    }
+
     const sql = getDatabase();
     
     // Información de conexión
@@ -104,7 +124,9 @@ export async function GET() {
         database: dbInfo[0]?.database_name,
         schema: dbInfo[0]?.current_schema,
         user: dbInfo[0]?.current_user,
-        version: dbInfo[0]?.postgres_version
+        version: dbInfo[0]?.postgres_version,
+        neonHost: hostInfo,
+        neonProjectEndpoint: projectEndpoint
       },
       availableDatabases: allDatabases.map(d => d.datname),
       availableSchemas: allSchemas.map(s => s.schema_name),
@@ -114,12 +136,13 @@ export async function GET() {
       },
       recentActivity: recentActivity,
       instructions: {
-        step1: `Estás conectado a la base de datos: "${dbInfo[0]?.database_name}"`,
-        step2: `En Neon SQL Editor, asegúrate de seleccionar la base de datos "${dbInfo[0]?.database_name}" en el dropdown`,
-        step3: tableDetails 
-          ? `La tabla existe en el schema "public". Ejecuta: SELECT * FROM public.wedding_leads ORDER BY created_at DESC;`
+        step1: `La API está conectada al proyecto de Neon con endpoint: "${projectEndpoint}"`,
+        step2: `En Neon Console, busca el proyecto que tenga este endpoint en su connection string`,
+        step3: `La base de datos es "${dbInfo[0]?.database_name}" en el schema "public"`,
+        step4: tableDetails 
+          ? `La tabla existe con ${tableDetails.recordCount} registros. Query: SELECT * FROM public.wedding_leads ORDER BY created_at DESC;`
           : `La tabla NO existe. Debería crearse automáticamente en el primer POST al formulario.`,
-        step4: `Si ves la tabla en otros schemas pero no en "public", ejecuta: SELECT * FROM ${tableInSchemas[0]?.table_schema || 'public'}.wedding_leads;`
+        importantNote: `Si en tu Neon Console no ves este endpoint (${projectEndpoint}), estás mirando un proyecto diferente. La integración de Vercel pudo haber creado un proyecto nuevo.`
       }
     });
   } catch (err) {
