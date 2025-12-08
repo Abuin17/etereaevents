@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '../../../lib/db';
+import { neon } from '@neondatabase/serverless';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -7,8 +7,31 @@ export const runtime = 'nodejs';
 // Initialize table on first request
 let isInitialized = false;
 
+// Obtener la URL de la base de datos con el prefijo correcto
+function getFeedbackDatabaseUrl(): string {
+  // Intentar con el prefijo feedback_ primero (integración Vercel con prefijo personalizado)
+  const feedbackUrl = process.env.feedback_DATABASE_URL;
+  if (feedbackUrl) {
+    console.log('[client-feedback] Usando feedback_DATABASE_URL');
+    return feedbackUrl;
+  }
+  
+  // Fallback a DATABASE_URL estándar
+  const standardUrl = process.env.DATABASE_URL;
+  if (standardUrl) {
+    console.log('[client-feedback] Usando DATABASE_URL estándar');
+    return standardUrl;
+  }
+  
+  throw new Error('No se encontró feedback_DATABASE_URL ni DATABASE_URL');
+}
+
+function getFeedbackDatabase() {
+  return neon(getFeedbackDatabaseUrl());
+}
+
 async function initializeFeedbackTable() {
-  const sql = getDatabase();
+  const sql = getFeedbackDatabase();
   
   await sql`
     CREATE TABLE IF NOT EXISTS client_feedback (
@@ -43,14 +66,15 @@ async function initializeFeedbackTable() {
 
 export async function POST(req: NextRequest) {
   try {
-    if (!process.env.DATABASE_URL) {
+    // Verificar que existe alguna URL de base de datos
+    if (!process.env.feedback_DATABASE_URL && !process.env.DATABASE_URL) {
       return NextResponse.json(
-        { error: 'DATABASE_URL no configurada' },
+        { error: 'feedback_DATABASE_URL ni DATABASE_URL configuradas' },
         { status: 500 }
       );
     }
 
-    const sql = getDatabase();
+    const sql = getFeedbackDatabase();
     
     // Initialize if needed
     if (!isInitialized) {
@@ -130,14 +154,14 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    if (!process.env.DATABASE_URL) {
+    if (!process.env.feedback_DATABASE_URL && !process.env.DATABASE_URL) {
       return NextResponse.json(
-        { error: 'DATABASE_URL no configurada' },
+        { error: 'feedback_DATABASE_URL ni DATABASE_URL configuradas' },
         { status: 500 }
       );
     }
 
-    const sql = getDatabase();
+    const sql = getFeedbackDatabase();
 
     // Initialize if needed
     if (!isInitialized) {

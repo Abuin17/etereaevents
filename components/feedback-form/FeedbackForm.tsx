@@ -380,6 +380,7 @@ const FeedbackForm: React.FC = () => {
                   <p className={styles.subtitleHedvig}>
                     Y por dedicar unos minutos a contarnos cómo lo viviste.
                     <br />
+                    <br />
                     Tus palabras nos ayudan a seguir afinando que a veces no se ve, pero siempre se siente.
                   </p>
                 </div>
