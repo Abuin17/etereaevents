@@ -7,8 +7,8 @@ gsap.registerPlugin(ScrollToPlugin);
 import './LandingSlider.scss';
 
 const slider1 = '/assets/images/conocer.jpg';
-const slider2 = '/assets/images/opt-slider-crear.jpg';
-const slider3 = '/assets/images/opt-slider-vivir.jpg';
+const slider2 = '/assets/images/crear.png';
+const slider3 = '/assets/images/vivir.png';
 
 const slides = [slider1, slider2, slider3];
 const SLIDE_HEIGHT = 700; // px

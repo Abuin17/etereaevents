@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import './Landing.scss';
 import HeroSection from './HeroSection';
 import SectionIntro from './SectionIntro';
+import IdentifierSection from './IdentifierSection';
 import ServicesSection from './ServicesSection';
 import LandingSlider from './LandingSlider';
 import LandingUs from './LandingUs';
@@ -27,6 +28,7 @@ const Landing: React.FC = () => {
     <div className="landing">
       <HeroSection />
       <SectionIntro />
+      <IdentifierSection />
       <ServicesSection />
       <LandingSlider />
       <LandingUs />

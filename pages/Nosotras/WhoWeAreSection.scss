@@ -3,18 +3,18 @@
 
 .who-we-are-section {
   width: 100%;
-  padding: $spacing-6xl $spacing-xl;
+  padding: $spacing-3xl $spacing-xl $spacing-6xl $spacing-xl;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $spacing-4xl;
+  gap: 0;
 
   &__icon-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-3xl;
 
     &--bottom {
       margin-top: $spacing-2xl;
@@ -100,8 +100,12 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    padding: $spacing-2xl $spacing-lg;
-    gap: $spacing-2xl;
+    padding: $spacing-xl $spacing-lg $spacing-2xl $spacing-lg;
+    gap: 0;
+
+    &__icon-wrapper {
+      margin-bottom: $spacing-xl;
+    }
 
     &__title {
       font-size: $font-size-2xl;
@@ -117,8 +121,12 @@
   }
 
   @media (max-width: $breakpoint-sm) {
-    padding: $spacing-xl $spacing-md;
-    gap: $spacing-xl;
+    padding: $spacing-lg $spacing-md $spacing-xl $spacing-md;
+    gap: 0;
+
+    &__icon-wrapper {
+      margin-bottom: $spacing-lg;
+    }
 
     &__title {
       font-size: $font-size-xl;

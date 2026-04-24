@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import './WhoWeAreSection.scss';
 const etereaIcon = '/assets/logos/ETÉREA_Icono_antracita.svg';
 const rhombusIcon = '/assets/icons/rombo.svg';
@@ -13,7 +12,6 @@ const WhoWeAreSection: React.FC = () => {
         <img src={etereaIcon} alt="Etérea Icon" className="who-we-are-section__icon" />
       </div>
       <div className="who-we-are-section__content">
-        <h2 className="who-we-are-section__title eterea-title">QUIÉNES SOMOS</h2>
         <div className="who-we-are-section__blocks">
           <div className="who-we-are-section__block">
             <h3 className="who-we-are-section__subtitle">¿HASTA DÓNDE LLEGAMOS?</h3>
@@ -41,7 +39,6 @@ const WhoWeAreSection: React.FC = () => {
             </p>
           </div>
         </div>
-        <Link href="/contacto" className="eterea-button eterea-button--auto">Contacto</Link>
       </div>
       <div className="who-we-are-section__icon-wrapper who-we-are-section__icon-wrapper--bottom">
         <img src={etereaIcon} alt="Etérea Icon" className="who-we-are-section__icon who-we-are-section__icon--inverted" />

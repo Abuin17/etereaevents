@@ -10,6 +10,13 @@
   align-items: stretch;
   width: 100%;
 
+  &__intro {
+    max-width: 52rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
   &__main {
     flex: 1;
     display: flex;
@@ -29,7 +36,7 @@
     align-items: center;
     gap: 16px;
     padding: 0;
-    margin-top: 7rem;
+    margin-top: 5rem;
   }
 
   &__group {
@@ -61,6 +68,18 @@
     text-transform: uppercase;
     color: #393431;
     vertical-align: middle;
+
+    &--link {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+
+      &:hover,
+      &:focus-visible {
+        opacity: 0.75;
+      }
+    }
   }
 
   &__label, &__separator {
@@ -98,6 +117,11 @@
   }
 
   @media (max-width: 600px) {
+    &__intro {
+      max-width: min(92vw, 28rem);
+      padding: 0 1rem;
+    }
+
     &__main {
       padding: 8rem 0 4rem 0;
     }

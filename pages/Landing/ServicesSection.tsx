@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import './ServicesSection.scss';
-const etereaIcon = '/assets/logos/ETÉREA_Icono_antracita.svg';
 
 const services = [
   {
@@ -31,15 +30,9 @@ const services = [
 
 const ServicesSection: React.FC = () => (
   <section className="services-section">
-    <div className="services-section__icon-wrapper">
-      <img src={etereaIcon} alt="Etérea Icon" className="services-section__icon" />
-    </div>
     <div className="services-section__center">
       <div className="services-section__title">
         PORQUE LO EXTRAORDINARIO DEBERÍA SENTIRSE NATURAL
-      </div>
-      <div className="services-section__desc">
-        Etérea es una forma de estar presente, de escuchar con atención y traducir lo esencial en celebraciones que reflejan quién eres. No hay moldes ni repeticiones, solo proyectos únicos que respiran de tu historia y toman forma con intención y sensibilidad.
       </div>
       <div className="services-section__cards" aria-label="Servicios de Etérea">
         {services.map((service) => (
@@ -57,9 +50,6 @@ const ServicesSection: React.FC = () => (
           </Link>
         ))}
       </div>
-    </div>
-    <div className="services-section__icon-wrapper services-section__icon-wrapper--bottom">
-      <img src={etereaIcon} alt="Etérea Icon" className="services-section__icon services-section__icon--inverted" />
     </div>
   </section>
 );

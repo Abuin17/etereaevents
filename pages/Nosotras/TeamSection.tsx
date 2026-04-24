@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import Link from 'next/link';
 import './TeamSection.scss';
 const nataliaImage = '/assets/images/opt-natalia.jpg';
 const virginiaImage = '/assets/images/opt-virginia.jpg';
@@ -59,7 +60,6 @@ const TeamSection: React.FC = () => {
 
   return (
     <section className="team-section">
-      <h2 className="team-section__title">EQUIPO</h2>
       <div className="team-section__grid">
         <div ref={nataliaMemberRef} className="team-section__member">
           <img src={nataliaImage} alt="Natalia del Río Pérez" className="team-section__image" />
@@ -77,9 +77,12 @@ const TeamSection: React.FC = () => {
         </div>
       </div>
       <p className="team-section__description">
-        Discretas por naturaleza, perfeccionistas en cada detalle y conseguidoras de lo imposible.<br />
-        Diseñamos y producimos experiencias memorables, pensadas desde la emoción y hechas para durar.
+        Creamos desde la escucha, trabajamos con intención.<br />
+        Cada proyecto empieza con una historia, la tuya.
       </p>
+      <Link href="/contacto" className="eterea-button eterea-button--auto team-section__cta">
+        Contacto
+      </Link>
     </section>
   );
 };

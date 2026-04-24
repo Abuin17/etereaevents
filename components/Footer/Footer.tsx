@@ -67,7 +67,7 @@ const Footer: React.FC<FooterProps> = ({ variant, onOpenCookiePreferences }) => 
         {/* Footer info */}
         <div className="footer__info">
           <div className="footer__info-static">
-            <span>2025</span>
+            <span>2026</span>
             <span className="footer__separator">|</span>
             <span>Eterea Events</span>
             <span className="footer__separator">|</span>

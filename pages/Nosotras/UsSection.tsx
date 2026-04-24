@@ -6,8 +6,8 @@ const UsSection: React.FC = () => {
     <section className="us-section">
       <h1 className="us-section__title eterea-title">NOSOTRAS</h1>
       <p className="us-section__body">
-        Creamos desde la escucha, trabajamos con intención.<br />
-        Cada proyecto empieza con una historia, la tuya.
+        Discretas por naturaleza, perfeccionistas en cada detalle y conseguidoras de lo imposible.<br />
+        Diseñamos y producimos experiencias memorables, pensadas desde la emoción y hechas para durar.
       </p>
     </section>
   );

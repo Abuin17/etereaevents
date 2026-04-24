@@ -8,11 +8,12 @@ const LandingUs: React.FC = () => {
   return (
     <section className="landing-us eterea-content-block">
       <h1 className="landing-us__title eterea-title">
-        POR LAS IDEAS<br />
-        QUE MERECEN SER CONTADAS
+        LAS MEJORES EXPERIENCIAS<br />
+        COMIENZAN CON UNA CONVERSACIÓN
       </h1>
       <p className="landing-us__body">
-        Somos precisión, sutileza y presencia. Hablamos con la seguridad de quien
+        Somos precisión, sutileza y presencia. <br />
+        Hablamos con la seguridad de quien
         no necesita demostrar, sino hacer sentir; de quien sabe que el verdadero lujo
         no se impone, sino que se percibe.
       </p>

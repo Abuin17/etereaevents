@@ -3,12 +3,11 @@
 
 .us-section {
   width: 100%;
-  padding: $spacing-6xl $spacing-xl;
+  padding: $spacing-6xl $spacing-xl 0.5rem $spacing-xl;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 100px;
-  margin-bottom: 500px;
 
   &__title {
     @extend .eterea-title;
@@ -28,7 +27,7 @@
   }
 
   @media (max-width: $breakpoint-md) {
-    padding: $spacing-2xl $spacing-lg;
+    padding: $spacing-2xl $spacing-lg 0.5rem $spacing-lg;
     gap: $spacing-4xl;
 
     &__title {
@@ -37,7 +36,7 @@
   }
 
   @media (max-width: $breakpoint-sm) {
-    padding: 6rem $spacing-md $spacing-xl $spacing-md;
+    padding: 6rem $spacing-md 0.5rem $spacing-md;
     gap: $spacing-2xl;
 
     &__title {
