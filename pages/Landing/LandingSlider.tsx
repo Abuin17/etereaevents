@@ -6,7 +6,7 @@ import ScrollToPlugin from 'gsap/ScrollToPlugin';
 gsap.registerPlugin(ScrollToPlugin);
 import './LandingSlider.scss';
 
-const slider1 = '/assets/images/opt-slider-conocer.jpg';
+const slider1 = '/assets/images/conocer.jpg';
 const slider2 = '/assets/images/opt-slider-crear.jpg';
 const slider3 = '/assets/images/opt-slider-vivir.jpg';
 
