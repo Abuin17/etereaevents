@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import styles from './Slider.module.scss';
 
+const rhombusIcon = '/assets/icons/rombo.svg';
+
 interface SliderProps {
   slides: {
     image: string;
@@ -104,14 +106,9 @@ const Slider: React.FC<SliderProps> = ({
               <div
                 key={idx}
                 className={styles['slider__stepper-dot']}
-                style={{ 
-                  border: '1px solid #393431',
-                  width: '10px',
-                  height: '10px',
-                  borderRadius: '50%',
-                  backgroundColor: '#F7F6F4'
-                }}
-              />
+              >
+                <img src={rhombusIcon} alt="" aria-hidden="true" />
+              </div>
             ))}
           </div>
         </div>

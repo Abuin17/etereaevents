@@ -3,7 +3,7 @@ import './PreFooter.scss';
 
 const PreFooter: React.FC = () => (
   <div className="pre-footer">
-    CELEBRATING UNFINISHED MOMENTS<br />SINCE 2023
+    IT'S ALL ABOUT DETAILS
   </div>
 );
 

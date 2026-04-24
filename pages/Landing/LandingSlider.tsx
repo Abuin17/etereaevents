@@ -17,15 +17,15 @@ const SLIDER_SCROLL_LENGTH = slides.length * SLIDE_HEIGHT;
 const slideContent = [
   {
     title: "CONOCER",
-    body: "Cada historia comienza con una conversación. Tomamos tiempo para entender quién eres, qué te inspira y cómo imaginas ese momento especial."
+    body: "Definimos juntos el alma del proyecto. Entendemos el propósito y la energía que debe transmitir. A partir de aquí, trazamos el concepto que guiará cada decisión posterior."
   },
   {
     title: "CREAR",
-    body: "Desde la idea inicial hasta el último detalle, combinamos estética, emoción y precisión para dar forma a eventos que no se parecen a ningún otro."
+    body: "Diseñamos el universo visual y sensorial del evento. Definimos el espacio, seleccionamos proveedores y damos forma a cada decisión: estética, tiempos, presupuesto y producción. Todo lo que se ve, y lo que no, queda bajo control."
   },
   {
     title: "VIVIR",
-    body: "Aquello que está presente sin necesidad de ser evidente, aquello intangible que evoca la profundidad. Cada instante, a tu medida."
+    body: "Nuestra presencia sostiene cada momento, desde el montaje hasta la retirada final. Coordinamos equipo, proveedores y tiempos con discreción, asegurando que todo suceda con precisión, calma y armonía."
   }
 ];
 
@@ -190,14 +190,6 @@ const LandingSlider: React.FC = () => {
         },
       });
 
-      // Stepper animado
-      gsap.to('.landing-slider__stepper-dot', {
-        scale: (i: number) => (i === Math.round(progress * (slides.length - 1)) ? 1.4 : 1),
-        background: (i: number) => (i === Math.round(progress * (slides.length - 1)) ? '#000' : '#bbb'),
-        duration: 0.5,
-        ease: 'power2.out',
-      });
-
       // Línea del stepper
       gsap.to('.landing-slider__stepper-line-inner', {
         scaleY: progress,
@@ -234,7 +226,7 @@ const LandingSlider: React.FC = () => {
         }}
       >
         {/* Slider Intro Text */}
-        <div className="landing-slider__intro">IT'S ALL ABOUT DETAILS</div>
+        <div className="landing-slider__intro">NUESTRO PROCESO</div>
         <div
           ref={sliderRef}
           className="landing-slider__custom-track"

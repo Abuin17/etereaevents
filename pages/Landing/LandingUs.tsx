@@ -17,7 +17,7 @@ const LandingUs: React.FC = () => {
         no se impone, sino que se percibe.
       </p>
       <Link href="/nosotras" className="eterea-button eterea-button--auto eterea-button-top">
-        Nosotras
+        Conócenos
       </Link>
     </section>
   );

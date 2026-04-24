@@ -9,12 +9,16 @@
   text-align: center;
   color: #393431;
   margin: 3.5rem 0 4.5rem 0;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
   white-space: pre-line;
 } 
 
 
 @media (max-width: $breakpoint-sm) {
   .section-intro {
-    margin: $spacing-xl 0 $spacing-6xl 0;
+    margin: $spacing-xl auto $spacing-6xl auto;
+    max-width: 21rem;
   }
 }

@@ -9,7 +9,7 @@
   gap: 2.5rem;
   margin: 12.5rem auto 31.25rem auto;
   width: 100%;
-  max-width: 55rem;
+  max-width: 74rem;
   padding: 0 1.5rem;
 
   &__icon-wrapper {
@@ -64,14 +64,97 @@
     @extend .eterea-body;
   }
 
-  &__buttons {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.25rem;
+    margin-top: $spacing-xl;
     width: 100%;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: $secondary-color;
+    padding: 0.9rem;
+    min-height: 100%;
+    transition: transform 0.25s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-4px);
+    }
+  }
+
+  &__card-media {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: $secondary-color;
+  }
+
+  &__card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  &__card-content {
+    padding: 1.5rem 0.75rem 1rem;
+  }
+
+  &__card-title {
+    color: $primary-color;
+    font-family: $font-primary;
+    font-weight: 500;
+    font-size: $font-size-lg;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    text-align: center;
+    margin-bottom: $spacing-md;
+  }
+
+  &__card-description {
+    font-family: $font-secondary;
+    color: $primary-color;
+    font-size: $body-font-size;
+    line-height: $body-line-height;
+    text-align: center;
+    white-space: pre-line;
+    margin: 0;
+  }
+
+  &__card-cta {
+    display: none;
+    margin: $spacing-lg auto 0;
+    padding: 0.65rem 1.25rem 0.5rem;
+    min-width: 9rem;
+    text-align: center;
+    font-family: $font-primary;
+    font-weight: 500;
+    font-size: $font-size-base;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    color: $primary-color;
+    background: $secondary-color;
+    border: 1px solid rgba($primary-color, 0.35);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  &__card:hover &__card-image,
+  &__card:focus-visible &__card-image {
+    transform: scale(1.03);
+  }
+
+  &__card:hover &__card-cta,
+  &__card:focus-visible &__card-cta {
+    background: $beige-light;
+    border-color: rgba($primary-color, 0.5);
   }
 }
 
@@ -89,9 +172,11 @@
       font-size: 1rem;
     }
 
-    &__buttons {
-      gap: 1.5rem;
+    &__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: $spacing-md;
     }
+
   }
 }
 
@@ -104,18 +189,21 @@
       font-size: 1.75rem;
     }
 
-    &__buttons {
-      gap: $spacing-md;
-      align-items: center;
-      max-width: 320px;
-      height: auto;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 1rem !important;
+    &__cards {
+      grid-template-columns: 1fr;
+      margin-top: $spacing-lg;
     }
 
-    &__eterea-button {
-      margin-top: 0 !important;
+    &__card {
+      min-height: 18rem;
     }
+
+    &__card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+    }
+
   }
 } 

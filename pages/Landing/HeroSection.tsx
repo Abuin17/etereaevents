@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import './HeroSection.scss';
 // const heroImage1 = '/assets/images/wedding.jpg';
 // const heroImage2 = '/assets/images/home3.jpg';
-const heroImage3 = '/assets/images/opt-hero-sabana.jpg';
+const heroImage3 = '/assets/images/sabana eterea OK 3.png';
 const etereaLogo = '/assets/logos/ETÉREA_Logo_beige-claro.svg';
 
 const MARQUEE_ITEMS = 6;
@@ -69,7 +69,7 @@ const HeroSection: React.FC = () => {
           <div
             key={index}
             className={`hero-section__background-image hero-section__background-image--active`}
-            style={{ backgroundImage: `url(${image})` }}
+            style={{ backgroundImage: `url("${image}")` }}
           />
         ))}
       </div>

@@ -86,12 +86,12 @@
     top: 85px;
   }
   &__stepper-line {
-    width: 100%;
+    width: calc(100% - 8px);
     height: 1px;
     background: #393431;
     position: absolute;
     top: 50%;
-    left: 0;
+    left: 4px;
     z-index: 1;
     transform: translateY(-50%);
   }
@@ -105,15 +105,21 @@
     z-index: 2;
   }
   &__stepper-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    border: 1px solid #393431;
-    background: #fff;
-    transition: background 0.2s;
+    width: 8px;
+    height: 12.5px;
+    background-color: $beige-dark;
+    -webkit-mask-image: url('/assets/icons/rombo.svg');
+    mask-image: url('/assets/icons/rombo.svg');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    transition: background-color 0.2s;
+
     &--active {
-      background: #393431;
-      border: 1px solid #393431;
+      background-color: $primary-color;
     }
   }
   &__heading {

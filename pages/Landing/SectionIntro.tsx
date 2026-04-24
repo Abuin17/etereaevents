@@ -3,7 +3,7 @@ import './SectionIntro.scss';
 
 const SectionIntro: React.FC = () => (
   <div className="section-intro">
-    EXPERIENCE AGENCY<br />BASED IN MADRID
+    DISEÑO Y PRODUCCIÓN DE EVENTOS Y EXPERIENCIAS <br /> QUE NACEN DE LA ESCUCHA Y SE QUEDAN EN LA MEMORIA.
   </div>
 );
 

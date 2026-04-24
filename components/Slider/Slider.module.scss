@@ -82,12 +82,17 @@
   }
 
   &__stepper-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: 1px solid #393431;
-    background-color: #F7F6F4 !important;
-    transition: background-color 0.5s ease;
-    will-change: background-color;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
   }
 } 
