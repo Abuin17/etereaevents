@@ -27,11 +27,13 @@
   }
 
   &__text {
+    width: 100%;
     max-width: 58rem;
     margin: 0;
     font-family: $font-secondary;
-    font-size: $body-font-size;
-    line-height: 1.1;
+    // Tamaño fluido: en móvil queda cerca de cuerpo; en desktop sube un poco, sin los 1.75–2rem fijos
+    font-size: clamp(0.95rem, 0.88rem + 0.4vw, 1.2rem);
+    line-height: 1.5;
     letter-spacing: 0;
     text-align: center;
     color: $primary-color;
@@ -43,22 +45,13 @@
   .identifier-section {
     margin: 6rem auto 5rem;
     gap: $spacing-xl;
-
-    &__text {
-      font-size: 2rem;
-    }
   }
 }
 
 @media (max-width: $breakpoint-sm) {
   .identifier-section {
     gap: $spacing-lg;
-    padding: 0 1rem;
+    padding: 0 1.25rem;
     margin: 5rem auto 4rem;
-
-    &__text {
-      font-size: 1.75rem;
-      line-height: 1.15;
-    }
   }
 }
