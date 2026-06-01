@@ -5,27 +5,24 @@ import styles from './FeedbackForm.module.scss';
 const nataliaVirginiaImage = '/assets/images/natalia-virginia.jpg';
 
 export interface FeedbackFormData {
-  // Step 1: Datos personales
   nombre: string;
   empresa: string;
   cargo: string;
-  
-  // Step 2: Preguntas abiertas
-  sorpresa_positiva: string;
-  tranquilidad: string;
-  
-  // Step 3-5: Multiple choice (separadas)
-  cuidado_detalles: string;
-  anticipacion: string;
-  interpretacion_identidad: string;
-  
-  // Step 6: Pregunta abierta
-  buenas_manos: string;
-  
-  // Step 7: Experiencia + autorización
-  experiencia: string;
+  experiencia_general: number | null;
+  valorado_mas: string;
+  momento_destacar: string;
+  impacto_evento: string;
+  recomendacion: string;
   autorizacion: 'nombre_completo' | 'anonimo' | '';
 }
+
+const RATING_OPTIONS = [
+  { value: 1, label: '1', hint: 'Muy insatisfactoria' },
+  { value: 2, label: '2', hint: '' },
+  { value: 3, label: '3', hint: '' },
+  { value: 4, label: '4', hint: '' },
+  { value: 5, label: '5', hint: 'Excelente' },
+] as const;
 
 const FeedbackForm: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -33,22 +30,20 @@ const FeedbackForm: React.FC = () => {
   const [animationDirection, setAnimationDirection] = useState<'next' | 'prev'>('next');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  
+
   const [formData, setFormData] = useState<FeedbackFormData>({
     nombre: '',
     empresa: '',
     cargo: '',
-    sorpresa_positiva: '',
-    tranquilidad: '',
-    cuidado_detalles: '',
-    anticipacion: '',
-    interpretacion_identidad: '',
-    buenas_manos: '',
-    experiencia: '',
+    experiencia_general: null,
+    valorado_mas: '',
+    momento_destacar: '',
+    impacto_evento: '',
+    recomendacion: '',
     autorizacion: '',
   });
 
-  const totalSteps = 8; // 7 steps + success
+  const totalSteps = 7; // 6 steps + success
 
   const updateFormData = (updates: Partial<FeedbackFormData>) => {
     setFormData(prev => ({ ...prev, ...updates }));
@@ -58,7 +53,7 @@ const FeedbackForm: React.FC = () => {
     if (currentStep < totalSteps && !isTransitioning) {
       setAnimationDirection('next');
       setIsTransitioning(true);
-      
+
       setTimeout(() => {
         setCurrentStep(prev => prev + 1);
         setTimeout(() => {
@@ -72,7 +67,7 @@ const FeedbackForm: React.FC = () => {
     if (currentStep > 1 && !isTransitioning) {
       setAnimationDirection('prev');
       setIsTransitioning(true);
-      
+
       setTimeout(() => {
         setCurrentStep(prev => prev - 1);
         setTimeout(() => {
@@ -82,44 +77,47 @@ const FeedbackForm: React.FC = () => {
     }
   };
 
-  // Validación reactiva para el paso 1
   const canProceedStep1 = Boolean(
-    formData.nombre.trim() && 
-    formData.empresa.trim() && 
+    formData.nombre.trim() &&
+    formData.empresa.trim() &&
     formData.cargo.trim()
   );
-  
-  // Validación para el último paso
-  const canSubmit = Boolean(
-    formData.experiencia.trim() && 
-    formData.autorizacion
-  );
+
+  const canProceedStep2 = formData.experiencia_general !== null;
+
+  const canSubmit = Boolean(formData.autorizacion);
 
   const handleSubmit = async () => {
     if (isSubmitting || !canSubmit) return;
-    
+
     setIsSubmitting(true);
     setSubmitError(null);
-    
+
     try {
       const response = await fetch('/api/client-feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...formData,
+          nombre: formData.nombre,
+          empresa: formData.empresa,
+          cargo: formData.cargo,
+          experiencia_general: formData.experiencia_general,
+          valorado_mas: formData.valorado_mas,
+          momento_destacar: formData.momento_destacar,
+          impacto_evento: formData.impacto_evento,
+          recomendacion: formData.recomendacion,
+          experiencia: formData.recomendacion.trim() || null,
           autoriza_nombre_web: formData.autorizacion === 'nombre_completo',
           autoriza_experiencia_anonima: formData.autorizacion === 'anonimo',
         }),
       });
-      
+
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Error al enviar el formulario');
       }
-      
-      console.log('✅ Feedback enviado correctamente');
-      setCurrentStep(8); // Go to success step
-      
+
+      setCurrentStep(7);
     } catch (error) {
       console.error('❌ Error:', error);
       setSubmitError(error instanceof Error ? error.message : 'Error desconocido');
@@ -136,6 +134,7 @@ const FeedbackForm: React.FC = () => {
             <div className={styles.stepContent}>
               <div className={styles.titleGroup}>
                 <h2 className={styles.title}>CUÉNTANOS SOBRE TI</h2>
+                <p className={styles.subtitleRevans}>Nombre, cargo y empresa</p>
               </div>
               <div className={styles.stepBody}>
                 <div className={styles.inputGroup}>
@@ -152,16 +151,6 @@ const FeedbackForm: React.FC = () => {
                   <div className={styles.inputWithLabel}>
                     <input
                       type="text"
-                      placeholder="Empresa *"
-                      value={formData.empresa}
-                      onChange={(e) => updateFormData({ empresa: e.target.value })}
-                      className={styles.textInput}
-                      required
-                    />
-                  </div>
-                  <div className={styles.inputWithLabel}>
-                    <input
-                      type="text"
                       placeholder="Cargo *"
                       value={formData.cargo}
                       onChange={(e) => updateFormData({ cargo: e.target.value })}
@@ -169,9 +158,19 @@ const FeedbackForm: React.FC = () => {
                       required
                     />
                   </div>
+                  <div className={styles.inputWithLabel}>
+                    <input
+                      type="text"
+                      placeholder="Empresa *"
+                      value={formData.empresa}
+                      onChange={(e) => updateFormData({ empresa: e.target.value })}
+                      className={styles.textInput}
+                      required
+                    />
+                  </div>
                 </div>
                 <p className={styles.disclaimer}>
-                  Al final del formulario, podrás autorizar o no que esta información 
+                  Al final del formulario, podrás autorizar o no que esta información
                   se refleje en nuestra web de forma anónima o con tu nombre.
                 </p>
               </div>
@@ -182,25 +181,32 @@ const FeedbackForm: React.FC = () => {
       case 2:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContentScrollable}>
-              <div className={styles.questionBlock}>
-                <h2 className={styles.titleSmall}>¿QUÉ FUE LO QUE MÁS TE SORPRENDIÓ POSITIVAMENTE DE NUESTRO TRABAJO?</h2>
-                <textarea
-                  placeholder="Cuéntanos..."
-                  value={formData.sorpresa_positiva}
-                  onChange={(e) => updateFormData({ sorpresa_positiva: e.target.value })}
-                  className={styles.textarea}
-                />
+            <div className={styles.stepContent}>
+              <div className={styles.titleGroup}>
+                <h2 className={styles.titleSmall}>
+                  EN UNA ESCALA DEL 1 AL 5, ¿CÓMO VALORARÍAS TU EXPERIENCIA GENERAL CON ETÉREA?
+                </h2>
               </div>
-              
-              <div className={styles.questionBlock}>
-                <h2 className={styles.titleSmall}>¿QUÉ PARTE DEL PROCESO TE DIO MÁS TRANQUILIDAD?</h2>
-                <textarea
-                  placeholder="Cuéntanos..."
-                  value={formData.tranquilidad}
-                  onChange={(e) => updateFormData({ tranquilidad: e.target.value })}
-                  className={styles.textarea}
-                />
+              <div className={styles.stepBody}>
+                <div className={styles.ratingScale}>
+                  {RATING_OPTIONS.map((option) => (
+                    <label key={option.value} className={styles.ratingOption}>
+                      <input
+                        type="radio"
+                        name="experiencia_general"
+                        value={option.value}
+                        checked={formData.experiencia_general === option.value}
+                        onChange={() => updateFormData({ experiencia_general: option.value })}
+                      />
+                      <span className={styles.ratingValue}>{option.label}</span>
+                      {option.hint ? (
+                        <span className={styles.ratingHint}>{option.hint}</span>
+                      ) : (
+                        <span className={styles.ratingHintPlaceholder} aria-hidden="true" />
+                      )}
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -211,23 +217,17 @@ const FeedbackForm: React.FC = () => {
           <div className={styles.step}>
             <div className={styles.stepContent}>
               <div className={styles.titleGroup}>
-                <h2 className={styles.titleSmall}>¿CÓMO DESCRIBIRÍAS EL NIVEL DE CUIDADO EN LOS DETALLES?</h2>
+                <h2 className={styles.titleSmall}>
+                  ¿QUÉ FUE LO QUE MÁS VALORASTE DE TRABAJAR CON ETÉREA?
+                </h2>
               </div>
               <div className={styles.stepBody}>
-                <div className={styles.radioGroupVertical}>
-                  {['Excepcional', 'Muy alto', 'Adecuado', 'Mejorable'].map((option) => (
-                    <label key={option} className={styles.radioOption}>
-                      <input
-                        type="radio"
-                        name="cuidado_detalles"
-                        value={option}
-                        checked={formData.cuidado_detalles === option}
-                        onChange={(e) => updateFormData({ cuidado_detalles: e.target.value })}
-                      />
-                      <span className={styles.radioLabel}>{option.toUpperCase()}</span>
-                    </label>
-                  ))}
-                </div>
+                <textarea
+                  placeholder="Cuéntanos..."
+                  value={formData.valorado_mas}
+                  onChange={(e) => updateFormData({ valorado_mas: e.target.value })}
+                  className={styles.textareaLarge}
+                />
               </div>
             </div>
           </div>
@@ -238,23 +238,17 @@ const FeedbackForm: React.FC = () => {
           <div className={styles.step}>
             <div className={styles.stepContent}>
               <div className={styles.titleGroup}>
-                <h2 className={styles.titleSmall}>¿CÓMO CALIFICARÍAS NUESTRA CAPACIDAD PARA ANTICIPARNOS A PROBLEMAS O NECESIDADES?</h2>
+                <h2 className={styles.titleSmall}>
+                  ¿HUBO ALGÚN MOMENTO, DETALLE O ASPECTO DEL SERVICIO QUE TE GUSTARÍA DESTACAR?
+                </h2>
               </div>
               <div className={styles.stepBody}>
-                <div className={styles.radioGroupVertical}>
-                  {['Excelente', 'Muy buena', 'Correcta', 'Insuficiente'].map((option) => (
-                    <label key={option} className={styles.radioOption}>
-                      <input
-                        type="radio"
-                        name="anticipacion"
-                        value={option}
-                        checked={formData.anticipacion === option}
-                        onChange={(e) => updateFormData({ anticipacion: e.target.value })}
-                      />
-                      <span className={styles.radioLabel}>{option.toUpperCase()}</span>
-                    </label>
-                  ))}
-                </div>
+                <textarea
+                  placeholder="Cuéntanos..."
+                  value={formData.momento_destacar}
+                  onChange={(e) => updateFormData({ momento_destacar: e.target.value })}
+                  className={styles.textareaLarge}
+                />
               </div>
             </div>
           </div>
@@ -265,23 +259,17 @@ const FeedbackForm: React.FC = () => {
           <div className={styles.step}>
             <div className={styles.stepContent}>
               <div className={styles.titleGroup}>
-                <h2 className={styles.titleSmall}>¿SENTISTE QUE INTERPRETAMOS BIEN VUESTRA IDENTIDAD Y OBJETIVOS?</h2>
+                <h2 className={styles.titleSmall}>
+                  ¿HAY ALGÚN RESULTADO, SENSACIÓN O IMPACTO QUE DESTACARÍAS DESPUÉS DEL EVENTO?
+                </h2>
               </div>
               <div className={styles.stepBody}>
-                <div className={styles.radioGroupVertical}>
-                  {['Sí, completamente', 'En gran medida', 'Parcialmente', 'No'].map((option) => (
-                    <label key={option} className={styles.radioOption}>
-                      <input
-                        type="radio"
-                        name="interpretacion_identidad"
-                        value={option}
-                        checked={formData.interpretacion_identidad === option}
-                        onChange={(e) => updateFormData({ interpretacion_identidad: e.target.value })}
-                      />
-                      <span className={styles.radioLabel}>{option.toUpperCase()}</span>
-                    </label>
-                  ))}
-                </div>
+                <textarea
+                  placeholder="Cuéntanos..."
+                  value={formData.impacto_evento}
+                  onChange={(e) => updateFormData({ impacto_evento: e.target.value })}
+                  className={styles.textareaLarge}
+                />
               </div>
             </div>
           </div>
@@ -290,34 +278,16 @@ const FeedbackForm: React.FC = () => {
       case 6:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContent}>
-              <div className={styles.titleGroup}>
-                <h2 className={styles.titleSmall}>¿QUÉ TE HIZO SENTIR QUE ESTABAS EN BUENAS MANOS?</h2>
-              </div>
-              <div className={styles.stepBody}>
-                <textarea
-                  placeholder="Cuéntanos..."
-                  value={formData.buenas_manos}
-                  onChange={(e) => updateFormData({ buenas_manos: e.target.value })}
-                  className={styles.textarea}
-                />
-              </div>
-            </div>
-          </div>
-        );
-
-      case 7:
-        return (
-          <div className={styles.step}>
             <div className={styles.stepContentScrollable}>
               <div className={styles.questionBlock}>
-                <h2 className={styles.titleSmall}>¿CÓMO DESCRIBIRÍAS TU EXPERIENCIA CON ETÉREA? *</h2>
+                <h2 className={styles.titleSmall}>
+                  SI RECOMENDARAS ETÉREA A OTRA PERSONA O EMPRESA, ¿QUÉ LE DIRÍAS?
+                </h2>
                 <textarea
-                  placeholder="Mi experiencia con Etérea..."
-                  value={formData.experiencia}
-                  onChange={(e) => updateFormData({ experiencia: e.target.value })}
+                  placeholder="Cuéntanos..."
+                  value={formData.recomendacion}
+                  onChange={(e) => updateFormData({ recomendacion: e.target.value })}
                   className={styles.textareaLarge}
-                  required
                 />
               </div>
 
@@ -329,20 +299,20 @@ const FeedbackForm: React.FC = () => {
                       name="autorizacion"
                       value="nombre_completo"
                       checked={formData.autorizacion === 'nombre_completo'}
-                      onChange={(e) => updateFormData({ autorizacion: e.target.value as 'nombre_completo' })}
+                      onChange={() => updateFormData({ autorizacion: 'nombre_completo' })}
                     />
                     <span className={styles.radioLabelAuth}>
                       Autorizo a que mi nombre, empresa y cargo aparezcan junto a mi reseña
                     </span>
                   </label>
-                  
+
                   <label className={styles.radioOptionAuth}>
                     <input
                       type="radio"
                       name="autorizacion"
                       value="anonimo"
                       checked={formData.autorizacion === 'anonimo'}
-                      onChange={(e) => updateFormData({ autorizacion: e.target.value as 'anonimo' })}
+                      onChange={() => updateFormData({ autorizacion: 'anonimo' })}
                     />
                     <span className={styles.radioLabelAuth}>
                       Prefiero que mi reseña aparezca de forma anónima
@@ -356,10 +326,10 @@ const FeedbackForm: React.FC = () => {
                   {submitError}
                 </div>
               )}
-              
+
               <div className={styles.submitButtonContainer}>
-                <button 
-                  className={styles.submitButton} 
+                <button
+                  className={styles.submitButton}
                   onClick={handleSubmit}
                   disabled={!canSubmit || isSubmitting}
                 >
@@ -370,7 +340,7 @@ const FeedbackForm: React.FC = () => {
           </div>
         );
 
-      case 8:
+      case 7:
         return (
           <div className={`${styles.step} ${styles.thankYouStep}`}>
             <div className={styles.thankYouContainer}>
@@ -388,7 +358,7 @@ const FeedbackForm: React.FC = () => {
                   Con cariño, el equipo de Etérea.
                 </p>
                 <div className={styles.thankYouButtons}>
-                  <button 
+                  <button
                     className={styles.secondaryButton}
                     onClick={() => {
                       window.location.href = '/';
@@ -399,9 +369,9 @@ const FeedbackForm: React.FC = () => {
                 </div>
               </div>
               <div className={styles.thankYouRight}>
-                <img 
-                  src={nataliaVirginiaImage} 
-                  alt="Natalia y Virginia - Equipo Etérea" 
+                <img
+                  src={nataliaVirginiaImage}
+                  alt="Natalia y Virginia - Equipo Etérea"
                   className={styles.thankYouImage}
                 />
               </div>
@@ -414,9 +384,16 @@ const FeedbackForm: React.FC = () => {
     }
   };
 
+  const isLastInteractiveStep = currentStep === 6;
+
+  const canGoNext = () => {
+    if (currentStep === 1) return canProceedStep1;
+    if (currentStep === 2) return canProceedStep2;
+    return true;
+  };
+
   return (
     <div className={styles.feedbackForm}>
-      {/* Header with logo */}
       <div className={styles.formHeader}>
         <Link href="/" className={styles.logoLink}>
           <img
@@ -428,14 +405,14 @@ const FeedbackForm: React.FC = () => {
         <h1 className={styles.formTitle}>FORMULARIO POST-EVENTO</h1>
         <div className={styles.headerSpacer} />
       </div>
-      
+
       <div className={styles.formWrapper}>
         <div className={styles.formContainer}>
-          <div 
+          <div
             className={`${styles.stepContainer} ${
-              isTransitioning 
-                ? animationDirection === 'next' 
-                  ? styles.stepTransitionOutNext 
+              isTransitioning
+                ? animationDirection === 'next'
+                  ? styles.stepTransitionOutNext
                   : styles.stepTransitionOutPrev
                 : styles.stepTransitionIn
             }`}
@@ -443,13 +420,12 @@ const FeedbackForm: React.FC = () => {
             {renderStep()}
           </div>
         </div>
-        
-        {/* Navigation */}
-        {currentStep < 8 && (
+
+        {currentStep < 7 && (
           <div className={styles.navigationContainer}>
             <div className={styles.navigation}>
               {currentStep > 1 ? (
-                <button 
+                <button
                   className={styles.navButton}
                   onClick={handlePrev}
                   aria-label="Paso anterior"
@@ -459,12 +435,12 @@ const FeedbackForm: React.FC = () => {
               ) : (
                 <div className={styles.navPlaceholder} />
               )}
-              
-              {currentStep < 7 ? (
-                <button 
+
+              {!isLastInteractiveStep ? (
+                <button
                   className={styles.navButton}
                   onClick={handleNext}
-                  disabled={currentStep === 1 && !canProceedStep1}
+                  disabled={!canGoNext()}
                   aria-label="Siguiente paso"
                 >
                   →
@@ -473,11 +449,10 @@ const FeedbackForm: React.FC = () => {
                 <div className={styles.navPlaceholder} />
               )}
             </div>
-            
-            {/* Progress indicator */}
+
             <div className={styles.progress}>
               <div className={styles.progressLine}>
-                {Array.from({ length: 7 }, (_, i) => (
+                {Array.from({ length: 6 }, (_, i) => (
                   <div
                     key={i}
                     className={`${styles.progressDot} ${

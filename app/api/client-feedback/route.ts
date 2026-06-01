@@ -4,25 +4,21 @@ import { neon } from '@neondatabase/serverless';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-// Initialize table on first request
 let isInitialized = false;
 
-// Obtener la URL de la base de datos con el prefijo correcto
 function getFeedbackDatabaseUrl(): string {
-  // Intentar con el prefijo feedback_ primero (integración Vercel con prefijo personalizado)
   const feedbackUrl = process.env.feedback_DATABASE_URL;
   if (feedbackUrl) {
     console.log('[client-feedback] Usando feedback_DATABASE_URL');
     return feedbackUrl;
   }
-  
-  // Fallback a DATABASE_URL estándar
+
   const standardUrl = process.env.DATABASE_URL;
   if (standardUrl) {
     console.log('[client-feedback] Usando DATABASE_URL estándar');
     return standardUrl;
   }
-  
+
   throw new Error('No se encontró feedback_DATABASE_URL ni DATABASE_URL');
 }
 
@@ -32,41 +28,40 @@ function getFeedbackDatabase() {
 
 async function initializeFeedbackTable() {
   const sql = getFeedbackDatabase();
-  
+
   await sql`
     CREATE TABLE IF NOT EXISTS client_feedback (
       id SERIAL PRIMARY KEY,
-      
-      -- Datos personales
+
       nombre VARCHAR(255) NOT NULL,
       empresa VARCHAR(255),
       cargo VARCHAR(255),
-      
-      -- Preguntas abiertas
-      sorpresa_positiva TEXT,
-      tranquilidad TEXT,
-      buenas_manos TEXT,
+
+      experiencia_general SMALLINT CHECK (experiencia_general >= 1 AND experiencia_general <= 5),
+      valorado_mas TEXT,
+      momento_destacar TEXT,
+      impacto_evento TEXT,
+      recomendacion TEXT,
+
       experiencia TEXT,
-      
-      -- Multiple choice
-      cuidado_detalles VARCHAR(50),
-      anticipacion VARCHAR(50),
-      interpretacion_identidad VARCHAR(50),
-      
-      -- Autorizaciones
+
       autoriza_nombre_web BOOLEAN DEFAULT false,
       autoriza_experiencia_anonima BOOLEAN DEFAULT false,
-      
-      -- Metadatos
+
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     )
   `;
+
+  await sql`ALTER TABLE client_feedback ADD COLUMN IF NOT EXISTS experiencia_general SMALLINT`;
+  await sql`ALTER TABLE client_feedback ADD COLUMN IF NOT EXISTS valorado_mas TEXT`;
+  await sql`ALTER TABLE client_feedback ADD COLUMN IF NOT EXISTS momento_destacar TEXT`;
+  await sql`ALTER TABLE client_feedback ADD COLUMN IF NOT EXISTS impacto_evento TEXT`;
+  await sql`ALTER TABLE client_feedback ADD COLUMN IF NOT EXISTS recomendacion TEXT`;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    // Verificar que existe alguna URL de base de datos
     if (!process.env.feedback_DATABASE_URL && !process.env.DATABASE_URL) {
       return NextResponse.json(
         { error: 'feedback_DATABASE_URL ni DATABASE_URL configuradas' },
@@ -75,8 +70,7 @@ export async function POST(req: NextRequest) {
     }
 
     const sql = getFeedbackDatabase();
-    
-    // Initialize if needed
+
     if (!isInitialized) {
       console.log('[client-feedback] Inicializando tabla...');
       await initializeFeedbackTable();
@@ -84,13 +78,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await req.json();
-    console.log('[client-feedback] Received data:', {
-      nombre: data.nombre,
-      empresa: data.empresa,
-      cargo: data.cargo
-    });
 
-    // Validate required fields
     if (!data.nombre || data.nombre.trim() === '') {
       return NextResponse.json(
         { error: 'El nombre es obligatorio' },
@@ -98,32 +86,49 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Insert into database
+    const rating = Number(data.experiencia_general);
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+      return NextResponse.json(
+        { error: 'La valoración general debe ser un número entre 1 y 5' },
+        { status: 400 }
+      );
+    }
+
+    if (data.autoriza_nombre_web !== true && data.autoriza_experiencia_anonima !== true) {
+      return NextResponse.json(
+        { error: 'Debes elegir una opción de autorización' },
+        { status: 400 }
+      );
+    }
+
+    const testimonio =
+      (typeof data.recomendacion === 'string' && data.recomendacion.trim()) ||
+      (typeof data.experiencia === 'string' && data.experiencia.trim()) ||
+      null;
+
     const result = await sql`
       INSERT INTO client_feedback (
         nombre,
         empresa,
         cargo,
-        sorpresa_positiva,
-        tranquilidad,
-        buenas_manos,
+        experiencia_general,
+        valorado_mas,
+        momento_destacar,
+        impacto_evento,
+        recomendacion,
         experiencia,
-        cuidado_detalles,
-        anticipacion,
-        interpretacion_identidad,
         autoriza_nombre_web,
         autoriza_experiencia_anonima
       ) VALUES (
         ${data.nombre},
         ${data.empresa || null},
         ${data.cargo || null},
-        ${data.sorpresa_positiva || null},
-        ${data.tranquilidad || null},
-        ${data.buenas_manos || null},
-        ${data.experiencia || null},
-        ${data.cuidado_detalles || null},
-        ${data.anticipacion || null},
-        ${data.interpretacion_identidad || null},
+        ${rating},
+        ${data.valorado_mas || null},
+        ${data.momento_destacar || null},
+        ${data.impacto_evento || null},
+        ${data.recomendacion || null},
+        ${testimonio},
         ${data.autoriza_nombre_web === true},
         ${data.autoriza_experiencia_anonima === true}
       )
@@ -132,20 +137,19 @@ export async function POST(req: NextRequest) {
 
     console.log('[client-feedback] ✅ Feedback saved:', {
       id: result[0]?.id,
-      nombre: data.nombre
+      nombre: data.nombre,
     });
 
     return NextResponse.json(
       { ok: true, id: result[0]?.id },
       { status: 200 }
     );
-
   } catch (err) {
     console.error('[client-feedback] Error:', err);
     return NextResponse.json(
-      { 
-        error: 'Error guardando el feedback', 
-        detail: err instanceof Error ? err.message : 'Unknown error'
+      {
+        error: 'Error guardando el feedback',
+        detail: err instanceof Error ? err.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -163,21 +167,18 @@ export async function GET() {
 
     const sql = getFeedbackDatabase();
 
-    // Initialize if needed
     if (!isInitialized) {
       await initializeFeedbackTable();
       isInitialized = true;
     }
 
-    // Get stats
     const dbInfo = await sql`SELECT current_database() as db_name`;
     const countResult = await sql`SELECT COUNT(*)::int as total FROM client_feedback`;
-    
-    // Get recent feedback (for admin purposes)
+
     const recent = await sql`
-      SELECT id, nombre, empresa, cargo, created_at 
-      FROM client_feedback 
-      ORDER BY created_at DESC 
+      SELECT id, nombre, empresa, cargo, experiencia_general, created_at
+      FROM client_feedback
+      ORDER BY created_at DESC
       LIMIT 10
     `;
 
@@ -186,18 +187,16 @@ export async function GET() {
       database: dbInfo[0]?.db_name,
       totalFeedback: countResult[0]?.total || 0,
       recentFeedback: recent,
-      isInitialized
+      isInitialized,
     });
-
   } catch (err) {
     console.error('[client-feedback] GET Error:', err);
     return NextResponse.json(
-      { 
-        error: 'Error de conexión', 
-        detail: err instanceof Error ? err.message : 'Unknown'
+      {
+        error: 'Error de conexión',
+        detail: err instanceof Error ? err.message : 'Unknown',
       },
       { status: 500 }
     );
   }
 }
-
