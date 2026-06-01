@@ -494,11 +494,11 @@
 // Authorization simple (sin título, recuadro ni descripción)
 .authorizationSimple {
   width: 100%;
-  max-width: 500px; // Mismo ancho que el textarea
+  max-width: 500px;
   display: flex;
   flex-direction: column;
-  margin-top: $spacing-sm; // Menos espacio después del textarea
-  align-items: center; // Centrar el contenido
+  margin-top: $spacing-lg;
+  align-items: center;
 }
 
 .authorizationSimple .radioGroupVertical {

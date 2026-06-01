@@ -80,15 +80,14 @@ const FeedbackForm: React.FC = () => {
   const canProceedStep1 = Boolean(
     formData.nombre.trim() &&
     formData.empresa.trim() &&
-    formData.cargo.trim()
+    formData.cargo.trim() &&
+    formData.autorizacion
   );
 
   const canProceedStep2 = formData.experiencia_general !== null;
 
-  const canSubmit = Boolean(formData.autorizacion);
-
   const handleSubmit = async () => {
-    if (isSubmitting || !canSubmit) return;
+    if (isSubmitting || !formData.autorizacion) return;
 
     setIsSubmitting(true);
     setSubmitError(null);
@@ -131,7 +130,7 @@ const FeedbackForm: React.FC = () => {
       case 1:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContent}>
+            <div className={styles.stepContentScrollable}>
               <div className={styles.titleGroup}>
                 <h2 className={styles.title}>CUÉNTANOS SOBRE TI</h2>
                 <p className={styles.subtitleRevans}>Nombre, cargo y empresa</p>
@@ -169,10 +168,36 @@ const FeedbackForm: React.FC = () => {
                     />
                   </div>
                 </div>
-                <p className={styles.disclaimer}>
-                  Al final del formulario, podrás autorizar o no que esta información
-                  se refleje en nuestra web de forma anónima o con tu nombre.
-                </p>
+
+                <div className={styles.authorizationSimple}>
+                  <div className={styles.radioGroupVertical}>
+                    <label className={styles.radioOptionAuth}>
+                      <input
+                        type="radio"
+                        name="autorizacion"
+                        value="nombre_completo"
+                        checked={formData.autorizacion === 'nombre_completo'}
+                        onChange={() => updateFormData({ autorizacion: 'nombre_completo' })}
+                      />
+                      <span className={styles.radioLabelAuth}>
+                        Autorizo a que mi nombre, empresa y cargo aparezcan junto a mi reseña
+                      </span>
+                    </label>
+
+                    <label className={styles.radioOptionAuth}>
+                      <input
+                        type="radio"
+                        name="autorizacion"
+                        value="anonimo"
+                        checked={formData.autorizacion === 'anonimo'}
+                        onChange={() => updateFormData({ autorizacion: 'anonimo' })}
+                      />
+                      <span className={styles.radioLabelAuth}>
+                        Prefiero que mi reseña aparezca de forma anónima junto al nombre de mi empresa
+                      </span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -278,63 +303,35 @@ const FeedbackForm: React.FC = () => {
       case 6:
         return (
           <div className={styles.step}>
-            <div className={styles.stepContentScrollable}>
-              <div className={styles.questionBlock}>
+            <div className={styles.stepContent}>
+              <div className={styles.titleGroup}>
                 <h2 className={styles.titleSmall}>
                   SI RECOMENDARAS ETÉREA A OTRA PERSONA O EMPRESA, ¿QUÉ LE DIRÍAS?
                 </h2>
+              </div>
+              <div className={styles.stepBody}>
                 <textarea
                   placeholder="Cuéntanos..."
                   value={formData.recomendacion}
                   onChange={(e) => updateFormData({ recomendacion: e.target.value })}
                   className={styles.textareaLarge}
                 />
-              </div>
 
-              <div className={styles.authorizationSimple}>
-                <div className={styles.radioGroupVertical}>
-                  <label className={styles.radioOptionAuth}>
-                    <input
-                      type="radio"
-                      name="autorizacion"
-                      value="nombre_completo"
-                      checked={formData.autorizacion === 'nombre_completo'}
-                      onChange={() => updateFormData({ autorizacion: 'nombre_completo' })}
-                    />
-                    <span className={styles.radioLabelAuth}>
-                      Autorizo a que mi nombre, empresa y cargo aparezcan junto a mi reseña
-                    </span>
-                  </label>
+                {submitError && (
+                  <div className={styles.errorMessage}>
+                    {submitError}
+                  </div>
+                )}
 
-                  <label className={styles.radioOptionAuth}>
-                    <input
-                      type="radio"
-                      name="autorizacion"
-                      value="anonimo"
-                      checked={formData.autorizacion === 'anonimo'}
-                      onChange={() => updateFormData({ autorizacion: 'anonimo' })}
-                    />
-                    <span className={styles.radioLabelAuth}>
-                      Prefiero que mi reseña aparezca de forma anónima
-                    </span>
-                  </label>
+                <div className={styles.submitButtonContainer}>
+                  <button
+                    className={styles.submitButton}
+                    onClick={handleSubmit}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'ENVIANDO...' : 'ENVIAR'}
+                  </button>
                 </div>
-              </div>
-
-              {submitError && (
-                <div className={styles.errorMessage}>
-                  {submitError}
-                </div>
-              )}
-
-              <div className={styles.submitButtonContainer}>
-                <button
-                  className={styles.submitButton}
-                  onClick={handleSubmit}
-                  disabled={!canSubmit || isSubmitting}
-                >
-                  {isSubmitting ? 'ENVIANDO...' : 'ENVIAR'}
-                </button>
               </div>
             </div>
           </div>
