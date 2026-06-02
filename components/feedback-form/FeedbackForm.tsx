@@ -180,7 +180,7 @@ const FeedbackForm: React.FC = () => {
                         onChange={() => updateFormData({ autorizacion: 'nombre_completo' })}
                       />
                       <span className={styles.radioLabelAuth}>
-                        Autorizo a que mi nombre, empresa y cargo aparezcan junto a mi reseña
+                        Autorizo a que mi nombre, empresa y cargo aparezcan junto a mi reseña.
                       </span>
                     </label>
 
@@ -193,7 +193,7 @@ const FeedbackForm: React.FC = () => {
                         onChange={() => updateFormData({ autorizacion: 'anonimo' })}
                       />
                       <span className={styles.radioLabelAuth}>
-                        Prefiero que mi reseña aparezca de forma anónima junto al nombre de mi empresa
+                        Prefiero que mi reseña aparezca de forma anónima junto al nombre de mi empresa.
                       </span>
                     </label>
                   </div>
@@ -248,7 +248,7 @@ const FeedbackForm: React.FC = () => {
               </div>
               <div className={styles.stepBody}>
                 <textarea
-                  placeholder="Cuéntanos..."
+                  placeholder="Cuéntanos tú experiencia"
                   value={formData.valorado_mas}
                   onChange={(e) => updateFormData({ valorado_mas: e.target.value })}
                   className={styles.textareaLarge}
@@ -306,12 +306,12 @@ const FeedbackForm: React.FC = () => {
             <div className={styles.stepContent}>
               <div className={styles.titleGroup}>
                 <h2 className={styles.titleSmall}>
-                  SI RECOMENDARAS ETÉREA A OTRA PERSONA O EMPRESA, ¿QUÉ LE DIRÍAS?
+                  SI RECOMENDARAS ETÉREA A OTRA PERSONA O EMPRESA....
                 </h2>
               </div>
               <div className={styles.stepBody}>
                 <textarea
-                  placeholder="Cuéntanos..."
+                  placeholder="¿Qué le dirías de nosotras?"
                   value={formData.recomendacion}
                   onChange={(e) => updateFormData({ recomendacion: e.target.value })}
                   className={styles.textareaLarge}
