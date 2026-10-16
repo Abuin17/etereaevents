@@ -6,6 +6,7 @@ import PageWrapper from '../../../components/PageWrapper';
 import { eventProjects } from '../../../lib/eventProjects';
 import ProjectFolder from '../../../components/ProjectDetail/ProjectFolder';
 import SignOff from '../../../components/ProjectDetail/SignOff';
+import ProjectNav from '../../../components/ProjectDetail/ProjectNav';
 
 interface ProjectPageProps {
   params: { slug: string };
@@ -41,6 +42,9 @@ export default function EventProjectPage({ params }: ProjectPageProps) {
       <section className="eterea-content-block" style={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', padding: '9.5rem 2rem' }}>
         <h1 className="eterea-title">{project.title}</h1>
         <Link href="/eventos" className="eterea-button eterea-button--auto">Eventos</Link>
+        <div style={{ width: 260, marginTop: '2.5rem' }}>
+          <ProjectNav slug={project.slug} />
+        </div>
       </section>
       <div style={{ padding: '0 2rem 6rem' }}>
         <SignOff />

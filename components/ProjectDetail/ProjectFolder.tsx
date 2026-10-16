@@ -1,10 +1,9 @@
 import React from 'react';
-import Link from 'next/link';
-import { eventProjects } from '../../lib/eventProjects';
 import type { EventProject } from '../../lib/eventProjects';
 import ProjectGallery from './ProjectGallery';
 import AutoplayVideo from './AutoplayVideo';
 import SignOff from './SignOff';
+import ProjectNav from './ProjectNav';
 import './ProjectDetail.scss'; // estilos compartidos de la galería y su overlay
 import './ProjectFolder.scss';
 
@@ -77,9 +76,6 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
   const { details } = project;
   if (!details) return null;
 
-  // Navegación entre proyectos: el siguiente (cíclico) y el índice completo
-  const currentIndex = eventProjects.findIndex((p) => p.slug === project.slug);
-  const nextProject = eventProjects[(currentIndex + 1) % eventProjects.length];
 
   const info = [
     { label: 'Cliente', value: details.client },
@@ -137,31 +133,8 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
           </dl>
         </div>
 
-        {/* Navegación entre proyectos, en el hueco de la carpeta delantera */}
-        <nav className="folder__nav" aria-label="Más proyectos">
-          <p className="folder__nav-title">Más proyectos</p>
-          <ul className="folder__nav-list">
-            {eventProjects.map((p) => (
-              <li key={p.slug}>
-                {p.slug === project.slug ? (
-                  <span className="folder__nav-link folder__nav-link--current" aria-current="page">
-                    {p.title}
-                  </span>
-                ) : (
-                  <Link href={`/eventos/${p.slug}`} className="folder__nav-link">
-                    {p.title}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-          <Link href={`/eventos/${nextProject.slug}`} className="folder__next">
-            <span>Siguiente proyecto</span>
-            <svg viewBox="0 0 48 24" aria-hidden="true">
-              <path d="M1 12h45M36 2l10 10-10 10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-        </nav>
+        {/* Navegación entre proyectos: solo dos flechas */}
+        <ProjectNav slug={project.slug} className="folder__nav" />
       </aside>
       {/* Clip, parte delantera: sobre folios y pestaña */}
       <Paperclip part="front" />
