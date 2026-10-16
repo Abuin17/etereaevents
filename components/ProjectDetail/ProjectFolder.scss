@@ -1,0 +1,402 @@
+@import '../../styles/_base';
+@import '../../styles/variables';
+@import 'paper-texture';
+
+$folder-color: #DDD3B6;      // cartulina manila, en la gama cálida de Etérea
+$folder-color-dark: #CFC4A4;
+$tab-width: 56px;  // lo que sobresale la pestaña de la carpeta
+$tab-radius: 16px;
+$folder-front-color: #EBE3CA;   // carpeta delantera: algo más clara que la trasera
+$folder-min-height: 820px;
+
+// Grano fino de cartulina (ruido continuo: no se aprecia repetición)
+$card-grain: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22240%22%3E%3Cfilter id=%22g%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.9%22 numOctaves=%223%22 seed=%228%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix values=%220 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .16  0 0 0 .5 -.18%22/%3E%3C/filter%3E%3Crect width=%22240%22 height=%22240%22 filter=%22url(%23g)%22/%3E%3C/svg%3E");
+
+$folder-width: clamp(340px, 31vw, 440px); // ancho total del bloque (cuerpo + pestaña)   // ancho del cuerpo de la carpeta
+$tab-top: 6rem;                              // dónde empieza la pestaña (bajo la barra de navegación)
+$tab-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='432' viewBox='0 0 56 432'%3E%3Cpath d='M0 0 L0 432 A16 16 0 0 1 16 416 L40 416 A16 16 0 0 0 56 400 L56 32 A16 16 0 0 0 40 16 L16 16 A16 16 0 0 1 0 0 Z'/%3E%3C/svg%3E");      // silueta de la pestaña: 56x432 (400 + 16 + 16 de empalmes)
+
+.folder-page {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 0;
+  background-color: #fff;
+}
+
+// Carpeta: UN solo elemento. El cuerpo y la pestaña salen del mismo fondo (misma cartulina),
+// recortados con una máscara; la pestaña sobresale por encima del folio central.
+.folder {
+  position: sticky;
+  --front-w: calc(#{$folder-width} - #{$tab-width} - 62px);   // carpeta delantera: deja 62px para que asomen los folios
+  --front-top: 6rem;
+  top: min(0px, calc(100vh - #{$folder-min-height}));
+  flex: 0 0 $folder-width;
+  width: $folder-width;
+  height: max(100vh, #{$folder-min-height});
+  box-sizing: border-box;
+  padding: calc(var(--front-top) + 1.5rem) calc(#{$tab-width} + 62px + #{$spacing-lg}) $spacing-xl $spacing-lg;
+  background-color: $folder-color;
+  background-image: $card-grain;
+  z-index: 3;
+  pointer-events: none;
+  -webkit-mask-image: $tab-tile, linear-gradient(#000, #000);
+  -webkit-mask-size: $tab-width 432px, calc(100% - #{$tab-width}) 100%;
+  -webkit-mask-position: right calc(#{$tab-top} - #{$tab-radius}), left top;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: $tab-tile, linear-gradient(#000, #000);
+  mask-size: $tab-width 432px, calc(100% - #{$tab-width}) 100%;
+  mask-position: right calc(#{$tab-top} - #{$tab-radius}), left top;
+  mask-repeat: no-repeat;
+
+  // Etiqueta vertical, centrada sobre la pestaña
+  &__tab-label {
+    position: absolute;
+    top: $tab-top;
+    right: 0;
+    width: $tab-width;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $primary-color;
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+
+  // Folios intermedios: franja vertical que asoma entre la carpeta delantera y la trasera
+  &__folios {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &__folio {
+    position: absolute;
+    top: 7.5rem;
+    bottom: -40px;
+    left: calc(var(--front-w) - 24px);
+    width: 82px;
+    box-sizing: border-box;
+    padding: 18px 7px 0 7px;
+    background-color: $beige-light;
+    background-image: $paper-texture;
+    background-size: 420px 2400px;
+    background-repeat: no-repeat;
+    transform-origin: 50% 0;
+    box-shadow: 0 1px 1px rgba(70, 55, 30, 0.14), 2px 0 8px rgba(70, 55, 30, 0.1);
+
+    &--1 {
+      transform: rotate(-1.4deg);
+    }
+
+    &--2 {
+      top: 8.2rem;
+      left: calc(var(--front-w) - 16px);
+      width: 74px;
+      transform: rotate(1.1deg);
+    }
+
+    &--3 {
+      top: 9rem;
+      left: calc(var(--front-w) - 8px);
+      width: 64px;
+      transform: rotate(-0.6deg);
+    }
+  }
+
+  &__folio-image {
+    display: block;
+    width: 100%;
+    height: 58%;
+    object-fit: cover;
+
+    &--placeholder {
+      background-color: #CBD2CF;
+    }
+  }
+
+  // Anotaciones a mano, en horizontal. Empiezan bajo la carpeta delantera (que las tapa),
+  // así solo asoma el final de cada línea: tenue y casi ilegible, como en una carpeta real.
+  &__folio-notes {
+    position: absolute;
+    top: calc(58% + 34px);
+    bottom: 24px;
+    left: -110px;
+    right: 6px;
+    display: flex;
+    flex-direction: column;
+    font-family: $font-accent;
+    font-size: 17px;
+    line-height: 1.55;
+    letter-spacing: 0.02em;
+    color: #3f4656;
+    opacity: 0.58;
+    filter: blur(0.3px);
+    pointer-events: none;
+
+    span {
+      display: block;
+      white-space: nowrap;
+      text-align: right;
+
+      &:nth-child(1) {
+        transform: rotate(-1.4deg);
+      }
+
+      &:nth-child(2) {
+        transform: rotate(0.6deg) translateX(-4px);
+      }
+
+      &:nth-child(3) {
+        transform: rotate(-0.8deg) translateX(2px);
+      }
+
+      &:nth-child(4) {
+        transform: rotate(1.2deg) translateX(-8px);
+      }
+    }
+  }
+
+  &__folio--2 &__folio-image--placeholder {
+    background-color: #D9D2C1;
+  }
+
+  &__folio--3 &__folio-image--placeholder {
+    background-color: #E3DED5;
+  }
+
+  // Clip horizontal: sujeta los folios a la carpeta trasera (cruza hacia la pestaña)
+  &__clip {
+    position: absolute;
+    top: 12rem;
+    left: calc(#{$folder-width} - #{$tab-width} - 21px);
+    width: 26px;
+    height: auto;
+    transform: rotate(88deg);
+    transform-origin: 50% 50%;
+    pointer-events: none;
+  }
+
+  // Carpeta delantera: grande, a la izquierda; cubre buena parte de los folios
+  &__front {
+    position: absolute;
+    top: var(--front-top);
+    bottom: 0;
+    left: 0;
+    width: var(--front-w);
+    z-index: 2;
+    background-color: $folder-front-color;
+    background-image: $card-grain;
+    border-radius: 0 8px 0 0;
+    box-shadow: 3px 0 10px rgba(70, 55, 30, 0.18);
+  }
+
+  // Recorte con la información del proyecto, sujeto con clip
+  &__slip {
+    position: relative;
+    z-index: 3;
+    padding: 2.2rem $spacing-lg $spacing-xl $spacing-lg;
+    background-color: $beige-light;
+    background-image: $paper-texture;
+    background-size: 420px 2400px;
+    background-repeat: no-repeat;
+    transform: rotate(-1.6deg);
+    transform-origin: 50% 0;
+    box-shadow: 0 1px 1px rgba(70, 55, 30, 0.14), 0 6px 14px rgba(70, 55, 30, 0.1);
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: $font-size-lg;
+    line-height: 1.1;
+    color: $primary-color;
+    margin: 0 0 $spacing-lg 0;
+    text-transform: uppercase;
+  }
+
+  &__thumb {
+    width: 100%;
+    max-width: 150px;
+    aspect-ratio: 4 / 3;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__info {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__info-row {
+    dt {
+      font-family: $font-secondary;
+      font-size: $font-size-xs;
+      line-height: 1.2;
+      color: $primary-color;
+      opacity: 0.6;
+      margin-bottom: $spacing-xs;
+    }
+
+    dd {
+      font-family: $font-secondary;
+      font-size: $body-font-size;
+      line-height: $body-line-height;
+      color: $primary-color;
+      margin: 0;
+    }
+  }
+
+  // Folio central: blanco sobre blanco, pisa ligeramente el borde de la carpeta
+  &__sheet {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+    padding: 7rem $spacing-3xl $spacing-4xl $spacing-3xl;
+    box-sizing: border-box;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xl;
+  }
+
+  &__body {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: $font-secondary;
+    font-size: $body-font-size;
+    line-height: 1.5;
+    color: $primary-color;
+
+    p {
+      margin: 0 0 $spacing-md 0;
+    }
+  }
+
+  &__main-image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 8rem);
+    margin: 0 auto;
+  }
+
+  &__media {
+    width: 100%;
+    background-color: #EFECE7;
+
+    &--main {
+      aspect-ratio: 3 / 2;
+    }
+
+    &--video {
+      aspect-ratio: 16 / 9;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .folder-page {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .folder {
+    --front-top: 14.5rem;
+    position: relative;
+    top: auto;
+    flex: none;
+    width: 100%;
+    margin-right: 0;
+    height: auto;
+    padding: calc(var(--front-top) + 1.25rem) $spacing-md $spacing-lg $spacing-md;
+    pointer-events: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+
+    &__tab-label {
+      display: none;
+    }
+
+    // En móvil los folios asoman por encima de la delantera
+    &__folio {
+      top: 5rem;
+      bottom: auto;
+      height: 9.5rem;
+      left: $spacing-md;
+      width: 78%;
+      padding: 8px 8px 0 8px;
+
+      &--1 {
+        transform: rotate(-2.4deg);
+      }
+
+      &--2 {
+        top: 5.4rem;
+        left: 14%;
+        width: 78%;
+        transform: rotate(1.6deg);
+      }
+
+      &--3 {
+        top: 5.9rem;
+        left: 8%;
+        width: 80%;
+        transform: rotate(-0.8deg);
+      }
+    }
+
+    &__folio-image {
+      height: 80%;
+    }
+
+    &__folio-notes {
+      display: none;
+    }
+
+    &__clip {
+      top: 4.2rem;
+      left: 52%;
+      transform: rotate(4deg);
+    }
+
+    &__front {
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 -2px 10px rgba(70, 55, 30, 0.16);
+    }
+
+    &__slip {
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    &__sheet {
+      min-height: 0;
+      margin-left: 0;
+      padding: $spacing-xl $spacing-md $spacing-2xl;
+      gap: $spacing-2xl;
+    }
+  }
+}
