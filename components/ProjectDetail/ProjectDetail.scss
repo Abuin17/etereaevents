@@ -1,47 +1,67 @@
 @import '../../styles/_base';
 @import '../../styles/variables';
+@import 'burnt-edge';
 
 $sidebar-width: clamp(260px, 24vw, 352px);
-$rings-width: 56px;
+$edge-reach: 24px; // cuánto sobresale el papel (zona del borde quemado) más allá del ancho del lateral
 
 .project-detail {
   display: flex;
   align-items: flex-start;
   width: 100%;
   min-height: 100vh;
-  background-color: $beige-dark;
+  background-color: #fff;
 
-  // Lateral fijo: sticky dentro del layout, para que termine antes del footer
+  // Lateral fijo: sticky dentro del layout, para que termine antes del footer.
+  // Hoja de papel verjurado con borde quemado y sombra proyectada (profundidad).
   &__sidebar {
     position: sticky;
     top: 0;
     flex: 0 0 $sidebar-width;
     width: $sidebar-width;
     height: 100vh;
+    z-index: 2;
+    filter: drop-shadow(2px 0 2px rgba(45, 32, 20, 0.22)) drop-shadow(10px 6px 16px rgba(45, 32, 20, 0.2));
+
+    // Ribete quemado sobre el borde irregular
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -$edge-reach;
+      width: $edge-thickness;
+      height: 100%;
+      background-image: $edge-fringe-v;
+      background-repeat: no-repeat;
+      background-position: right top;
+      background-size: $edge-thickness $edge-len-v;
+      pointer-events: none;
+    }
+  }
+
+  &__paper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: -$edge-reach;
     box-sizing: border-box;
-    padding: 7rem $spacing-xl $spacing-xl $spacing-xl;
+    padding: 7rem calc(#{$spacing-xl} + #{$edge-reach}) $spacing-xl $spacing-xl;
     background-color: $beige-light;
     // Papel verjurado: formación nubosa, fibras, líneas de verjura y puntizones
     background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%222400%22 viewBox=%220 0 420 2400%22%3E%3Cdefs%3E%3Cfilter id=%22cloud%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.006 .004%22 numOctaves=%224%22 seed=%225%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .52  0 0 0 0 .45  0 0 0 0 .34  .38 0 0 0 -.14%22/%3E%3C/filter%3E%3Cfilter id=%22fib%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.8%22 numOctaves=%223%22 seed=%229%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .38  0 0 0 0 .32  0 0 0 0 .25  .36 0 0 0 -.14%22/%3E%3C/filter%3E%3Cfilter id=%22laid%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.004 .35%22 numOctaves=%222%22 seed=%2221%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .42  0 0 0 0 .36  0 0 0 0 .28  .20 0 0 0 -.085%22/%3E%3C/filter%3E%3Cfilter id=%22chain%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.035 .002%22 numOctaves=%222%22 seed=%2233%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .45 0 0 0 -.19%22/%3E%3C/filter%3E%3C/defs%3E%3Crect width=%22420%22 height=%222400%22 filter=%22url(%23cloud)%22/%3E%3Crect width=%22420%22 height=%222400%22 filter=%22url(%23chain)%22/%3E%3Crect width=%22420%22 height=%222400%22 filter=%22url(%23laid)%22/%3E%3Crect width=%22420%22 height=%222400%22 filter=%22url(%23fib)%22/%3E%3C/svg%3E");
     background-size: 420px 2400px;
     background-repeat: no-repeat;
     background-position: left top;
-    z-index: 2;
-
-    // Anillas de cuaderno en el borde con el contenido
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: -($rings-width / 2);
-      width: $rings-width;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2256%22 height=%2236%22 viewBox=%220 0 56 36%22%3E%3Cdefs%3E%3CradialGradient id=%22h%22 cx=%2250%%22 cy=%2242%%22 r=%2260%%22%3E%3Cstop offset=%220%22 stop-color=%22%2316120f%22/%3E%3Cstop offset=%22.7%22 stop-color=%22%232b2622%22/%3E%3Cstop offset=%221%22 stop-color=%22%234a433d%22/%3E%3C/radialGradient%3E%3Cfilter id=%22b%22 x=%22-20%%22 y=%22-50%%22 width=%22140%%22 height=%22200%%22%3E%3CfeGaussianBlur stdDeviation=%221.6%22/%3E%3C/filter%3E%3Cfilter id=%22hb%22 x=%22-50%%22 y=%22-50%%22 width=%22200%%22 height=%22200%%22%3E%3CfeGaussianBlur stdDeviation=%221.1%22/%3E%3C/filter%3E%3C/defs%3E%3Cellipse cx=%2237%22 cy=%2220.2%22 rx=%227%22 ry=%226.4%22 fill=%22%23000%22 opacity=%22.16%22 filter=%22url(%23hb)%22/%3E%3Cellipse cx=%2236%22 cy=%2218%22 rx=%225.4%22 ry=%225.4%22 fill=%22url(%23h)%22/%3E%3Cpath d=%22M31 20.6 A5.4 5.4 0 0 0 41 20.6%22 fill=%22none%22 stroke=%22%23fffdf8%22 stroke-opacity=%22.55%22 stroke-width=%22.9%22/%3E%3Cpath d=%22M5 25.5 C16 23 27 19.5 36 17.2%22 fill=%22none%22 stroke=%22%23000%22 stroke-opacity=%22.3%22 stroke-width=%224.2%22 stroke-linecap=%22round%22 filter=%22url(%23b)%22 transform=%22translate(1.2 2.4)%22/%3E%3Cpath d=%22M5 22.5 C16 20 27 16.5 36 14.2%22 fill=%22none%22 stroke=%22%2355514d%22 stroke-width=%224.6%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M5 22.3 C16 19.8 27 16.3 36 14%22 fill=%22none%22 stroke=%22%23a9a5a0%22 stroke-width=%223.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M5 21.5 C16 19 27 15.5 36 13.2%22 fill=%22none%22 stroke=%22%23f4f2ef%22 stroke-width=%221.3%22 stroke-linecap=%22round%22 stroke-opacity=%22.95%22/%3E%3Cpath d=%22M5 23.9 C16 21.4 27 17.9 36 15.6%22 fill=%22none%22 stroke=%22%233c3835%22 stroke-width=%22.9%22 stroke-linecap=%22round%22 stroke-opacity=%22.55%22/%3E%3C/svg%3E");
-      background-repeat: repeat-y;
-      background-position: center top;
-      background-size: 56px 36px;
-      pointer-events: none;
-    }
+    // Borde derecho irregular (quemado) por máscara
+    -webkit-mask-image: $edge-mask-v, linear-gradient(#000, #000);
+    -webkit-mask-size: $edge-thickness $edge-len-v, calc(100% - #{$edge-thickness}) 100%;
+    -webkit-mask-position: right top, left top;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: $edge-mask-v, linear-gradient(#000, #000);
+    mask-size: $edge-thickness $edge-len-v, calc(100% - #{$edge-thickness}) 100%;
+    mask-position: right top, left top;
+    mask-repeat: no-repeat;
   }
 
   &__title {
@@ -91,7 +111,7 @@ $rings-width: 56px;
   &__content {
     flex: 1;
     min-width: 0;
-    padding: 7rem $spacing-3xl $spacing-5xl calc($rings-width / 2 + $spacing-3xl);
+    padding: 7rem $spacing-3xl $spacing-5xl $spacing-3xl;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -144,25 +164,34 @@ $rings-width: 56px;
       flex: none;
       width: 100%;
       height: auto;
-      padding: 6rem $spacing-lg $spacing-2xl $spacing-lg;
 
       &::after {
         top: auto;
-        bottom: -($rings-width / 2);
+        bottom: 0;
         left: 0;
         right: 0;
         width: auto;
-        height: $rings-width;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2236%22 height=%2256%22 viewBox=%220 0 36 56%22%3E%3Cg transform=%22translate(36 0) rotate(90)%22%3E%3Cdefs%3E%3CradialGradient id=%22h%22 cx=%2250%%22 cy=%2242%%22 r=%2260%%22%3E%3Cstop offset=%220%22 stop-color=%22%2316120f%22/%3E%3Cstop offset=%22.7%22 stop-color=%22%232b2622%22/%3E%3Cstop offset=%221%22 stop-color=%22%234a433d%22/%3E%3C/radialGradient%3E%3Cfilter id=%22b%22 x=%22-20%%22 y=%22-50%%22 width=%22140%%22 height=%22200%%22%3E%3CfeGaussianBlur stdDeviation=%221.6%22/%3E%3C/filter%3E%3Cfilter id=%22hb%22 x=%22-50%%22 y=%22-50%%22 width=%22200%%22 height=%22200%%22%3E%3CfeGaussianBlur stdDeviation=%221.1%22/%3E%3C/filter%3E%3C/defs%3E%3Cellipse cx=%2237%22 cy=%2220.2%22 rx=%227%22 ry=%226.4%22 fill=%22%23000%22 opacity=%22.16%22 filter=%22url(%23hb)%22/%3E%3Cellipse cx=%2236%22 cy=%2218%22 rx=%225.4%22 ry=%225.4%22 fill=%22url(%23h)%22/%3E%3Cpath d=%22M31 20.6 A5.4 5.4 0 0 0 41 20.6%22 fill=%22none%22 stroke=%22%23fffdf8%22 stroke-opacity=%22.55%22 stroke-width=%22.9%22/%3E%3Cpath d=%22M5 25.5 C16 23 27 19.5 36 17.2%22 fill=%22none%22 stroke=%22%23000%22 stroke-opacity=%22.3%22 stroke-width=%224.2%22 stroke-linecap=%22round%22 filter=%22url(%23b)%22 transform=%22translate(1.2 2.4)%22/%3E%3Cpath d=%22M5 22.5 C16 20 27 16.5 36 14.2%22 fill=%22none%22 stroke=%22%2355514d%22 stroke-width=%224.6%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M5 22.3 C16 19.8 27 16.3 36 14%22 fill=%22none%22 stroke=%22%23a9a5a0%22 stroke-width=%223.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M5 21.5 C16 19 27 15.5 36 13.2%22 fill=%22none%22 stroke=%22%23f4f2ef%22 stroke-width=%221.3%22 stroke-linecap=%22round%22 stroke-opacity=%22.95%22/%3E%3Cpath d=%22M5 23.9 C16 21.4 27 17.9 36 15.6%22 fill=%22none%22 stroke=%22%233c3835%22 stroke-width=%22.9%22 stroke-linecap=%22round%22 stroke-opacity=%22.55%22/%3E%3C/g%3E%3C/svg%3E");
-        background-repeat: repeat-x;
-        background-position: left center;
-        background-size: 36px 56px;
+        height: $edge-thickness;
+        background-image: $edge-fringe-h;
+        background-position: left bottom;
+        background-size: $edge-len-h $edge-thickness;
       }
     }
 
+    &__paper {
+      position: relative;
+      right: 0;
+      padding: 6rem $spacing-lg calc(#{$spacing-xl} + 20px) $spacing-lg;
+      -webkit-mask-image: $edge-mask-h, linear-gradient(#000, #000);
+      -webkit-mask-size: $edge-len-h $edge-thickness, 100% calc(100% - #{$edge-thickness});
+      -webkit-mask-position: left bottom, left top;
+      mask-image: $edge-mask-h, linear-gradient(#000, #000);
+      mask-size: $edge-len-h $edge-thickness, 100% calc(100% - #{$edge-thickness});
+      mask-position: left bottom, left top;
+    }
 
     &__content {
-      padding: calc($rings-width / 2 + $spacing-xl) $spacing-lg $spacing-3xl $spacing-lg;
+      padding: $spacing-2xl $spacing-lg $spacing-3xl $spacing-lg;
       gap: $spacing-2xl;
     }
   }

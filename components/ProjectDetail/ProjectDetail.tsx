@@ -29,21 +29,23 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
   return (
     <div className="project-detail">
       <aside className="project-detail__sidebar">
-        <h1 className="project-detail__title">{project.title}</h1>
-        <div
-          className="project-detail__thumb"
-          style={{ backgroundImage: `url("${encodeURI(project.image)}")` }}
-          role="img"
-          aria-label={project.title}
-        />
-        <dl className="project-detail__info">
-          {info.map((item) => (
-            <div key={item.label} className="project-detail__info-row">
-              <dt>{item.label}</dt>
-              <dd>{item.value}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="project-detail__paper">
+          <h1 className="project-detail__title">{project.title}</h1>
+          <div
+            className="project-detail__thumb"
+            style={{ backgroundImage: `url("${encodeURI(project.image)}")` }}
+            role="img"
+            aria-label={project.title}
+          />
+          <dl className="project-detail__info">
+            {info.map((item) => (
+              <div key={item.label} className="project-detail__info-row">
+                <dt>{item.label}</dt>
+                <dd>{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </aside>
 
       <div className="project-detail__content">

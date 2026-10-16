@@ -29,7 +29,7 @@ export default function EventProjectPage({ params }: ProjectPageProps) {
 
   if (project.details) {
     return (
-      <PageWrapper backgroundColor="#EFECE7" hideFooter>
+      <PageWrapper backgroundColor="#FFFFFF" hideFooter>
         <ProjectDetail project={project} />
       </PageWrapper>
     );
