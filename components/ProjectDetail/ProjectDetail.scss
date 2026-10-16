@@ -1,0 +1,159 @@
+@import '../../styles/_base';
+@import '../../styles/variables';
+
+$sidebar-width: clamp(260px, 24vw, 352px);
+$rings-width: 48px;
+
+.project-detail {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100vh;
+  background-color: $beige-dark;
+
+  // Lateral fijo: sticky dentro del layout, para que termine antes del footer
+  &__sidebar {
+    position: sticky;
+    top: 0;
+    flex: 0 0 $sidebar-width;
+    width: $sidebar-width;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 7rem $spacing-xl $spacing-xl $spacing-xl;
+    background-color: $beige-light;
+    z-index: 2;
+
+    // Anillas de cuaderno en el borde con el contenido
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -($rings-width / 2);
+      width: $rings-width;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='40' viewBox='0 0 48 40'%3E%3Ccircle cx='38' cy='20' r='4' fill='%23393431' fill-opacity='.22'/%3E%3Crect x='7' y='16' width='33' height='8' rx='4' fill='%23F7F6F4' stroke='%23393431' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: repeat-y;
+      background-position: center top;
+      pointer-events: none;
+    }
+  }
+
+  &__title {
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: $font-size-lg;
+    line-height: 1.1;
+    color: $primary-color;
+    margin: 0 0 $spacing-xl 0;
+    text-transform: uppercase;
+  }
+
+  &__thumb {
+    width: 124px;
+    aspect-ratio: 4 / 3;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__info {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__info-row {
+    dt {
+      font-family: $font-secondary;
+      font-size: $font-size-xs;
+      line-height: 1.2;
+      color: $primary-color;
+      opacity: 0.6;
+      margin-bottom: $spacing-xs;
+    }
+
+    dd {
+      font-family: $font-secondary;
+      font-size: $body-font-size;
+      line-height: $body-line-height;
+      color: $primary-color;
+      margin: 0;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+    padding: 7rem $spacing-3xl $spacing-5xl calc($rings-width / 2 + $spacing-3xl);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-3xl;
+  }
+
+  &__body {
+    max-width: 560px;
+    font-family: $font-secondary;
+    font-size: $body-font-size;
+    line-height: 1.5;
+    color: $primary-color;
+
+    p {
+      margin: 0 0 $spacing-md 0;
+    }
+  }
+
+  // Placeholders de media: bloques planos en un tono distinto al fondo
+  &__media {
+    width: 100%;
+    background-color: #E3DED5;
+
+    &--main {
+      aspect-ratio: 3 / 2;
+    }
+
+    &--video {
+      aspect-ratio: 16 / 9;
+    }
+
+    &--grid {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: column;
+
+    &__sidebar {
+      position: relative;
+      flex: none;
+      width: 100%;
+      height: auto;
+      padding: 6rem $spacing-lg $spacing-2xl $spacing-lg;
+
+      &::after {
+        top: auto;
+        bottom: -($rings-width / 2);
+        left: 0;
+        right: 0;
+        width: auto;
+        height: $rings-width;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewBox='0 0 40 48'%3E%3Ccircle cx='20' cy='38' r='4' fill='%23393431' fill-opacity='.22'/%3E%3Crect x='16' y='7' width='8' height='33' rx='4' fill='%23F7F6F4' stroke='%23393431' stroke-width='1.5'/%3E%3C/svg%3E");
+        background-repeat: repeat-x;
+        background-position: left center;
+      }
+    }
+
+    &__content {
+      padding: calc($rings-width / 2 + $spacing-xl) $spacing-lg $spacing-3xl $spacing-lg;
+      gap: $spacing-2xl;
+    }
+  }
+}

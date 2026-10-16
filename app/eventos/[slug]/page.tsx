@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import PageWrapper from '../../../components/PageWrapper';
 import { eventProjects } from '../../../lib/eventProjects';
+import ProjectDetail from '../../../components/ProjectDetail/ProjectDetail';
 
 interface ProjectPageProps {
   params: { slug: string };
@@ -25,6 +26,14 @@ export function generateMetadata({ params }: ProjectPageProps): Metadata {
 export default function EventProjectPage({ params }: ProjectPageProps) {
   const project = eventProjects.find((p) => p.slug === params.slug);
   if (!project) notFound();
+
+  if (project.details) {
+    return (
+      <PageWrapper backgroundColor="#EFECE7">
+        <ProjectDetail project={project} />
+      </PageWrapper>
+    );
+  }
 
   return (
     <PageWrapper backgroundColor="#EFECE7">
