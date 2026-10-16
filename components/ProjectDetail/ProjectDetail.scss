@@ -13,7 +13,7 @@ $edge-reach: 24px; // cuánto sobresale el papel (zona del borde quemado) más a
   background-color: #fff;
 
   // Lateral fijo: sticky dentro del layout, para que termine antes del footer.
-  // Hoja de papel verjurado con borde quemado y sombra proyectada (profundidad).
+  // Hoja de papel verjurado con borde quemado suave (sin sombra proyectada).
   &__sidebar {
     position: sticky;
     top: 0;
@@ -21,7 +21,6 @@ $edge-reach: 24px; // cuánto sobresale el papel (zona del borde quemado) más a
     width: $sidebar-width;
     height: 100vh;
     z-index: 2;
-    filter: drop-shadow(2px 0 2px rgba(45, 32, 20, 0.22)) drop-shadow(10px 6px 16px rgba(45, 32, 20, 0.2));
 
     // Ribete quemado sobre el borde irregular
     &::after {
