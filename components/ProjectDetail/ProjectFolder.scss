@@ -245,12 +245,15 @@ $tab-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' wid
   }
 
   &__info-row {
+    // Etiqueta: Revans en mayúsculas; valor: Hedvig. Mismo tamaño (el de cuerpo).
     dt {
-      font-family: $font-secondary;
-      font-size: $font-size-xs;
-      line-height: 1.2;
+      font-family: $font-primary;
+      font-weight: 400;
+      font-size: $body-font-size;
+      line-height: $body-line-height;
+      text-transform: uppercase;
       color: $primary-color;
-      opacity: 0.6;
+      opacity: 0.65;
       margin-bottom: $spacing-xs;
     }
 

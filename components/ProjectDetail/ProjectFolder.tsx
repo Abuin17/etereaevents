@@ -46,7 +46,7 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
   const info = [
     { label: 'Cliente', value: details.client },
     { label: 'Localización', value: details.location },
-    { label: 'Año', value: details.year },
+    { label: 'Fecha', value: details.date },
     { label: 'Servicios', value: details.services },
   ];
 
