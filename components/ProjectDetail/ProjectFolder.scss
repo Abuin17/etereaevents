@@ -12,6 +12,11 @@ $folder-min-height: 820px;
 // Grano fino de cartulina (ruido continuo: no se aprecia repetición)
 $card-grain: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22240%22%3E%3Cfilter id=%22g%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.9%22 numOctaves=%223%22 seed=%228%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix values=%220 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .16  0 0 0 .5 -.18%22/%3E%3C/filter%3E%3Crect width=%22240%22 height=%22240%22 filter=%22url(%23g)%22/%3E%3C/svg%3E");
 
+// Manchado suave a gran escala (formación irregular de la cartulina)
+$card-cloud: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22700%22 height=%22700%22%3E%3Cfilter id=%22c%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.006 .009%22 numOctaves=%224%22 seed=%2212%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .5  0 0 0 0 .42  0 0 0 0 .26  .55 0 0 0 -.235%22/%3E%3C/filter%3E%3Crect width=%22700%22 height=%22700%22 filter=%22url(%23c)%22/%3E%3C/svg%3E");
+// Luz: entra desde arriba a la izquierda; el cartón se oscurece levemente hacia abajo a la derecha
+$card-light: linear-gradient(115deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 38%, rgba(70, 55, 30, 0.08) 100%);
+
 $folder-width: clamp(340px, 31vw, 440px); // ancho total del bloque (cuerpo + pestaña)   // ancho del cuerpo de la carpeta
 $tab-top: 6rem;                              // dónde empieza la pestaña (bajo la barra de navegación)
 $tab-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='432' viewBox='0 0 56 432'%3E%3Cpath d='M0 0 L0 432 A16 16 0 0 1 16 416 L40 416 A16 16 0 0 0 56 400 L56 32 A16 16 0 0 0 40 16 L16 16 A16 16 0 0 1 0 0 Z'/%3E%3C/svg%3E");      // silueta de la pestaña: 56x432 (400 + 16 + 16 de empalmes)
@@ -26,21 +31,32 @@ $tab-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' wid
   background-color: #fff;
 }
 
-// Carpeta: UN solo elemento. El cuerpo y la pestaña salen del mismo fondo (misma cartulina),
-// recortados con una máscara; la pestaña sobresale por encima del folio central.
-.folder {
+// Contenedor sticky. Los efectos de canto (filter) van aquí porque sobre un elemento con máscara
+// el filtro se aplica ANTES de recortar y no marcaría la silueta (cuerpo + pestaña).
+.folder-wrap {
   position: sticky;
-  --front-w: calc(#{$folder-width} - #{$tab-width} - 62px);   // carpeta delantera: deja 62px para que asomen los folios
-  --front-top: 6rem;
   top: min(0px, calc(100vh - #{$folder-min-height}));
   flex: 0 0 $folder-width;
   width: $folder-width;
   height: max(100vh, #{$folder-min-height});
+  z-index: 3;
+  pointer-events: none;
+  // canto fino y oscuro de la cartulina + contacto muy suave
+  filter: drop-shadow(0 0 0.6px rgba(80, 62, 34, 0.55)) drop-shadow(1px 2px 4px rgba(70, 55, 30, 0.12));
+}
+
+// Carpeta: UN solo elemento. El cuerpo y la pestaña salen del mismo fondo (misma cartulina),
+// recortados con una máscara; la pestaña sobresale por encima del folio central.
+.folder {
+  position: relative;
+  --front-w: calc(#{$folder-width} - #{$tab-width} - 62px);   // carpeta delantera: deja 62px para que asomen los folios
+  --front-top: 6rem;
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   padding: calc(var(--front-top) + 1.5rem) calc(#{$tab-width} + 62px + #{$spacing-lg}) $spacing-xl $spacing-lg;
   background-color: $folder-color;
-  background-image: $card-grain;
-  z-index: 3;
+  background-image: $card-light, $card-cloud, $card-grain;
   pointer-events: none;
   -webkit-mask-image: $tab-tile, linear-gradient(#000, #000);
   -webkit-mask-size: $tab-width 432px, calc(100% - #{$tab-width}) 100%;
@@ -199,9 +215,23 @@ $tab-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' wid
     width: var(--front-w);
     z-index: 2;
     background-color: $folder-front-color;
-    background-image: $card-grain;
+    background-image: $card-light, $card-cloud, $card-grain;
     border-radius: 0 8px 0 0;
-    box-shadow: 3px 0 10px rgba(70, 55, 30, 0.18);
+    // borde superior claro, canto del cartón (línea clara + sombra) y sombra sobre los folios
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.4), 3px 0 10px rgba(70, 55, 30, 0.2);
+
+    // pliegue marcado cerca del borde superior (hendido en relieve)
+    &::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(70, 55, 30, 0.16);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
   }
 
   // Recorte con la información del proyecto, sujeto con clip
@@ -349,6 +379,15 @@ $tab-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' wid
     padding: 0;
   }
 
+  .folder-wrap {
+    position: relative;
+    top: auto;
+    flex: none;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 0.5px rgba(80, 62, 34, 0.5));
+  }
+
   .folder {
     --front-top: 14.5rem;
     position: relative;
@@ -411,7 +450,7 @@ $tab-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' wid
     &__front {
       width: 100%;
       border-radius: 8px 8px 0 0;
-      box-shadow: 0 -2px 10px rgba(70, 55, 30, 0.16);
+      box-shadow: 0 -2px 10px rgba(70, 55, 30, 0.18);
     }
 
     &__slip {

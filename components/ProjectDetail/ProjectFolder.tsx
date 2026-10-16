@@ -53,6 +53,7 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
 
   return (
     <div className="folder-page">
+      <div className="folder-wrap">
       <aside className="folder">
         {/* La pestaña es la propia silueta de la carpeta (máscara); aquí solo va su etiqueta */}
         <span className="folder__tab-label" aria-hidden="true">Portfolio · Eventos</span>
@@ -98,6 +99,7 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
           </dl>
         </div>
       </aside>
+      </div>
 
       <div className="folder__sheet">
         <div className="folder__body">
