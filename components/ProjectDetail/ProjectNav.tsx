@@ -9,7 +9,7 @@ interface ProjectNavProps {
   className?: string;
 }
 
-/** Navegación mínima entre proyectos: solo dos flechas, anterior y siguiente. */
+/** Navegación mínima entre proyectos: flecha + texto, anterior y siguiente. */
 const ProjectNav: React.FC<ProjectNavProps> = ({ slug, className = '' }) => {
   const i = Math.max(0, eventProjects.findIndex((p) => p.slug === slug));
   const prev = eventProjects[(i - 1 + eventProjects.length) % eventProjects.length];
@@ -17,12 +17,14 @@ const ProjectNav: React.FC<ProjectNavProps> = ({ slug, className = '' }) => {
 
   return (
     <nav className={`project-nav ${className}`.trim()} aria-label="Navegación entre proyectos">
-      <Link href={`/eventos/${prev.slug}`} className="project-nav__arrow" aria-label="Proyecto anterior" title="Proyecto anterior">
+      <Link href={`/eventos/${prev.slug}`} className="project-nav__link" aria-label="Proyecto anterior">
         <svg viewBox="0 0 48 24" aria-hidden="true">
           <path d="M47 12H2M12 2L2 12l10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
+        <span>Anterior</span>
       </Link>
-      <Link href={`/eventos/${next.slug}`} className="project-nav__arrow" aria-label="Siguiente proyecto" title="Siguiente proyecto">
+      <Link href={`/eventos/${next.slug}`} className="project-nav__link" aria-label="Siguiente proyecto">
+        <span>Siguiente</span>
         <svg viewBox="0 0 48 24" aria-hidden="true">
           <path d="M1 12h45M36 2l10 10-10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>

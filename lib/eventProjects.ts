@@ -58,5 +58,13 @@ export const eventProjects: EventProject[] = [
     slug: 'veepee-welovebrands-milan',
     title: 'Título Evento 3', // real: ENCUENTRO "WELOVEBRANDS" DE VEEPEE CON SUS PRINCIPALES PARTNERS - MILÁN
     image: '/assets/images/opt-torre-cava.jpg',
+    // Placeholders: pendientes de los datos reales de este evento
+    details: {
+      client: 'Nombre del cliente',
+      location: 'Ciudad, País',
+      date: 'Fecha',
+      services: 'Servicios',
+      // mainImage y video: sin definir todavía (la plantilla muestra los huecos)
+    },
   },
 ];
