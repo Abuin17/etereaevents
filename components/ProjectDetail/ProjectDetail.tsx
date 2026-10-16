@@ -1,5 +1,6 @@
 import React from 'react';
 import type { EventProject } from '../../lib/eventProjects';
+import ProjectGallery from './ProjectGallery';
 import './ProjectDetail.scss';
 
 interface ProjectDetailProps {
@@ -11,7 +12,8 @@ const LOREM =
 const LOREM_2 =
   'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 
-const GRID_PLACEHOLDERS = [1, 2, 3, 4];
+// Mínimo 8 fotos. Placeholders: sustituir por { src, alt } reales.
+const GALLERY_ITEMS = Array.from({ length: 12 }, (_, i) => ({ alt: `Foto ${i + 1}` }));
 
 const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
   const { details } = project;
@@ -56,11 +58,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
         {/* Vídeo: pasar src al <video> cuando exista; mientras tanto, placeholder */}
         <div className="project-detail__media project-detail__media--video" aria-label="Vídeo (placeholder)" />
 
-        <div className="project-detail__grid">
-          {GRID_PLACEHOLDERS.map((n) => (
-            <div key={n} className="project-detail__media project-detail__media--grid" aria-label={`Foto ${n} (placeholder)`} />
-          ))}
-        </div>
+        <ProjectGallery items={GALLERY_ITEMS} />
       </div>
     </div>
   );
