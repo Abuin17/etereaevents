@@ -16,23 +16,23 @@ const EventsInvisible: React.FC = () => {
         </div>
       </div>
 
-      <div className="events-invisible__showcase">
-        <ul className="events-invisible__portfolio">
-          {eventProjects.map((project) => (
-            <li key={project.slug} className="events-invisible__portfolio-item">
-              <Link href={`/eventos/${project.slug}`} className="events-invisible__portfolio-link">
-                <div
-                  className="events-invisible__portfolio-image"
-                  style={{ backgroundImage: `url(${project.image})` }}
-                  role="img"
-                  aria-label={project.title}
-                />
-                <span className="events-invisible__portfolio-title">{project.title}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <ul className="events-invisible__portfolio">
+        {eventProjects.map((project) => (
+          <li key={project.slug} className="events-invisible__portfolio-item">
+            <Link href={`/eventos/${project.slug}`} className="events-invisible__portfolio-link">
+              <div
+                className="events-invisible__portfolio-image"
+                style={{ backgroundImage: `url("${encodeURI(project.image)}")` }}
+                role="img"
+                aria-label={project.title}
+              />
+              <span className="events-invisible__portfolio-title">{project.title}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
 
+      <div className="events-invisible__showcase">
         <div className="events-invisible__separator">
           <div className="events-invisible__separator-line">
             <div className="events-invisible__separator-dots">

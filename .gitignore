@@ -32,3 +32,4 @@ build/
 *.sw?
 .vercel
 tsconfig.tsbuildinfo
+.taste-skill/
