@@ -29,7 +29,7 @@ export const eventProjects: EventProject[] = [
       date: 'Junio 2026',
       services: 'Curated Events',
       mainImage: {
-        src: '/assets/images/redbull-principal.jpeg',
+        src: '/assets/images/evento1-principal.jpg',
         alt: 'Ilustración de una escalinata monumental con alfombra roja',
       },
       video: {

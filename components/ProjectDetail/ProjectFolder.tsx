@@ -1,4 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
+import { eventProjects } from '../../lib/eventProjects';
 import type { EventProject } from '../../lib/eventProjects';
 import ProjectGallery from './ProjectGallery';
 import AutoplayVideo from './AutoplayVideo';
@@ -26,29 +28,46 @@ const FOLIOS: { src?: string; alt: string; notes: string[] }[] = [
   { alt: 'Folio 3', notes: ['montaje viernes 7am', 'revisar sonido!!', 'guion invitados', 'ver luces / backstage'] },
 ];
 
-// Clip en dos piezas para que AGARRE de verdad: la trasera (alambre interior + curva) va detrás de la
-// carpeta y solo asoma por el canto exterior de la pestaña; la delantera (los otros dos alambres) va
-// por encima de los folios y de la pestaña.
-const CLIP_BACK = 'M11 70 V16 C11 5 25 5 25 16';
+// Clip metálico de un solo hilo continuo, dibujado en dos piezas para que AGARRE de verdad:
+// - delantera: el alambre largo (que entra en la curva JUSTO en el canto exterior de la pestaña),
+//   la curva inferior y el extremo libre; va por encima de los folios y de la pestaña.
+// - trasera: la curva exterior y el alambre interior, que quedan detrás de la carpeta y solo se
+//   ven pasado el canto.
+// Las dos mitades comparten el punto (25,16): ahí se unen sin costura.
 const CLIP_FRONT = 'M25 16 V74 C25 85 7 85 7 74 V26';
+const CLIP_BACK = 'M25 16 C25 5 11 5 11 16 V70';
 
 const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
   const d = part === 'back' ? CLIP_BACK : CLIP_FRONT;
+  const id = `clip-${part}`;
   return (
-    <svg className={`folder__clip folder__clip--${part}`} viewBox="0 0 34 92" aria-hidden="true">
-      {part === 'front' && (
-        <>
-          <defs>
-            <filter id="clip-blur" x="-50%" y="-20%" width="200%" height="140%">
-              <feGaussianBlur stdDeviation="1.4" />
-            </filter>
-          </defs>
-          <path d={d} transform="translate(1.6 2.6)" fill="none" stroke="#000" strokeOpacity=".28" strokeWidth="3.4" strokeLinecap="round" filter="url(#clip-blur)" />
-        </>
-      )}
-      <path d={d} fill="none" stroke="#5a5652" strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke="#b4b0ab" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} transform="translate(-0.5 -0.4)" fill="none" stroke="#f6f4f1" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" strokeOpacity=".95" />
+    <svg className={`folder__clip folder__clip--${part}`} viewBox="0 0 34 92" aria-hidden="true" overflow="visible">
+      <defs>
+        {/* Reflejos a lo largo del alambre: bandas claras y oscuras como en el acero pulido */}
+        <linearGradient id={`${id}-metal`} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="92">
+          <stop offset="0" stopColor="#8e9094" />
+          <stop offset=".16" stopColor="#f3f4f5" />
+          <stop offset=".31" stopColor="#a7a9ad" />
+          <stop offset=".47" stopColor="#e9eaec" />
+          <stop offset=".64" stopColor="#868a8f" />
+          <stop offset=".82" stopColor="#dfe0e3" />
+          <stop offset="1" stopColor="#8e9094" />
+        </linearGradient>
+        <filter id={`${id}-soft`} x="-60%" y="-30%" width="220%" height="160%">
+          <feGaussianBlur stdDeviation="1.1" />
+        </filter>
+        <filter id={`${id}-contact`} x="-60%" y="-30%" width="220%" height="160%">
+          <feGaussianBlur stdDeviation="0.35" />
+        </filter>
+      </defs>
+      {/* Sombra suave (la luz cae desde arriba a la izquierda) y sombra de contacto, más oscura y pegada */}
+      <path d={d} transform="translate(1.3 2.1)" fill="none" stroke="#2c2418" strokeOpacity=".2" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" filter={`url(#${id}-soft)`} />
+      <path d={d} transform="translate(0.45 0.75)" fill="none" stroke="#1c160c" strokeOpacity=".5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" filter={`url(#${id}-contact)`} />
+      {/* Cuerpo del alambre: borde oscuro, acero con reflejos, brillo especular y reflejo secundario */}
+      <path d={d} fill="none" stroke="#4b4d51" strokeWidth="2.7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={`url(#${id}-metal)`} strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} transform="translate(-0.42 -0.38)" fill="none" stroke="#ffffff" strokeOpacity=".85" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} transform="translate(0.5 0.45)" fill="none" stroke="#ffffff" strokeOpacity=".28" strokeWidth="0.35" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 };
@@ -56,6 +75,10 @@ const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
 const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
   const { details } = project;
   if (!details) return null;
+
+  // Navegación entre proyectos: el siguiente (cíclico) y el índice completo
+  const currentIndex = eventProjects.findIndex((p) => p.slug === project.slug);
+  const nextProject = eventProjects[(currentIndex + 1) % eventProjects.length];
 
   const info = [
     { label: 'Cliente', value: details.client },
@@ -112,6 +135,32 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
             ))}
           </dl>
         </div>
+
+        {/* Navegación entre proyectos, en el hueco de la carpeta delantera */}
+        <nav className="folder__nav" aria-label="Más proyectos">
+          <p className="folder__nav-title">Más proyectos</p>
+          <ul className="folder__nav-list">
+            {eventProjects.map((p) => (
+              <li key={p.slug}>
+                {p.slug === project.slug ? (
+                  <span className="folder__nav-link folder__nav-link--current" aria-current="page">
+                    {p.title}
+                  </span>
+                ) : (
+                  <Link href={`/eventos/${p.slug}`} className="folder__nav-link">
+                    {p.title}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+          <Link href={`/eventos/${nextProject.slug}`} className="folder__next">
+            <span>Siguiente proyecto</span>
+            <svg viewBox="0 0 48 24" aria-hidden="true">
+              <path d="M1 12h45M36 2l10 10-10 10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
+        </nav>
       </aside>
       {/* Clip, parte delantera: sobre folios y pestaña */}
       <Paperclip part="front" />
