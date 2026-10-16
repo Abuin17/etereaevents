@@ -97,8 +97,8 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
         <div className="folder__folios" aria-hidden="true">
           {FOLIOS.map((folio, i) => (
             <div key={i} className={`folder__folio folder__folio--${i + 1}`}>
-              {folio.src ? (
-                <img src={folio.src} alt="" className="folder__folio-image" />
+              {(details.folioImages?.[i] ?? folio.src) ? (
+                <img src={details.folioImages?.[i] ?? folio.src} alt="" className="folder__folio-image" />
               ) : (
                 <div className="folder__folio-image folder__folio-image--placeholder" />
               )}

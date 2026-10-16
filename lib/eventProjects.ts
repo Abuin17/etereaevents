@@ -4,6 +4,8 @@ export interface EventProjectDetails {
   date: string;
   services: string;
   mainImage?: { src: string; alt: string };
+  /** Imágenes de los folios que asoman de la carpeta (por orden: 1, 2, 3; el 3 es el que queda encima y se ve). Sin imagen = placeholder. */
+  folioImages?: (string | undefined)[];
   /** Vídeo del proyecto: horizontal para escritorio y vertical para móvil. */
   video?: {
     desktop: { src: string; poster: string };
@@ -32,6 +34,7 @@ export const eventProjects: EventProject[] = [
         src: '/assets/images/evento1-principal.jpg',
         alt: 'Ilustración de una escalinata monumental con alfombra roja',
       },
+      folioImages: [undefined, undefined, '/assets/images/evento1-folio.jpg'], // el 3 es el folio visible (queda encima)
       video: {
         desktop: { src: '/assets/videos/redbull-desktop.mp4', poster: '/assets/videos/redbull-desktop-poster.jpg' },
         mobile: { src: '/assets/videos/redbull-mobile.mp4', poster: '/assets/videos/redbull-mobile-poster.jpg' },
