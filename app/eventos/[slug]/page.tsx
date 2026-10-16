@@ -29,14 +29,14 @@ export default function EventProjectPage({ params }: ProjectPageProps) {
 
   if (project.details) {
     return (
-      <PageWrapper backgroundColor="#EFECE7">
+      <PageWrapper backgroundColor="#EFECE7" hideFooter>
         <ProjectDetail project={project} />
       </PageWrapper>
     );
   }
 
   return (
-    <PageWrapper backgroundColor="#EFECE7">
+    <PageWrapper backgroundColor="#EFECE7" hideFooter>
       <section className="eterea-content-block" style={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', padding: '9.5rem 2rem' }}>
         <h1 className="eterea-title">{project.title}</h1>
         <Link href="/eventos" className="eterea-button eterea-button--auto">Eventos</Link>
