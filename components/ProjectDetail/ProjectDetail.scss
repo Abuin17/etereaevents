@@ -22,8 +22,10 @@ $rings-width: 56px;
     padding: 7rem $spacing-xl $spacing-xl $spacing-xl;
     background-color: $beige-light;
     // Papel verjurado: formación nubosa, fibras, líneas de verjura y puntizones
-    background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22320%22 height=%22320%22 viewBox=%220 0 320 320%22%3E%3Cdefs%3E%3Cfilter id=%22fib%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.85%22 numOctaves=%223%22 seed=%227%22 stitchTiles=%22stitch%22 result=%22n%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .35  0 0 0 0 .30  0 0 0 0 .24  0 0 0 .55 -.18%22/%3E%3C/filter%3E%3Cfilter id=%22cloud%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.012 .02%22 numOctaves=%223%22 seed=%223%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .45  0 0 0 0 .38  0 0 0 0 .28  0 0 0 .30 -.11%22/%3E%3C/filter%3E%3Cfilter id=%22wob%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.02 .6%22 numOctaves=%222%22 seed=%2211%22 result=%22t%22/%3E%3CfeDisplacementMap in=%22SourceGraphic%22 in2=%22t%22 scale=%221.6%22 xChannelSelector=%22R%22 yChannelSelector=%22G%22/%3E%3C/filter%3E%3Cpattern id=%22laid%22 width=%22320%22 height=%222.6%22 patternUnits=%22userSpaceOnUse%22%3E%3Crect width=%22320%22 height=%221%22 y=%220%22 fill=%22%237d705f%22 fill-opacity=%22.10%22/%3E%3Crect width=%22320%22 height=%221%22 y=%221.3%22 fill=%22%23ffffff%22 fill-opacity=%22.30%22/%3E%3C/pattern%3E%3Cpattern id=%22chain%22 width=%2232%22 height=%22320%22 patternUnits=%22userSpaceOnUse%22%3E%3Crect x=%2214%22 width=%223%22 height=%22320%22 fill=%22%23ffffff%22 fill-opacity=%22.16%22/%3E%3Crect x=%2217%22 width=%221.4%22 height=%22320%22 fill=%22%237d705f%22 fill-opacity=%22.04%22/%3E%3C/pattern%3E%3C/defs%3E%3Crect width=%22320%22 height=%22320%22 filter=%22url(%23cloud)%22/%3E%3Crect width=%22320%22 height=%22320%22 filter=%22url(%23fib)%22/%3E%3Cg filter=%22url(%23wob)%22%3E%3Crect width=%22320%22 height=%22320%22 fill=%22url(%23laid)%22/%3E%3Crect width=%22320%22 height=%22320%22 fill=%22url(%23chain)%22/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 320px 320px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%222400%22 viewBox=%220 0 420 2400%22%3E%3Cdefs%3E%3Cfilter id=%22cloud%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.006 .004%22 numOctaves=%224%22 seed=%225%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .52  0 0 0 0 .45  0 0 0 0 .34  .38 0 0 0 -.14%22/%3E%3C/filter%3E%3Cfilter id=%22fib%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.8%22 numOctaves=%223%22 seed=%229%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .38  0 0 0 0 .32  0 0 0 0 .25  .36 0 0 0 -.14%22/%3E%3C/filter%3E%3Cfilter id=%22laid%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.004 .35%22 numOctaves=%222%22 seed=%2221%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 .42  0 0 0 0 .36  0 0 0 0 .28  .20 0 0 0 -.085%22/%3E%3C/filter%3E%3Cfilter id=%22chain%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.035 .002%22 numOctaves=%222%22 seed=%2233%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .45 0 0 0 -.19%22/%3E%3C/filter%3E%3C/defs%3E%3Crect width=%22420%22 height=%222400%22 filter=%22url(%23cloud)%22/%3E%3Crect width=%22420%22 height=%222400%22 filter=%22url(%23chain)%22/%3E%3Crect width=%22420%22 height=%222400%22 filter=%22url(%23laid)%22/%3E%3Crect width=%22420%22 height=%222400%22 filter=%22url(%23fib)%22/%3E%3C/svg%3E");
+    background-size: 420px 2400px;
+    background-repeat: no-repeat;
+    background-position: left top;
     z-index: 2;
 
     // Anillas de cuaderno en el borde con el contenido
@@ -208,8 +210,108 @@ $rings-width: 56px;
     color: $secondary-color;
   }
 
-  &__bar,
-  &__nav {
+  &__bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__counter {
+    font-family: $font-secondary;
+    font-size: $body-font-size;
+    color: $secondary-color;
+  }
+
+  &__btn {
+    font-family: $font-primary;
+    font-size: $body-font-size;
+    text-transform: uppercase;
+    color: $secondary-color;
+    background: none;
+    border: 0;
+    padding: $spacing-sm $spacing-md;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity 0.25s cubic-bezier(.4,0,.2,1);
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  &__main {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-lg;
+    padding: $spacing-lg 0;
+  }
+
+  &__stage {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__arrow {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: $secondary-color;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.25s cubic-bezier(.4,0,.2,1), transform 0.25s cubic-bezier(.4,0,.2,1);
+
+    svg {
+      width: 40px;
+      height: 20px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    &--placeholder {
+      background-color: #E3DED5;
+    }
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg $spacing-xl;
+    background-color: rgba($primary-color, 1);
+    color: $secondary-color;
+  }
+
+  &__bar {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -274,5 +376,18 @@ $rings-width: 56px;
 
   .project-gallery__overlay {
     padding: $spacing-md;
+  }
+
+  .project-gallery__main {
+    gap: $spacing-xs;
+  }
+
+  .project-gallery__arrow {
+    width: 40px;
+    height: 48px;
+
+    svg {
+      width: 28px;
+    }
   }
 }

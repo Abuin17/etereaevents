@@ -106,16 +106,17 @@ const ProjectGallery: React.FC<ProjectGalleryProps> = ({ items }) => {
             </button>
           </div>
 
-          <div className="project-gallery__stage" onClick={(e) => e.stopPropagation()}>
-            {renderMedia(items[openIndex!], 'project-gallery__image')}
-          </div>
-
-          <div className="project-gallery__nav" onClick={(e) => e.stopPropagation()}>
-            <button type="button" className="project-gallery__btn" onClick={() => go(-1)}>
-              Anterior
+          <div className="project-gallery__main" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="project-gallery__arrow" onClick={() => go(-1)} aria-label="Foto anterior">
+              <svg viewBox="0 0 48 24" aria-hidden="true">
+                <path d="M47 12H2M12 2L2 12l10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
-            <button type="button" className="project-gallery__btn" onClick={() => go(1)}>
-              Siguiente
+            <div className="project-gallery__stage">{renderMedia(items[openIndex!], 'project-gallery__image')}</div>
+            <button type="button" className="project-gallery__arrow" onClick={() => go(1)} aria-label="Foto siguiente">
+              <svg viewBox="0 0 48 24" aria-hidden="true">
+                <path d="M1 12h45M36 2l10 10-10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
           </div>
         </div>,
