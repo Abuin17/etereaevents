@@ -4,6 +4,7 @@ import { eventProjects } from '../../lib/eventProjects';
 import type { EventProject } from '../../lib/eventProjects';
 import ProjectGallery from './ProjectGallery';
 import AutoplayVideo from './AutoplayVideo';
+import SignOff from './SignOff';
 import './ProjectDetail.scss'; // estilos compartidos de la galería y su overlay
 import './ProjectFolder.scss';
 
@@ -196,6 +197,9 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
         )}
 
         <ProjectGallery items={GALLERY_ITEMS} />
+
+        {/* Cierre: foto del equipo con la firma, en todos los proyectos */}
+        <SignOff />
       </div>
     </div>
   );

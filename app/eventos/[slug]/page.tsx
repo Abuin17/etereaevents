@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import PageWrapper from '../../../components/PageWrapper';
 import { eventProjects } from '../../../lib/eventProjects';
 import ProjectFolder from '../../../components/ProjectDetail/ProjectFolder';
+import SignOff from '../../../components/ProjectDetail/SignOff';
 
 interface ProjectPageProps {
   params: { slug: string };
@@ -41,6 +42,9 @@ export default function EventProjectPage({ params }: ProjectPageProps) {
         <h1 className="eterea-title">{project.title}</h1>
         <Link href="/eventos" className="eterea-button eterea-button--auto">Eventos</Link>
       </section>
+      <div style={{ padding: '0 2rem 6rem' }}>
+        <SignOff />
+      </div>
     </PageWrapper>
   );
 }
