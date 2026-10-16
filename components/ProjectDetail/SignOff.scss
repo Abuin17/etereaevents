@@ -42,9 +42,9 @@
 
   &__sign {
     position: absolute;
-    left: 13%;
-    right: 13%;
-    bottom: 9%;
+    left: 18%;
+    right: 18%;
+    bottom: 8%;
     will-change: transform;
   }
 
@@ -80,8 +80,8 @@
   // Isotipo blanco, pequeño, centrado bajo la firma (comparte su sombra)
   &__iso {
     display: block;
-    width: 26px;
-    margin: 14px auto 0 auto;
+    width: 52px;
+    margin: 16px auto 0 auto;
 
     img {
       display: block;
@@ -98,13 +98,13 @@
     }
 
     &__sign {
-      left: 10%;
-      right: 10%;
+      left: 14%;
+      right: 14%;
     }
 
     &__iso {
-      width: 22px;
-      margin-top: 12px;
+      width: 44px;
+      margin-top: 14px;
     }
   }
 }

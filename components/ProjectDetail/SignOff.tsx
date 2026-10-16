@@ -59,7 +59,7 @@ const SignOff: React.FC = () => {
               animate={reduceMotion || inkVisible ? { opacity: 1 } : undefined}
               transition={{ duration: 0.9, ease: 'easeOut', delay: 2.1 }}
             >
-              <img src="/assets/logos/ETÉREA_Icono_blanco.svg" alt="" aria-hidden="true" width={26} height={27} />
+              <img src="/assets/logos/ETÉREA_Icono_blanco.svg" alt="" aria-hidden="true" width={52} height={53} />
             </motion.span>
           </span>
         </motion.div>
