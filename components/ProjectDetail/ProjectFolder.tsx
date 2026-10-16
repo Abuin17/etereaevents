@@ -1,6 +1,7 @@
 import React from 'react';
 import type { EventProject } from '../../lib/eventProjects';
 import ProjectGallery from './ProjectGallery';
+import AutoplayVideo from './AutoplayVideo';
 import './ProjectDetail.scss'; // estilos compartidos de la galería y su overlay
 import './ProjectFolder.scss';
 
@@ -112,25 +113,16 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
 
         {details.video ? (
           <div className="folder__video">
-            {/* preload="none": no se descarga nada hasta pulsar play; el que está oculto nunca se pide */}
-            <video
+            <AutoplayVideo
               className="folder__video-el folder__video-el--desktop"
-              controls
-              playsInline
-              preload="none"
+              src={details.video.desktop.src}
               poster={details.video.desktop.poster}
-            >
-              <source src={details.video.desktop.src} type="video/mp4" />
-            </video>
-            <video
+            />
+            <AutoplayVideo
               className="folder__video-el folder__video-el--mobile"
-              controls
-              playsInline
-              preload="none"
+              src={details.video.mobile.src}
               poster={details.video.mobile.poster}
-            >
-              <source src={details.video.mobile.src} type="video/mp4" />
-            </video>
+            />
           </div>
         ) : (
           <div className="folder__media folder__media--video" aria-label="Vídeo (placeholder)" />
