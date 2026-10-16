@@ -42,6 +42,17 @@ export const eventProjects: EventProject[] = [
     slug: 'farlabo-christmas-party-lisboa',
     title: 'Título Evento 2', // real: FARLABO CHRISTMAS PARTY - LISBOA
     image: '/assets/images/opt-piano christmas.jpg',
+    details: {
+      client: 'Nordea',
+      location: 'Jardín del Hotel Rosewood Villa Magna, Madrid, España',
+      date: 'Junio 2026',
+      services: 'Curated Events',
+      mainImage: {
+        src: '/assets/images/evento2-principal.jpg',
+        alt: 'Ilustración de la entrada del Hotel Rosewood Villa Magna',
+      },
+      // Sin vídeo todavía: se muestra el placeholder
+    },
   },
   {
     slug: 'veepee-welovebrands-milan',
