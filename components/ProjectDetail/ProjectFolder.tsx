@@ -26,19 +26,32 @@ const FOLIOS: { src?: string; alt: string; notes: string[] }[] = [
   { alt: 'Folio 3', notes: ['montaje viernes 7am', 'revisar sonido!!', 'guion invitados', 'ver luces / backstage'] },
 ];
 
-const Paperclip: React.FC = () => (
-  <svg className="folder__clip" viewBox="0 0 34 92" aria-hidden="true">
-    <defs>
-      <filter id="clip-blur" x="-50%" y="-20%" width="200%" height="140%">
-        <feGaussianBlur stdDeviation="1.4" />
-      </filter>
-    </defs>
-    <path d="M11 70 V16 C11 5 25 5 25 16 V74 C25 85 7 85 7 74 V26" transform="translate(1.6 2.6)" fill="none" stroke="#000" strokeOpacity=".28" strokeWidth="3.4" strokeLinecap="round" filter="url(#clip-blur)" />
-    <path d="M11 70 V16 C11 5 25 5 25 16 V74 C25 85 7 85 7 74 V26" fill="none" stroke="#5a5652" strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M11 70 V16 C11 5 25 5 25 16 V74 C25 85 7 85 7 74 V26" fill="none" stroke="#b4b0ab" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M10.4 68 V16 C10.4 6.4 24.4 6.4 24.4 16 V73" fill="none" stroke="#f6f4f1" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" strokeOpacity=".95" />
-  </svg>
-);
+// Clip en dos piezas para que AGARRE de verdad: la trasera (alambre interior + curva) va detrás de la
+// carpeta y solo asoma por el canto exterior de la pestaña; la delantera (los otros dos alambres) va
+// por encima de los folios y de la pestaña.
+const CLIP_BACK = 'M11 70 V16 C11 5 25 5 25 16';
+const CLIP_FRONT = 'M25 16 V74 C25 85 7 85 7 74 V26';
+
+const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
+  const d = part === 'back' ? CLIP_BACK : CLIP_FRONT;
+  return (
+    <svg className={`folder__clip folder__clip--${part}`} viewBox="0 0 34 92" aria-hidden="true">
+      {part === 'front' && (
+        <>
+          <defs>
+            <filter id="clip-blur" x="-50%" y="-20%" width="200%" height="140%">
+              <feGaussianBlur stdDeviation="1.4" />
+            </filter>
+          </defs>
+          <path d={d} transform="translate(1.6 2.6)" fill="none" stroke="#000" strokeOpacity=".28" strokeWidth="3.4" strokeLinecap="round" filter="url(#clip-blur)" />
+        </>
+      )}
+      <path d={d} fill="none" stroke="#5a5652" strokeWidth="3.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke="#b4b0ab" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} transform="translate(-0.5 -0.4)" fill="none" stroke="#f6f4f1" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" strokeOpacity=".95" />
+    </svg>
+  );
+};
 
 const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
   const { details } = project;
@@ -54,6 +67,8 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
   return (
     <div className="folder-page">
       <div className="folder-wrap">
+      {/* Clip, parte trasera: detrás de la carpeta (solo asoma por fuera del canto de la pestaña) */}
+      <Paperclip part="back" />
       <aside className="folder">
         {/* La pestaña es la propia silueta de la carpeta (máscara); aquí solo va su etiqueta */}
         <span className="folder__tab-label" aria-hidden="true">Portfolio · Eventos</span>
@@ -74,7 +89,6 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
               </div>
             </div>
           ))}
-          <Paperclip />
         </div>
 
         {/* Carpeta delantera */}
@@ -99,6 +113,8 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
           </dl>
         </div>
       </aside>
+      {/* Clip, parte delantera: sobre folios y pestaña */}
+      <Paperclip part="front" />
       </div>
 
       <div className="folder__sheet">
