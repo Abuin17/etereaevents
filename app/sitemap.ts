@@ -1,8 +1,16 @@
 import { MetadataRoute } from 'next';
+import { eventProjects } from '../lib/eventProjects';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.etereaevents.com';
   
+  const eventProjectPages: MetadataRoute.Sitemap = eventProjects.map((project) => ({
+    url: `${baseUrl}/eventos/${project.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
   return [
     {
       url: baseUrl,
@@ -70,6 +78,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
+    ...eventProjectPages,
   ];
 }
 

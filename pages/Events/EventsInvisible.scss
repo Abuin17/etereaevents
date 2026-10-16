@@ -43,71 +43,43 @@
     gap: 0.5rem;
   }
 
-  &__slider {
-    width: 100%;
-    aspect-ratio: 1;
-    position: relative;
-    overflow: hidden;
-  }
-
-  &__slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
-    pointer-events: none;
-
-    &.active {
-      opacity: 1;
-      z-index: 1;
-    }
-
-    &.next {
-      z-index: 2;
-      
-      &.fade-in {
-        opacity: 1;
-      }
-    }
-  }
-
-  &__project {
-    text-align: center;
-    position: relative;
-    height: 120px;
-    min-height: 80px;
+  &__portfolio {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     width: 100%;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column;
+    gap: $spacing-2xl;
   }
 
-  &__project-title {
+  &__portfolio-link {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    color: $primary-color;
+    text-decoration: none;
+  }
+
+  &__portfolio-image {
+    width: 100%;
+    aspect-ratio: 1;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.25s cubic-bezier(.4,0,.2,1);
+  }
+
+  &__portfolio-title {
     font-family: $font-secondary;
     font-size: $body-font-size;
+    line-height: $body-line-height;
+    text-align: center;
     color: $primary-color;
-    margin-bottom: $spacing-xs;
   }
 
-  &__project-year {
-    font-family: $font-secondary;
-    font-size: $font-size-base;
-    color: $primary-color;
-    margin-bottom: $spacing-lg;
-  }
-
-  &__project-description {
-    font-family: $font-secondary;
-    font-size: $font-size-base;
-    line-height: 1.5;
-    color: $primary-color;
-    max-width: 400px;
-    margin: 0 auto;
+  &__portfolio-link:hover &__portfolio-image,
+  &__portfolio-link:focus-visible &__portfolio-image {
+    opacity: 0.85;
   }
 
   &__separator {
@@ -195,39 +167,6 @@
         background: #E8E2D5;
         color: #393431;
       }
-    }
-  }
-
-  &__project-stack {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    min-height: 120px;
-    max-height: 220px;
-    margin: 0 auto;
-  }
-
-  &__project-info {
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-
-    &.active {
-      opacity: 1;
-      z-index: 2;
-      pointer-events: auto;
-    }
-    &.next {
-      z-index: 3;
-    }
-    &.fade-in {
-      opacity: 1;
     }
   }
 
