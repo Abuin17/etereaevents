@@ -110,8 +110,31 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
           <div className="folder__media folder__media--main" aria-label="Imagen principal (placeholder)" />
         )}
 
-        {/* Vídeo: pasar src al <video> cuando exista; mientras tanto, placeholder */}
-        <div className="folder__media folder__media--video" aria-label="Vídeo (placeholder)" />
+        {details.video ? (
+          <div className="folder__video">
+            {/* preload="none": no se descarga nada hasta pulsar play; el que está oculto nunca se pide */}
+            <video
+              className="folder__video-el folder__video-el--desktop"
+              controls
+              playsInline
+              preload="none"
+              poster={details.video.desktop.poster}
+            >
+              <source src={details.video.desktop.src} type="video/mp4" />
+            </video>
+            <video
+              className="folder__video-el folder__video-el--mobile"
+              controls
+              playsInline
+              preload="none"
+              poster={details.video.mobile.poster}
+            >
+              <source src={details.video.mobile.src} type="video/mp4" />
+            </video>
+          </div>
+        ) : (
+          <div className="folder__media folder__media--video" aria-label="Vídeo (placeholder)" />
+        )}
 
         <ProjectGallery items={GALLERY_ITEMS} />
       </div>

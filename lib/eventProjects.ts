@@ -4,6 +4,11 @@ export interface EventProjectDetails {
   year: string;
   services: string;
   mainImage?: { src: string; alt: string };
+  /** Vídeo del proyecto: horizontal para escritorio y vertical para móvil. */
+  video?: {
+    desktop: { src: string; poster: string };
+    mobile: { src: string; poster: string };
+  };
 }
 
 export interface EventProject {
@@ -27,6 +32,10 @@ export const eventProjects: EventProject[] = [
       mainImage: {
         src: '/assets/images/redbull-principal.jpeg',
         alt: 'Ilustración de una escalinata monumental con alfombra roja',
+      },
+      video: {
+        desktop: { src: '/assets/videos/redbull-desktop.mp4', poster: '/assets/videos/redbull-desktop-poster.jpg' },
+        mobile: { src: '/assets/videos/redbull-mobile.mp4', poster: '/assets/videos/redbull-mobile-poster.jpg' },
       },
     },
   },
