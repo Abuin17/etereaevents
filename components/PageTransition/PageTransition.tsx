@@ -20,6 +20,9 @@ const routeBackgrounds: Record<string, string> = {
   '/contacto': '#393431',
 };
 
+// Páginas de proyecto de evento: entre ellas la transición la hace el efecto de "pasar hoja"
+const isProjectRoute = (path?: string | null) => /^\/eventos\/[^/]+$/.test(path || '');
+
 const PageTransition: React.FC<PageTransitionProps> = ({ children, backgroundColor }) => {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
@@ -34,6 +37,15 @@ const PageTransition: React.FC<PageTransitionProps> = ({ children, backgroundCol
     
     // Si es la primera carga o cambio de ruta
     if (prevPathRef.current !== pathname) {
+      // Proyecto -> proyecto: sin desvanecer la página (la hoja se encarga); solo se actualiza el fondo
+      if (isProjectRoute(prevPathRef.current) && isProjectRoute(pathname)) {
+        setCurrentBg(bgColor);
+        document.documentElement.style.setProperty('--page-background', bgColor);
+        setIsVisible(true);
+        prevPathRef.current = pathname || '/';
+        return;
+      }
+
       setIsTransitioning(true);
       setNextBg(bgColor);
       

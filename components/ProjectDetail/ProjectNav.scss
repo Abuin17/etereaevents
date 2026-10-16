@@ -3,8 +3,25 @@
 
 .project-nav {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  &__title {
+    margin: 0;
+    font-family: $font-primary;
+    font-weight: 400;
+    font-size: $font-size-sm;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $primary-color;
+    opacity: 0.6;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   &__link {
     display: inline-flex;
