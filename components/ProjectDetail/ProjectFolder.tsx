@@ -4,7 +4,6 @@ import ProjectGallery from './ProjectGallery';
 import AutoplayVideo from './AutoplayVideo';
 import SignOff from './SignOff';
 import ProjectNav from './ProjectNav';
-import ProjectTurnEnter from './ProjectTurnEnter';
 import './ProjectDetail.scss'; // estilos compartidos de la galería y su overlay
 import './ProjectFolder.scss';
 
@@ -87,7 +86,6 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
 
   return (
     <div className="folder-page">
-      <ProjectTurnEnter />
       <div className="folder-wrap">
       {/* Clip, parte trasera: detrás de la carpeta (solo asoma por fuera del canto de la pestaña) */}
       <Paperclip part="back" />
