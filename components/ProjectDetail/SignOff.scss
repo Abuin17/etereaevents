@@ -9,7 +9,7 @@
 
   &__frame {
     position: relative;
-    width: min(100%, 560px);
+    width: min(100%, 400px);
     aspect-ratio: 2 / 3;
     overflow: hidden;
     background-color: $beige-dark; // mientras carga la foto
@@ -42,8 +42,8 @@
 
   &__sign {
     position: absolute;
-    left: 6%;
-    right: 6%;
+    left: 13%;
+    right: 13%;
     bottom: 9%;
     will-change: transform;
   }
@@ -77,16 +77,34 @@
     mask: url('/assets/images/firma-eterea.svg') center / contain no-repeat;
   }
 
+  // Isotipo blanco, pequeño, centrado bajo la firma (comparte su sombra)
+  &__iso {
+    display: block;
+    width: 26px;
+    margin: 14px auto 0 auto;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     padding-top: $spacing-xl;
 
     &__frame {
-      width: 100%;
+      width: min(100%, 300px);
     }
 
     &__sign {
-      left: 4%;
-      right: 4%;
+      left: 10%;
+      right: 10%;
+    }
+
+    &__iso {
+      width: 22px;
+      margin-top: 12px;
     }
   }
 }

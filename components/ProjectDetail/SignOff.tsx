@@ -52,6 +52,15 @@ const SignOff: React.FC = () => {
               animate={reduceMotion || inkVisible ? { clipPath: 'inset(0 0% 0 0)' } : undefined}
               transition={{ duration: 2.2, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
             />
+            {/* Isotipo blanco: aparece cuando la firma termina de escribirse */}
+            <motion.span
+              className="signoff__iso"
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={reduceMotion || inkVisible ? { opacity: 1 } : undefined}
+              transition={{ duration: 0.9, ease: 'easeOut', delay: 2.1 }}
+            >
+              <img src="/assets/logos/ETÉREA_Icono_blanco.svg" alt="" aria-hidden="true" width={26} height={27} />
+            </motion.span>
           </span>
         </motion.div>
       </div>
