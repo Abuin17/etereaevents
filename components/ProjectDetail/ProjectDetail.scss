@@ -112,6 +112,16 @@ $rings-width: 56px;
     }
   }
 
+  // Imagen principal: se muestra completa, sin recortar, centrada
+  &__main-image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 8rem);
+    margin: 0 auto;
+  }
+
   // Placeholders de media: bloques planos en un tono distinto al fondo
   &__media {
     width: 100%;

@@ -52,8 +52,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
           <p>{LOREM_2}</p>
         </div>
 
-        {/* Imagen principal: sustituir por la imagen real */}
-        <div className="project-detail__media project-detail__media--main" aria-label="Imagen principal (placeholder)" />
+        {details.mainImage ? (
+          <img src={details.mainImage.src} alt={details.mainImage.alt} className="project-detail__main-image" />
+        ) : (
+          <div className="project-detail__media project-detail__media--main" aria-label="Imagen principal (placeholder)" />
+        )}
 
         {/* Vídeo: pasar src al <video> cuando exista; mientras tanto, placeholder */}
         <div className="project-detail__media project-detail__media--video" aria-label="Vídeo (placeholder)" />

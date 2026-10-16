@@ -3,6 +3,7 @@ export interface EventProjectDetails {
   location: string;
   year: string;
   services: string;
+  mainImage?: { src: string; alt: string };
 }
 
 export interface EventProject {
@@ -23,6 +24,10 @@ export const eventProjects: EventProject[] = [
       location: 'Ciudad, País',
       year: 'Año',
       services: 'Servicios del proyecto',
+      mainImage: {
+        src: '/assets/images/redbull-principal.jpeg',
+        alt: 'Ilustración de una escalinata monumental con alfombra roja',
+      },
     },
   },
   {
