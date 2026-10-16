@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import PageWrapper from '../../../components/PageWrapper';
 import { eventProjects } from '../../../lib/eventProjects';
-import ProjectDetail from '../../../components/ProjectDetail/ProjectDetail';
+import ProjectFolder from '../../../components/ProjectDetail/ProjectFolder';
 
 interface ProjectPageProps {
   params: { slug: string };
@@ -30,7 +30,7 @@ export default function EventProjectPage({ params }: ProjectPageProps) {
   if (project.details) {
     return (
       <PageWrapper backgroundColor="#FFFFFF" hideFooter>
-        <ProjectDetail project={project} />
+        <ProjectFolder project={project} />
       </PageWrapper>
     );
   }
