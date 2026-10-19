@@ -89,7 +89,7 @@ export const eventProjects: EventProject[] = [
         { src: '/assets/images/nordea/foto-12.jpg', alt: 'Bandeja de bollos y fresas entre flores azules' },
       ],
       folioImages: [undefined, undefined, '/assets/images/nordea/folio.jpg'], // el 3 es el folio visible
-      folioImagePositions: [undefined, undefined, '90% 50%'], // la franja muestra el ramillete de la derecha
+      folioImagePositions: [undefined, undefined, '100% 50%'], // la franja muestra el ramillete de la derecha
       signoff: { src: '/assets/images/nordea/cierre.jpg', alt: 'Una invitada con corona de flores entre las flores del jardín' },
       // Sin vídeo todavía: se muestra el placeholder
     },
