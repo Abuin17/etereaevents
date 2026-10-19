@@ -30,7 +30,7 @@ export const eventProjects: EventProject[] = [
   {
     slug: 'showrun-redbull-checo-perez-madrid',
     title: 'Título Evento 1', // real: SHOWRUN REDBULL x CHECO PÉREZ - MADRID
-    image: '/assets/images/opt-redbull.jpg',
+    image: '/assets/images/nazca/miniatura.jpg',
     details: {
       client: 'Nazca Capital',
       location: 'Real Casino de Madrid, España',
@@ -40,6 +40,20 @@ export const eventProjects: EventProject[] = [
         src: '/assets/images/evento1-principal.jpg',
         alt: 'Ilustración de una escalinata monumental con alfombra roja',
       },
+      gallery: [
+        { src: '/assets/images/nazca/foto-1.jpg', alt: 'Pareja disfrazada bajando la escalinata de alfombra roja bajo el arco' },
+        { src: '/assets/images/nazca/foto-2.jpg', alt: 'Grupo de invitados con trajes de época en la escalera del Real Casino' },
+        { src: '/assets/images/nazca/foto-3.jpg', alt: 'Pareja con sombrero de plumas rosas en el balcón de la escalinata' },
+        { src: '/assets/images/nazca/foto-4.jpg', alt: 'Centro de mesa con peonías, musgo y velas, y el número de mesa' },
+        { src: '/assets/images/nazca/foto-5.jpg', alt: 'Techo del salón con focos proyectados sobre las molduras y la placa del centenario' },
+        { src: '/assets/images/nazca/foto-6.jpg', alt: 'Salón de banquete con lámparas de araña y mesas redondas' },
+        { src: '/assets/images/nazca/foto-7.jpg', alt: 'Techo dorado con pinturas y claraboya de cristal' },
+        { src: '/assets/images/nazca/foto-8.jpg', alt: 'Pianista con vestido dorado y tocado de plumas' },
+        { src: '/assets/images/nazca/foto-9.jpg', alt: 'Escalinata del Real Casino vista desde arriba, con músicos y figuras de época' },
+        { src: '/assets/images/nazca/foto-10.jpg', alt: 'Detalle de peonías rojas y rosas sobre musgo' },
+        { src: '/assets/images/nazca/foto-11.jpg', alt: 'Mesa del banquete con flores rojas, lámparas y cuadros al fondo' },
+        { src: '/assets/images/nazca/foto-12.jpg', alt: 'Bailarines con corsé turquesa y encaje ante un violonchelista' },
+      ],
       folioImages: [undefined, undefined, '/assets/images/evento1-folio.jpg'], // el 3 es el folio visible (queda encima)
       video: {
         desktop: { src: '/assets/videos/redbull-desktop.mp4', poster: '/assets/videos/redbull-desktop-poster.jpg' },
