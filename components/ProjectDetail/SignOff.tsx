@@ -12,7 +12,12 @@ import './SignOff.scss';
  *   oscuro en la base y sombra suave.
  * Con prefers-reduced-motion no hay parallax ni animación de escritura.
  */
-const SignOff: React.FC = () => {
+interface SignOffProps {
+  /** Foto del cierre; por defecto, la del equipo. */
+  photo?: { src: string; alt: string };
+}
+
+const SignOff: React.FC<SignOffProps> = ({ photo }) => {
   const frameRef = useRef<HTMLDivElement>(null);
   const inkBoxRef = useRef<HTMLSpanElement>(null);
   // Se observa el contenedor (sin recortar): un elemento con clip-path al 100% puede no contar como visible
@@ -31,8 +36,8 @@ const SignOff: React.FC = () => {
         <motion.div className="signoff__photo-wrap" style={reduceMotion ? undefined : { y: photoY }}>
           <img
             className="signoff__photo"
-            src="/assets/images/cierre-equipo.jpg"
-            alt="El equipo de Etérea en un salón del palacio"
+            src={photo?.src ?? '/assets/images/cierre-equipo.jpg'}
+            alt={photo?.alt ?? 'El equipo de Etérea en un salón del palacio'}
             width={1200}
             height={1800}
             loading="lazy"

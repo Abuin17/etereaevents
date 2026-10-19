@@ -169,10 +169,10 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
           <div className="folder__media folder__media--video" aria-label="Vídeo (placeholder)" />
         )}
 
-        <ProjectGallery items={GALLERY_ITEMS} />
+        <ProjectGallery items={details.gallery ?? GALLERY_ITEMS} />
 
         {/* Cierre: foto del equipo con la firma, en todos los proyectos */}
-        <SignOff />
+        <SignOff photo={details.signoff} />
       </div>
     </div>
   );

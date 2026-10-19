@@ -6,6 +6,10 @@ export interface EventProjectDetails {
   mainImage?: { src: string; alt: string };
   /** Imágenes de los folios que asoman de la carpeta (por orden: 1, 2, 3; el 3 es el que queda encima y se ve). Sin imagen = placeholder. */
   folioImages?: (string | undefined)[];
+  /** Fotos de la galería (si falta, se muestran 12 placeholders). */
+  gallery?: { src: string; alt: string }[];
+  /** Foto del cierre con la firma (si falta, la foto del equipo por defecto). */
+  signoff?: { src: string; alt: string };
   /** Vídeo del proyecto: horizontal para escritorio y vertical para móvil. */
   video?: {
     desktop: { src: string; poster: string };
@@ -44,7 +48,7 @@ export const eventProjects: EventProject[] = [
   {
     slug: 'farlabo-christmas-party-lisboa',
     title: 'Título Evento 2', // real: FARLABO CHRISTMAS PARTY - LISBOA
-    image: '/assets/images/opt-piano christmas.jpg',
+    image: '/assets/images/nordea/miniatura.jpg',
     details: {
       client: 'Nordea',
       location: 'Jardín del Hotel Rosewood Villa Magna, Madrid, España',
@@ -54,6 +58,21 @@ export const eventProjects: EventProject[] = [
         src: '/assets/images/evento2-principal.jpg',
         alt: 'Ilustración de la entrada del Hotel Rosewood Villa Magna',
       },
+      gallery: [
+        { src: '/assets/images/nordea/foto-1.jpg', alt: 'Cubitera con vinos y flores blancas' },
+        { src: '/assets/images/nordea/foto-2.jpg', alt: 'Tarta con la silueta del alce y bollos de canela' },
+        { src: '/assets/images/nordea/foto-3.jpg', alt: 'Camarero preparando un cóctel con naranja' },
+        { src: '/assets/images/nordea/foto-4.jpg', alt: 'Mástil de Midsommar con coronas de flores' },
+        { src: '/assets/images/nordea/foto-5.jpg', alt: 'Tarta de nata y fresas entre flores silvestres' },
+        { src: '/assets/images/nordea/foto-6.jpg', alt: 'Barra azul con la carta de cócteles enmarcada' },
+        { src: '/assets/images/nordea/foto-7.jpg', alt: 'Mesa de postres con carta, tartas y bollos' },
+        { src: '/assets/images/nordea/foto-8.jpg', alt: 'Mesa auxiliar con un ramo silvestre azul y amarillo' },
+        { src: '/assets/images/nordea/foto-9.jpg', alt: 'Servilleta con el logo de Nordea y Midsommar' },
+        { src: '/assets/images/nordea/foto-10.jpg', alt: 'Invitados en el jardín bajo guirnaldas de luces' },
+        { src: '/assets/images/nordea/foto-11.jpg', alt: 'Corona de hortensias y aquileas colgada del mástil' },
+        { src: '/assets/images/nordea/foto-12.jpg', alt: 'Bandeja de bollos y fresas entre flores azules' },
+      ],
+      signoff: { src: '/assets/images/nordea/cierre.jpg', alt: 'Una invitada con corona de flores entre las flores del jardín' },
       // Sin vídeo todavía: se muestra el placeholder
     },
   },
