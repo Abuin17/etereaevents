@@ -28,8 +28,21 @@ export interface EventProject {
 
 export const eventProjects: EventProject[] = [
   {
+    slug: 'veepee-welovebrands-milan',
+    title: 'Título Evento 3', // real: ENCUENTRO "WELOVEBRANDS" DE VEEPEE CON SUS PRINCIPALES PARTNERS - MILÁN
+    image: '/assets/images/opt-torre-cava.jpg',
+    // Placeholders: pendientes de los datos reales de este evento
+    details: {
+      client: 'Nombre del cliente',
+      location: 'Ciudad, País',
+      date: 'Fecha',
+      services: 'Servicios',
+      // mainImage y video: sin definir todavía (la plantilla muestra los huecos)
+    },
+  },
+  {
     slug: 'showrun-redbull-checo-perez-madrid',
-    title: 'Título Evento 1', // real: SHOWRUN REDBULL x CHECO PÉREZ - MADRID
+    title: 'Le Grand Bal', // antes: Título Evento 1; real antiguo: SHOWRUN REDBULL x CHECO PÉREZ - MADRID
     image: '/assets/images/nazca/miniatura.jpg',
     details: {
       client: 'Nazca Capital',
@@ -63,7 +76,7 @@ export const eventProjects: EventProject[] = [
   },
   {
     slug: 'farlabo-christmas-party-lisboa',
-    title: 'Título Evento 2', // real: FARLABO CHRISTMAS PARTY - LISBOA
+    title: 'The Nordic Solstice', // antes: Título Evento 2; real antiguo: FARLABO CHRISTMAS PARTY - LISBOA
     image: '/assets/images/nordea/miniatura.jpg',
     details: {
       client: 'Nordea',
@@ -92,19 +105,6 @@ export const eventProjects: EventProject[] = [
       folioImagePositions: [undefined, undefined, '100% 50%'], // la franja muestra el ramillete de la derecha
       signoff: { src: '/assets/images/nordea/cierre.jpg', alt: 'Una invitada con corona de flores entre las flores del jardín' },
       // Sin vídeo todavía: se muestra el placeholder
-    },
-  },
-  {
-    slug: 'veepee-welovebrands-milan',
-    title: 'Título Evento 3', // real: ENCUENTRO "WELOVEBRANDS" DE VEEPEE CON SUS PRINCIPALES PARTNERS - MILÁN
-    image: '/assets/images/opt-torre-cava.jpg',
-    // Placeholders: pendientes de los datos reales de este evento
-    details: {
-      client: 'Nombre del cliente',
-      location: 'Ciudad, País',
-      date: 'Fecha',
-      services: 'Servicios',
-      // mainImage y video: sin definir todavía (la plantilla muestra los huecos)
     },
   },
 ];
