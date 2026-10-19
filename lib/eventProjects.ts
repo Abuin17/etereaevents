@@ -8,6 +8,8 @@ export interface EventProjectDetails {
   folioImages?: (string | undefined)[];
   /** Fotos de la galería (si falta, se muestran 12 placeholders). */
   gallery?: { src: string; alt: string }[];
+  /** Punto de enfoque (object-position) de cada imagen de folio: el folio es una franja estrecha y se recorta a ese tramo. */
+  folioImagePositions?: (string | undefined)[];
   /** Foto del cierre con la firma (si falta, la foto del equipo por defecto). */
   signoff?: { src: string; alt: string };
   /** Vídeo del proyecto: horizontal para escritorio y vertical para móvil. */
@@ -73,6 +75,7 @@ export const eventProjects: EventProject[] = [
         { src: '/assets/images/nordea/foto-12.jpg', alt: 'Bandeja de bollos y fresas entre flores azules' },
       ],
       folioImages: [undefined, undefined, '/assets/images/nordea/folio.jpg'], // el 3 es el folio visible
+      folioImagePositions: [undefined, undefined, '90% 50%'], // la franja muestra el ramillete de la derecha
       signoff: { src: '/assets/images/nordea/cierre.jpg', alt: 'Una invitada con corona de flores entre las flores del jardín' },
       // Sin vídeo todavía: se muestra el placeholder
     },

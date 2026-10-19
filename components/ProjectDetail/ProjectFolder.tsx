@@ -98,7 +98,12 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
           {FOLIOS.map((folio, i) => (
             <div key={i} className={`folder__folio folder__folio--${i + 1}`}>
               {(details.folioImages?.[i] ?? folio.src) ? (
-                <img src={details.folioImages?.[i] ?? folio.src} alt="" className="folder__folio-image" />
+                <img
+                  src={details.folioImages?.[i] ?? folio.src}
+                  alt=""
+                  className="folder__folio-image"
+                  style={{ objectPosition: details.folioImagePositions?.[i] }}
+                />
               ) : (
                 <div className="folder__folio-image folder__folio-image--placeholder" />
               )}
