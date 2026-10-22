@@ -1,9 +1,62 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState, useCallback } from 'react';
 import './EventsInvisible.scss';
+const redbullImage = '/assets/images/opt-redbull.jpg';
+const pianoChristmasImage = '/assets/images/opt-piano christmas.jpg';
+const torreCavaImage = '/assets/images/opt-torre-cava.jpg';
 import Link from 'next/link';
-import { eventProjects } from '../../lib/eventProjects';
+
+const images = [redbullImage, pianoChristmasImage, torreCavaImage];
+const projects = [
+  {
+    title: 'SHOWRUN REDBULL x CHECO PÉREZ - MADRID',
+    year: '2023',
+    description: ''
+  },
+  {
+    title: 'FARLABO CHRISTMAS PARTY - LISBOA',
+    year: '2024',
+    description: ''
+  },
+  {
+    title: 'ENCUENTRO "WELOVEBRANDS" DE VEEPEE CON SUS PRINCIPALES PARTNERS - MILÁN',
+    year: '2024',
+    description: ''
+  }
+];
+const FADE_DURATION = 3000; // 3 segundos entre cambios
 
 const EventsInvisible: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(1);
+  const [isFading, setIsFading] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(false);
+
+  const transition = useCallback(() => {
+    setIsFading(true);
+    
+    // Esperamos a que termine el fade para actualizar los índices
+    setTimeout(() => {
+      setActiveIndex(nextIndex);
+      setNextIndex((nextIndex + 1) % images.length);
+      setIsFading(false);
+    }, 2000); // Duración del fade
+  }, [nextIndex]);
+
+  useEffect(() => {
+    const interval = setInterval(transition, FADE_DURATION);
+    return () => clearInterval(interval);
+  }, [transition]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => setIsPortrait(window.innerWidth < window.innerHeight);
+    setIsPortrait(window.innerWidth < window.innerHeight);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <section className="events-invisible">
       <div className="events-invisible__container">
@@ -16,23 +69,45 @@ const EventsInvisible: React.FC = () => {
         </div>
       </div>
 
-      <ul className="events-invisible__portfolio">
-        {eventProjects.map((project) => (
-          <li key={project.slug} className="events-invisible__portfolio-item">
-            <Link href={`/eventos/${project.slug}`} className="events-invisible__portfolio-link">
-              <div
-                className="events-invisible__portfolio-image"
-                style={{ backgroundImage: `url("${encodeURI(project.image)}")` }}
-                role="img"
-                aria-label={project.title}
-              />
-              <span className="events-invisible__portfolio-title">{project.title}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-
       <div className="events-invisible__showcase">
+        <div className="events-invisible__slider"
+          style={isPortrait ? { width: '96vw', maxWidth: '96vw' } : undefined}
+        >
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={`events-invisible__slide ${
+                index === activeIndex ? 'active' : 
+                index === nextIndex ? `next ${isFading ? 'fade-in' : ''}` : ''
+              }`}
+              style={{ backgroundImage: `url(${image})` }}
+            />
+          ))}
+        </div>
+        
+        <div className="events-invisible__project">
+          <div className="events-invisible__project-stack">
+            {projects.map((project, idx) => (
+              <div
+                key={idx}
+                className={`events-invisible__project-info${
+                  idx === activeIndex && !isFading ? ' active' : ''
+                }${idx === nextIndex && isFading ? ' next fade-in' : ''}`}
+              >
+          <div className="events-invisible__project-title">
+                  {project.title}
+          </div>
+          <div className="events-invisible__project-year">
+                  {project.year}
+          </div>
+          <div className="events-invisible__project-description">
+                  {project.description}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="events-invisible__separator">
           <div className="events-invisible__separator-line">
             <div className="events-invisible__separator-dots">

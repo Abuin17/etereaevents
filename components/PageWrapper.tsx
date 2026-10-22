@@ -13,14 +13,12 @@ interface PageWrapperProps {
   children: React.ReactNode;
   chromeless?: boolean;
   backgroundColor?: string;
-  hideFooter?: boolean;
 }
 
 const PageWrapper: React.FC<PageWrapperProps> = ({ 
   children, 
   chromeless = false,
-  backgroundColor,
-  hideFooter = false
+  backgroundColor 
 }) => {
   const pathname = usePathname();
   const isContactPage = pathname === '/contacto';
@@ -51,7 +49,7 @@ const PageWrapper: React.FC<PageWrapperProps> = ({
             {children}
           </PageTransition>
         </main>
-        {!isContactPage && !hideFooter && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
+        {!isContactPage && <Footer onOpenCookiePreferences={handleOpenCookiePreferences} />}
         <CookieConsent 
           shouldOpenModal={shouldOpenCookieModal}
           onModalClose={() => setShouldOpenCookieModal(false)}

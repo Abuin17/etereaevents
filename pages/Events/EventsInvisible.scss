@@ -43,46 +43,71 @@
     gap: 0.5rem;
   }
 
-  &__portfolio {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  &__slider {
     width: 100%;
-    max-width: 1200px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-xl;
-    align-items: start;
-    margin-bottom: $spacing-4xl;
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
   }
 
-  &__portfolio-link {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-md;
-    color: $primary-color;
-    text-decoration: none;
-  }
-
-  &__portfolio-image {
+  &__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    aspect-ratio: 4 / 5;
+    height: 100%;
     background-size: cover;
     background-position: center;
-    transition: opacity 0.25s cubic-bezier(.4,0,.2,1);
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    pointer-events: none;
+
+    &.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    &.next {
+      z-index: 2;
+      
+      &.fade-in {
+        opacity: 1;
+      }
+    }
   }
 
-  &__portfolio-title {
+  &__project {
+    text-align: center;
+    position: relative;
+    height: 120px;
+    min-height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  &__project-title {
     font-family: $font-secondary;
     font-size: $body-font-size;
-    line-height: $body-line-height;
-    text-align: center;
     color: $primary-color;
+    margin-bottom: $spacing-xs;
   }
 
-  &__portfolio-link:hover &__portfolio-image,
-  &__portfolio-link:focus-visible &__portfolio-image {
-    opacity: 0.85;
+  &__project-year {
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    color: $primary-color;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__project-description {
+    font-family: $font-secondary;
+    font-size: $font-size-base;
+    line-height: 1.5;
+    color: $primary-color;
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   &__separator {
@@ -173,32 +198,41 @@
     }
   }
 
+  &__project-stack {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    min-height: 120px;
+    max-height: 220px;
+    margin: 0 auto;
+  }
+
+  &__project-info {
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+
+    &.active {
+      opacity: 1;
+      z-index: 2;
+      pointer-events: auto;
+    }
+    &.next {
+      z-index: 3;
+    }
+    &.fade-in {
+      opacity: 1;
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     padding: $spacing-2xl $spacing-lg;
-
-    &__portfolio {
-      display: flex;
-      gap: $spacing-md;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      width: calc(100% + #{$spacing-lg * 2});
-      margin-left: -$spacing-lg;
-      margin-right: -$spacing-lg;
-      padding: 0 $spacing-lg;
-      box-sizing: border-box;
-      scroll-padding: 0 $spacing-lg;
-      scrollbar-width: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-
-    &__portfolio-item {
-      flex: 0 0 72%;
-      scroll-snap-align: start;
-    }
 
     &__container {
       gap: 48px;
