@@ -34,8 +34,9 @@ const FOLIOS: { src?: string; alt: string; notes: string[] }[] = [
 // - trasera: la curva exterior y el alambre interior, que quedan detrás de la carpeta y solo se
 //   ven pasado el canto.
 // Las dos mitades comparten el punto (25,16): ahí se unen sin costura.
-const CLIP_FRONT = 'M25 16 V74 C25 85 7 85 7 74 V26';
-const CLIP_BACK = 'M25 16 C25 5 11 5 11 16 V70';
+// Topología de un clip real (tres curvas): arco superior -> U interior pequeña -> U exterior grande.
+const CLIP_FRONT = 'M25 16 V72 C25 87 6 87 6 72 V24';
+const CLIP_BACK = 'M25 16 C25 4 12 4 12 16 V56 C12 67 20 67 20 56 V30';
 
 const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
   const d = part === 'back' ? CLIP_BACK : CLIP_FRONT;
@@ -61,13 +62,14 @@ const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
         </filter>
       </defs>
       {/* Sombra suave (la luz cae desde arriba a la izquierda) y sombra de contacto, más oscura y pegada */}
-      <path d={d} transform="translate(1.3 2.1)" fill="none" stroke="#2c2418" strokeOpacity=".2" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" filter={`url(#${id}-soft)`} />
-      <path d={d} transform="translate(0.45 0.75)" fill="none" stroke="#1c160c" strokeOpacity=".5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" filter={`url(#${id}-contact)`} />
-      {/* Cuerpo del alambre: borde oscuro, acero con reflejos, brillo especular y reflejo secundario */}
-      <path d={d} fill="none" stroke="#4b4d51" strokeWidth="2.7" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke={`url(#${id}-metal)`} strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} transform="translate(-0.42 -0.38)" fill="none" stroke="#ffffff" strokeOpacity=".85" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} transform="translate(0.5 0.45)" fill="none" stroke="#ffffff" strokeOpacity=".28" strokeWidth="0.35" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} transform="translate(1.4 2.3)" fill="none" stroke="#2c2418" strokeOpacity=".22" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" filter={`url(#${id}-soft)`} />
+      <path d={d} transform="translate(0.5 0.8)" fill="none" stroke="#1c160c" strokeOpacity=".5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" filter={`url(#${id}-contact)`} />
+      {/* Alambre como tubo cilíndrico: borde oscuro, cuerpo gris, banda clara central desplazada hacia la luz y brillo especular */}
+      <path d={d} fill="none" stroke="#35373b" strokeWidth="2.9" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke="#7d8085" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke={`url(#${id}-metal)`} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} transform="translate(-0.38 -0.34)" fill="none" stroke="#ffffff" strokeOpacity=".9" strokeWidth="0.55" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} transform="translate(0.55 0.5)" fill="none" stroke="#2a2c30" strokeOpacity=".55" strokeWidth="0.4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 };
