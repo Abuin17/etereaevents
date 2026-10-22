@@ -64,25 +64,16 @@ const Paperclip: React.FC<{ part: 'back' | 'front' | 'full' }> = ({ part }) => {
         <clipPath id={`${id}-cut`} clipPathUnits="userSpaceOnUse">
           <path d={CLIP_HIDE} clipRule="evenodd" />
         </clipPath>
-        {/* Las sombras del arco se difuminan al hundirse en el canto (sin corte seco) */}
-        <linearGradient id={`${id}-fade`} gradientUnits="userSpaceOnUse" x1="0" y1="11" x2="0" y2="17">
+        {/* Sin sombra del arco sobre la carpeta: el alambre se mete por detrás del canto */}
+        <linearGradient id={`${id}-fade`} gradientUnits="userSpaceOnUse" x1="0" y1="11.5" x2="0" y2="13.5">
           <stop offset="0" stopColor="#fff" />
           <stop offset="1" stopColor="#000" />
         </linearGradient>
         <mask id={`${id}-shade`} maskUnits="userSpaceOnUse" x="-50" y="-50" width="150" height="200">
           <rect x="-50" y="-50" width="150" height="200" fill="#fff" />
-          <rect x="19" y="11" width="14" height="6" fill={`url(#${id}-fade)`} />
-          <rect x="19" y="17" width="14" height="3" fill="#000" />
+          <rect x="19" y="11.5" width="14" height="2" fill={`url(#${id}-fade)`} />
+          <rect x="19" y="13.5" width="14" height="6.5" fill="#000" />
         </mask>
-        {/* Oclusión del canto: el alambre que asoma por detrás de la carpeta se oscurece al salir y se aclara después */}
-        <linearGradient id={`${id}-occ`} gradientUnits="userSpaceOnUse" x1="0" y1="13.5" x2="0" y2="4">
-          <stop offset="0" stopColor="#14100a" stopOpacity=".92" />
-          <stop offset=".4" stopColor="#14100a" stopOpacity=".5" />
-          <stop offset="1" stopColor="#14100a" stopOpacity="0" />
-        </linearGradient>
-        <clipPath id={`${id}-occclip`} clipPathUnits="userSpaceOnUse">
-          <rect x="17" y="-10" width="15" height="23.5" />
-        </clipPath>
         <filter id={`${id}-soft`} x="-60%" y="-30%" width="220%" height="160%">
           <feGaussianBlur stdDeviation="1.1" />
         </filter>
@@ -103,11 +94,6 @@ const Paperclip: React.FC<{ part: 'back' | 'front' | 'full' }> = ({ part }) => {
       <path d={d} transform="translate(0.45 0.42)" fill="none" stroke="#5d6065" strokeOpacity=".7" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" />
       <path d={d} transform="translate(-0.42 -0.4)" fill="none" stroke="#ffffff" strokeOpacity=".95" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
       <path d={d} transform="translate(-0.5 -0.46)" fill="none" stroke="#ffffff" strokeWidth="0.3" strokeLinecap="round" strokeLinejoin="round" />
-      {part === 'front' && (
-        <g clipPath={`url(#${id}-occclip)`}>
-          <path d={d} fill="none" stroke={`url(#${id}-occ)`} strokeWidth="3.2" strokeLinecap="butt" strokeLinejoin="round" />
-        </g>
-      )}
       </g>
     </svg>
   );
