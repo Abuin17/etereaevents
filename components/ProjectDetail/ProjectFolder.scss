@@ -205,8 +205,8 @@ $tab-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' wid
     position: absolute;
     // El alambre largo entra en la curva justo en el canto exterior de la pestaña (100% = ese canto)
     top: calc(#{$tab-top} + 4px);
-    left: calc(100% - 68px);
-    width: 49px;
+    left: calc(100% - 79px);
+    width: 54px;
     height: auto;
     overflow: visible;
     transform: rotate(88deg);
