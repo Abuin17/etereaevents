@@ -35,13 +35,18 @@ const FOLIOS: { src?: string; alt: string; notes: string[] }[] = [
 //   ven pasado el canto.
 // Las dos mitades comparten el punto (25,16): ahí se unen sin costura.
 // Topología de un clip real (tres curvas): arco superior -> U interior pequeña -> U exterior grande.
-// Medidas calcadas de un clip real (alambre grueso, arco superior 19 de ancho, U exterior 21, U interior 13):
-// delantero = U exterior grande; trasero = arco superior + U interior. Comparten el punto (8,13.5).
-const CLIP_FRONT = 'M8 13.5 V66.5 C8 82 29 82 29 66.5 V24';
-const CLIP_BACK = 'M8 13.5 C8 1 25 1 25 13.5 V60.5 C25 73 12 73 12 60.5 V24';
+// Medidas calcadas de un clip real (alambre grueso, arco superior 17 de ancho, U exterior 21, U interior 13).
+// Un único alambre continuo: arco superior -> U exterior grande (un lado) y U interior pequeña (el otro).
+// - delantero: el arco y la U exterior, de una sola pieza (sin costura en el canto); se recorta el tramo
+//   del arco que se mete detrás de la carpeta (CLIP_HIDE) para que el alambre se hunda en el canto.
+// - trasero: la U interior, que arranca justo debajo del arco y queda detrás de la carpeta.
+// - completo (móvil): todo el alambre por encima, sin cortes.
+const CLIP_OUTER = 'M25 13.5 C25 1 8 1 8 13.5 V66.5 C8 82 29 82 29 66.5 V24';
+const CLIP_INNER = 'M25 13.5 V60.5 C25 73 12 73 12 60.5 V24';
+const CLIP_HIDE = 'M-50 -50H100V150H-50Z M22 13.5H27.2V40H22Z';
 
-const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
-  const d = part === 'back' ? CLIP_BACK : CLIP_FRONT;
+const Paperclip: React.FC<{ part: 'back' | 'front' | 'full' }> = ({ part }) => {
+  const d = part === 'back' ? CLIP_INNER : part === 'front' ? CLIP_OUTER : `${CLIP_OUTER} ${CLIP_INNER}`;
   const id = `clip-${part}`;
   return (
     <svg className={`folder__clip folder__clip--${part}`} viewBox="0 0 34 92" aria-hidden="true" overflow="visible">
@@ -56,6 +61,19 @@ const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
           <stop offset=".82" stopColor="#dfe0e3" />
           <stop offset="1" stopColor="#8e9094" />
         </linearGradient>
+        <clipPath id={`${id}-cut`} clipPathUnits="userSpaceOnUse">
+          <path d={CLIP_HIDE} clipRule="evenodd" />
+        </clipPath>
+        {/* Las sombras del arco se difuminan al hundirse en el canto (sin corte seco) */}
+        <linearGradient id={`${id}-fade`} gradientUnits="userSpaceOnUse" x1="0" y1="11" x2="0" y2="17">
+          <stop offset="0" stopColor="#fff" />
+          <stop offset="1" stopColor="#000" />
+        </linearGradient>
+        <mask id={`${id}-shade`} maskUnits="userSpaceOnUse" x="-50" y="-50" width="150" height="200">
+          <rect x="-50" y="-50" width="150" height="200" fill="#fff" />
+          <rect x="19" y="11" width="14" height="6" fill={`url(#${id}-fade)`} />
+          <rect x="19" y="17" width="14" height="3" fill="#000" />
+        </mask>
         <filter id={`${id}-soft`} x="-60%" y="-30%" width="220%" height="160%">
           <feGaussianBlur stdDeviation="1.1" />
         </filter>
@@ -63,9 +81,12 @@ const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
           <feGaussianBlur stdDeviation="0.35" />
         </filter>
       </defs>
+      <g mask={part === 'front' ? `url(#${id}-shade)` : undefined}>
       {/* Sombra suave (la luz cae desde arriba a la izquierda) y sombra de contacto, más oscura y pegada */}
       <path d={d} transform="translate(1.6 2.6)" fill="none" stroke="#2c2418" strokeOpacity=".24" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" filter={`url(#${id}-soft)`} />
       <path d={d} transform="translate(0.55 0.9)" fill="none" stroke="#1c160c" strokeOpacity=".5" strokeWidth="2.7" strokeLinecap="round" strokeLinejoin="round" filter={`url(#${id}-contact)`} />
+      </g>
+      <g clipPath={part === 'front' ? `url(#${id}-cut)` : undefined}>
       {/* Alambre como tubo cilíndrico (acero cromado): borde oscuro, cuerpo claro, sombra interior hacia abajo-derecha y brillo especular hacia arriba-izquierda */}
       <path d={d} fill="none" stroke="#54565b" strokeWidth="3.1" strokeLinecap="round" strokeLinejoin="round" />
       <path d={d} fill="none" stroke="#b9bbbf" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -73,6 +94,7 @@ const Paperclip: React.FC<{ part: 'back' | 'front' }> = ({ part }) => {
       <path d={d} transform="translate(0.45 0.42)" fill="none" stroke="#5d6065" strokeOpacity=".7" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round" />
       <path d={d} transform="translate(-0.42 -0.4)" fill="none" stroke="#ffffff" strokeOpacity=".95" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
       <path d={d} transform="translate(-0.5 -0.46)" fill="none" stroke="#ffffff" strokeWidth="0.3" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
     </svg>
   );
 };
@@ -148,6 +170,7 @@ const ProjectFolder: React.FC<ProjectFolderProps> = ({ project }) => {
       </aside>
       {/* Clip, parte delantera: sobre folios y pestaña */}
       <Paperclip part="front" />
+      <Paperclip part="full" />
       </div>
 
       <div className="folder__sheet">
